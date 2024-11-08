@@ -5,7 +5,5 @@
 IDEIA INICIAL:
 
 O jogo se chamará "Neighborhood", e simulará uma vizinhança onde o jogador poderá explorar livremente a pé ou de bicicleta. O objetivo principal é sair de casa, e realizar compras no mercado e/ou o posto de gasolina e retornar. 
-
 Durante a jornada, o jogador possivelemte poderá interagir com NPCs em diálogos e abrir um HUD de celular para consultar o horário.
-
 Também estamos avaliando a possibilidade de um limite de tempo para a conclusão dessas tarefas, embora ainda seja uma ideia em estudo.
