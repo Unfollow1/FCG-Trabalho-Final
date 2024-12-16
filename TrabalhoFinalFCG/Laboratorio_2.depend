@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1727266428 source:c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\src\glad.c
+1727266428 source:c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\src\glad.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -7,7 +7,7 @@
 	<windows.h>
 	<dlfcn.h>
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glad\glad.h
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glad\glad.h
 	<windows.h>
 	<stddef.h>
 	<KHR/khrplatform.h>
@@ -18,13 +18,13 @@
 	<stdint.h>
 	<inttypes.h>
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\khr\khrplatform.h
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\khr\khrplatform.h
 	<sys/cdefs.h>
 	<stdint.h>
 	<inttypes.h>
 	<stdint.h>
 
-1727266428 source:c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\src\textrendering.cpp
+1727266428 source:c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\src\textrendering.cpp
 	<string>
 	<glad/glad.h>
 	<GLFW/glfw3.h>
@@ -33,7 +33,7 @@
 	"utils.h"
 	"dejavufont.h"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glfw\glfw3.h
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glfw\glfw3.h
 	<stddef.h>
 	<stdint.h>
 	<vulkan/vulkan.h>
@@ -57,39 +57,39 @@
 	<GL/gl.h>
 	<GL/glext.h>
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\mat4x4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat4x4.hpp
 	"./ext/matrix_double4x4.hpp"
 	"./ext/matrix_double4x4_precision.hpp"
 	"./ext/matrix_float4x4.hpp"
 	"./ext/matrix_float4x4_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x4.hpp
 	"../detail/type_mat4x4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x4.hpp
 	"type_vec4.hpp"
 	<limits>
 	<cstddef>
 	"type_mat4x4.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_vec4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec4.hpp
 	"qualifier.hpp"
 	"_swizzle.hpp"
 	"_swizzle_func.hpp"
 	<cstddef>
 	"type_vec4.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\qualifier.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\qualifier.hpp
 	"setup.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\setup.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\setup.hpp
 	<cassert>
 	<cstddef>
 	"../simd/platform.h"
 	<cstdint>
 	<type_traits>
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\simd\platform.h
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\simd\platform.h
 	<cuda.h>
 	<immintrin.h>
 	<immintrin.h>
@@ -100,25 +100,25 @@
 	<pmmintrin.h>
 	<emmintrin.h>
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\_swizzle.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\_swizzle.hpp
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\_swizzle_func.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\_swizzle_func.hpp
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_vec4.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec4.inl
 	"compute_vector_relational.hpp"
 	"type_vec4_simd.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\compute_vector_relational.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\compute_vector_relational.hpp
 	"setup.hpp"
 	<limits>
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_vec4_simd.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec4_simd.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x4.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x4.inl
 	"../matrix.hpp"
 	"type_mat4x4_simd.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\matrix.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\matrix.hpp
 	"detail/qualifier.hpp"
 	"detail/setup.hpp"
 	"vec2.hpp"
@@ -135,7 +135,7 @@
 	"mat4x4.hpp"
 	"detail/func_matrix.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\vec2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\vec2.hpp
 	"./ext/vector_bool2.hpp"
 	"./ext/vector_bool2_precision.hpp"
 	"./ext/vector_float2.hpp"
@@ -147,47 +147,47 @@
 	"./ext/vector_uint2.hpp"
 	"./ext/vector_uint2_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool2.hpp
 	"../detail/type_vec2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_vec2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec2.hpp
 	"qualifier.hpp"
 	"_swizzle.hpp"
 	"_swizzle_func.hpp"
 	<cstddef>
 	"type_vec2.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_vec2.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec2.inl
 	"./compute_vector_relational.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool2_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool2_precision.hpp
 	"../detail/type_vec2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_float2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float2.hpp
 	"../detail/type_vec2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_float2_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float2_precision.hpp
 	"../detail/type_vec2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_double2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double2.hpp
 	"../detail/type_vec2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_double2_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double2_precision.hpp
 	"../detail/type_vec2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_int2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int2.hpp
 	"../detail/type_vec2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_int2_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int2_precision.hpp
 	"../detail/type_vec2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint2.hpp
 	"../detail/type_vec2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint2_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint2_precision.hpp
 	"../detail/type_vec2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\vec3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\vec3.hpp
 	"./ext/vector_bool3.hpp"
 	"./ext/vector_bool3_precision.hpp"
 	"./ext/vector_float3.hpp"
@@ -199,47 +199,47 @@
 	"./ext/vector_uint3.hpp"
 	"./ext/vector_uint3_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool3.hpp
 	"../detail/type_vec3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_vec3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec3.hpp
 	"qualifier.hpp"
 	"_swizzle.hpp"
 	"_swizzle_func.hpp"
 	<cstddef>
 	"type_vec3.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_vec3.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec3.inl
 	"compute_vector_relational.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool3_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool3_precision.hpp
 	"../detail/type_vec3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_float3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float3.hpp
 	"../detail/type_vec3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_float3_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float3_precision.hpp
 	"../detail/type_vec3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_double3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double3.hpp
 	"../detail/type_vec3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_double3_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double3_precision.hpp
 	"../detail/type_vec3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_int3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int3.hpp
 	"../detail/type_vec3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_int3_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int3_precision.hpp
 	"../detail/type_vec3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint3.hpp
 	"../detail/type_vec3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint3_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint3_precision.hpp
 	"../detail/type_vec3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\vec4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\vec4.hpp
 	"./ext/vector_bool4.hpp"
 	"./ext/vector_bool4_precision.hpp"
 	"./ext/vector_float4.hpp"
@@ -251,268 +251,268 @@
 	"./ext/vector_uint4.hpp"
 	"./ext/vector_uint4_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool4.hpp
 	"../detail/type_vec4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool4_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool4_precision.hpp
 	"../detail/type_vec4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_float4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float4.hpp
 	"../detail/type_vec4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_float4_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float4_precision.hpp
 	"../detail/type_vec4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_double4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double4.hpp
 	"../detail/type_vec4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_double4_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double4_precision.hpp
 	"../detail/setup.hpp"
 	"../detail/type_vec4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_int4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int4.hpp
 	"../detail/type_vec4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_int4_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int4_precision.hpp
 	"../detail/type_vec4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint4.hpp
 	"../detail/type_vec4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint4_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint4_precision.hpp
 	"../detail/type_vec4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\mat2x2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat2x2.hpp
 	"./ext/matrix_double2x2.hpp"
 	"./ext/matrix_double2x2_precision.hpp"
 	"./ext/matrix_float2x2.hpp"
 	"./ext/matrix_float2x2_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x2.hpp
 	"../detail/type_mat2x2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x2.hpp
 	"type_vec2.hpp"
 	<limits>
 	<cstddef>
 	"type_mat2x2.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x2.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x2.inl
 	"../matrix.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x2_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x2_precision.hpp
 	"../detail/type_mat2x2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x2.hpp
 	"../detail/type_mat2x2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x2_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x2_precision.hpp
 	"../detail/type_mat2x2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\mat2x3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat2x3.hpp
 	"./ext/matrix_double2x3.hpp"
 	"./ext/matrix_double2x3_precision.hpp"
 	"./ext/matrix_float2x3.hpp"
 	"./ext/matrix_float2x3_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x3.hpp
 	"../detail/type_mat2x3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x3.hpp
 	"type_vec2.hpp"
 	"type_vec3.hpp"
 	<limits>
 	<cstddef>
 	"type_mat2x3.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x3.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x3.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x3_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x3_precision.hpp
 	"../detail/type_mat2x3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x3.hpp
 	"../detail/type_mat2x3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x3_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x3_precision.hpp
 	"../detail/type_mat2x3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\mat2x4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat2x4.hpp
 	"./ext/matrix_double2x4.hpp"
 	"./ext/matrix_double2x4_precision.hpp"
 	"./ext/matrix_float2x4.hpp"
 	"./ext/matrix_float2x4_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x4.hpp
 	"../detail/type_mat2x4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x4.hpp
 	"type_vec2.hpp"
 	"type_vec4.hpp"
 	<limits>
 	<cstddef>
 	"type_mat2x4.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x4.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x4.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x4_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x4_precision.hpp
 	"../detail/type_mat2x4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x4.hpp
 	"../detail/type_mat2x4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x4_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x4_precision.hpp
 	"../detail/type_mat2x4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\mat3x2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat3x2.hpp
 	"./ext/matrix_double3x2.hpp"
 	"./ext/matrix_double3x2_precision.hpp"
 	"./ext/matrix_float3x2.hpp"
 	"./ext/matrix_float3x2_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x2.hpp
 	"../detail/type_mat3x2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x2.hpp
 	"type_vec2.hpp"
 	"type_vec3.hpp"
 	<limits>
 	<cstddef>
 	"type_mat3x2.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x2.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x2.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x2_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x2_precision.hpp
 	"../detail/type_mat3x2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x2.hpp
 	"../detail/type_mat3x2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x2_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x2_precision.hpp
 	"../detail/type_mat3x2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\mat3x3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat3x3.hpp
 	"./ext/matrix_double3x3.hpp"
 	"./ext/matrix_double3x3_precision.hpp"
 	"./ext/matrix_float3x3.hpp"
 	"./ext/matrix_float3x3_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x3.hpp
 	"../detail/type_mat3x3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x3.hpp
 	"type_vec3.hpp"
 	<limits>
 	<cstddef>
 	"type_mat3x3.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x3.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x3.inl
 	"../matrix.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x3_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x3_precision.hpp
 	"../detail/type_mat3x3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x3.hpp
 	"../detail/type_mat3x3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x3_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x3_precision.hpp
 	"../detail/type_mat3x3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\mat3x4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat3x4.hpp
 	"./ext/matrix_double3x4.hpp"
 	"./ext/matrix_double3x4_precision.hpp"
 	"./ext/matrix_float3x4.hpp"
 	"./ext/matrix_float3x4_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x4.hpp
 	"../detail/type_mat3x4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x4.hpp
 	"type_vec3.hpp"
 	"type_vec4.hpp"
 	<limits>
 	<cstddef>
 	"type_mat3x4.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x4.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x4.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x4_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x4_precision.hpp
 	"../detail/type_mat3x4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x4.hpp
 	"../detail/type_mat3x4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x4_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x4_precision.hpp
 	"../detail/type_mat3x4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\mat4x2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat4x2.hpp
 	"./ext/matrix_double4x2.hpp"
 	"./ext/matrix_double4x2_precision.hpp"
 	"./ext/matrix_float4x2.hpp"
 	"./ext/matrix_float4x2_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x2.hpp
 	"../detail/type_mat4x2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x2.hpp
 	"type_vec2.hpp"
 	"type_vec4.hpp"
 	<limits>
 	<cstddef>
 	"type_mat4x2.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x2.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x2.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x2_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x2_precision.hpp
 	"../detail/type_mat4x2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x2.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x2.hpp
 	"../detail/type_mat4x2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x2_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x2_precision.hpp
 	"../detail/type_mat2x2.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\mat4x3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat4x3.hpp
 	"./ext/matrix_double4x3.hpp"
 	"./ext/matrix_double4x3_precision.hpp"
 	"./ext/matrix_float4x3.hpp"
 	"./ext/matrix_float4x3_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x3.hpp
 	"../detail/type_mat4x3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x3.hpp
 	"type_vec3.hpp"
 	"type_vec4.hpp"
 	<limits>
 	<cstddef>
 	"type_mat4x3.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x3.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x3.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x3_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x3_precision.hpp
 	"../detail/type_mat4x3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x3.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x3.hpp
 	"../detail/type_mat4x3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x3_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x3_precision.hpp
 	"../detail/type_mat4x3.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\func_matrix.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_matrix.inl
 	"../geometric.hpp"
 	<limits>
 	"func_matrix_simd.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\geometric.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\geometric.hpp
 	"detail/type_vec3.hpp"
 	"detail/func_geometric.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\func_geometric.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_geometric.inl
 	"../exponential.hpp"
 	"../common.hpp"
 	"func_geometric_simd.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\exponential.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\exponential.hpp
 	"detail/type_vec1.hpp"
 	"detail/type_vec2.hpp"
 	"detail/type_vec3.hpp"
@@ -520,17 +520,17 @@
 	<cmath>
 	"detail/func_exponential.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_vec1.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec1.hpp
 	"qualifier.hpp"
 	"_swizzle.hpp"
 	"_swizzle_func.hpp"
 	<cstddef>
 	"type_vec1.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_vec1.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec1.inl
 	"./compute_vector_relational.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\func_exponential.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_exponential.inl
 	"../vector_relational.hpp"
 	"_vectorize.hpp"
 	<limits>
@@ -538,33 +538,33 @@
 	<cassert>
 	"func_exponential_simd.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\vector_relational.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\vector_relational.hpp
 	"detail/qualifier.hpp"
 	"detail/setup.hpp"
 	"detail/func_vector_relational.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\func_vector_relational.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_vector_relational.inl
 	"func_vector_relational_simd.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\func_vector_relational_simd.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_vector_relational_simd.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\_vectorize.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\_vectorize.hpp
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\func_exponential_simd.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_exponential_simd.inl
 	"../simd/exponential.h"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\simd\exponential.h
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\simd\exponential.h
 	"platform.h"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\common.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\common.hpp
 	"detail/qualifier.hpp"
 	"detail/_fixes.hpp"
 	"detail/func_common.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\_fixes.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\_fixes.hpp
 	<cmath>
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\func_common.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_common.inl
 	"../vector_relational.hpp"
 	"compute_common.hpp"
 	"type_vec1.hpp"
@@ -575,51 +575,51 @@
 	<limits>
 	"func_common_simd.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\compute_common.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\compute_common.hpp
 	"setup.hpp"
 	<limits>
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\func_common_simd.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_common_simd.inl
 	"../simd/common.h"
 	<immintrin.h>
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\simd\common.h
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\simd\common.h
 	"platform.h"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\func_geometric_simd.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_geometric_simd.inl
 	"../simd/geometric.h"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\simd\geometric.h
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\simd\geometric.h
 	"common.h"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\func_matrix_simd.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_matrix_simd.inl
 	"type_mat4x4.hpp"
 	"../geometric.hpp"
 	"../simd/matrix.h"
 	<cstring>
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\simd\matrix.h
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\simd\matrix.h
 	"geometric.h"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x4_simd.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x4_simd.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x4_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x4_precision.hpp
 	"../detail/type_mat4x4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x4.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x4.hpp
 	"../detail/type_mat4x4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x4_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x4_precision.hpp
 	"../detail/type_mat4x4.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\utils.h
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\utils.h
 	<cstdio>
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\dejavufont.h
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\dejavufont.h
 	<stddef.h>
 	<stdint.h>
 
-1731966702 source:c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\src\main.cpp
+1731969121 source:c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\src\main.cpp
 	<cmath>
 	<cstdio>
 	<cstdlib>
@@ -636,7 +636,7 @@
 	"utils.h"
 	"matrices.h"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\gtc\type_ptr.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\type_ptr.hpp
 	"../gtc/quaternion.hpp"
 	"../gtc/vec1.hpp"
 	"../vec2.hpp"
@@ -654,7 +654,7 @@
 	<cstring>
 	"type_ptr.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\gtc\quaternion.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\quaternion.hpp
 	"../gtc/constants.hpp"
 	"../gtc/matrix_transform.hpp"
 	"../ext/vector_relational.hpp"
@@ -673,20 +673,20 @@
 	"../detail/type_vec4.hpp"
 	"quaternion.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\gtc\constants.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\constants.hpp
 	"../ext/scalar_constants.hpp"
 	"constants.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\scalar_constants.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\scalar_constants.hpp
 	"../detail/setup.hpp"
 	"scalar_constants.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\scalar_constants.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\scalar_constants.inl
 	<limits>
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\gtc\constants.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\constants.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\gtc\matrix_transform.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\matrix_transform.hpp
 	"../mat4x4.hpp"
 	"../vec2.hpp"
 	"../vec3.hpp"
@@ -696,64 +696,64 @@
 	"../ext/matrix_transform.hpp"
 	"matrix_transform.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_projection.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_projection.hpp
 	"../gtc/constants.hpp"
 	"../geometric.hpp"
 	"../trigonometric.hpp"
 	"../matrix.hpp"
 	"matrix_projection.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\trigonometric.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\trigonometric.hpp
 	"detail/setup.hpp"
 	"detail/qualifier.hpp"
 	"detail/func_trigonometric.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\func_trigonometric.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_trigonometric.inl
 	"_vectorize.hpp"
 	<cmath>
 	<limits>
 	"func_trigonometric_simd.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\func_trigonometric_simd.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_trigonometric_simd.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_projection.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_projection.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_clip_space.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_clip_space.hpp
 	"../ext/scalar_constants.hpp"
 	"../geometric.hpp"
 	"../trigonometric.hpp"
 	"matrix_clip_space.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_clip_space.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_clip_space.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_transform.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_transform.hpp
 	"../gtc/constants.hpp"
 	"../geometric.hpp"
 	"../trigonometric.hpp"
 	"../matrix.hpp"
 	"matrix_transform.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\matrix_transform.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_transform.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\gtc\matrix_transform.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\matrix_transform.inl
 	"../geometric.hpp"
 	"../trigonometric.hpp"
 	"../matrix.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_relational.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_relational.hpp
 	"../detail/qualifier.hpp"
 	"vector_relational.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_relational.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_relational.inl
 	"../vector_relational.hpp"
 	"../common.hpp"
 	"../detail/qualifier.hpp"
 	"../detail/type_float.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_float.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_float.hpp
 	"setup.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_common.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_common.hpp
 	"../ext/scalar_constants.hpp"
 	"../ext/quaternion_geometric.hpp"
 	"../common.hpp"
@@ -762,23 +762,23 @@
 	<limits>
 	"quaternion_common.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_geometric.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_geometric.hpp
 	"../geometric.hpp"
 	"../exponential.hpp"
 	"../ext/vector_relational.hpp"
 	"quaternion_geometric.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_geometric.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_geometric.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_common.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_common.inl
 	"quaternion_common_simd.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_common_simd.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_common_simd.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_float.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_float.hpp
 	"../detail/type_quat.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_quat.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_quat.hpp
 	"../detail/type_mat3x3.hpp"
 	"../detail/type_mat4x4.hpp"
 	"../detail/type_vec3.hpp"
@@ -789,31 +789,31 @@
 	"../gtc/matrix_transform.hpp"
 	"type_quat.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_relational.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_relational.hpp
 	"../vector_relational.hpp"
 	"quaternion_relational.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_relational.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_relational.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_quat.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_quat.inl
 	"../trigonometric.hpp"
 	"../exponential.hpp"
 	"../ext/quaternion_geometric.hpp"
 	<limits>
 	"type_quat_simd.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\detail\type_quat_simd.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_quat_simd.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_float_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_float_precision.hpp
 	"../detail/type_quat.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_double.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_double.hpp
 	"../detail/type_quat.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_double_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_double_precision.hpp
 	"../detail/type_quat.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_trigonometric.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_trigonometric.hpp
 	"../trigonometric.hpp"
 	"../exponential.hpp"
 	"scalar_constants.hpp"
@@ -821,17 +821,17 @@
 	<limits>
 	"quaternion_trigonometric.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_trigonometric.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_trigonometric.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_transform.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_transform.hpp
 	"../common.hpp"
 	"../trigonometric.hpp"
 	"../geometric.hpp"
 	"quaternion_transform.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_transform.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_transform.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\gtc\quaternion.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\quaternion.inl
 	"../trigonometric.hpp"
 	"../geometric.hpp"
 	"../exponential.hpp"
@@ -839,18 +839,18 @@
 	<limits>
 	"quaternion_simd.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\gtc\epsilon.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\epsilon.hpp
 	"../detail/setup.hpp"
 	"../detail/qualifier.hpp"
 	"epsilon.inl"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\gtc\epsilon.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\epsilon.inl
 	"../vector_relational.hpp"
 	"../common.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\gtc\quaternion_simd.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\quaternion_simd.inl
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\gtc\vec1.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\vec1.hpp
 	"../ext/vector_bool1.hpp"
 	"../ext/vector_bool1_precision.hpp"
 	"../ext/vector_float1.hpp"
@@ -862,43 +862,1849 @@
 	"../ext/vector_uint1.hpp"
 	"../ext/vector_uint1_precision.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool1.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool1.hpp
 	"../detail/type_vec1.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool1_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool1_precision.hpp
 	"../detail/type_vec1.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_float1.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float1.hpp
 	"../detail/type_vec1.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_float1_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float1_precision.hpp
 	"../detail/type_vec1.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_double1.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double1.hpp
 	"../detail/type_vec1.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_double1_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double1_precision.hpp
 	"../detail/type_vec1.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_int1.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int1.hpp
 	"../detail/type_vec1.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_int1_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int1_precision.hpp
 	"../detail/type_vec1.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint1.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint1.hpp
 	"../detail/type_vec1.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint1_precision.hpp
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint1_precision.hpp
 	"../detail/type_vec1.hpp"
 
-1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\glm\gtc\type_ptr.inl
+1727266428 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\type_ptr.inl
 	<cstring>
 
-1731964981 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte\laboratorio_2_codigo_fonte\include\matrices.h
+1731964981 c:\users\gabri\desktop\fcg\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\matrices.h
 	<cstdio>
 	<cstdlib>
 	<glm/mat4x4.hpp>
 	<glm/vec4.hpp>
 	<glm/gtc/matrix_transform.hpp>
+
+1727266428 source:c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\src\glad.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<glad/glad.h>
+	<windows.h>
+	<dlfcn.h>
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glad\glad.h
+	<windows.h>
+	<stddef.h>
+	<KHR/khrplatform.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\khr\khrplatform.h
+	<sys/cdefs.h>
+	<stdint.h>
+	<inttypes.h>
+	<stdint.h>
+
+1731969363 source:c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\src\main.cpp
+	<cmath>
+	<cstdio>
+	<cstdlib>
+	<map>
+	<string>
+	<limits>
+	<fstream>
+	<sstream>
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	<glm/mat4x4.hpp>
+	<glm/vec4.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"utils.h"
+	"matrices.h"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glfw\glfw3.h
+	<stddef.h>
+	<stdint.h>
+	<vulkan/vulkan.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GLES2/gl2.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl3.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl31.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl32.h>
+	<GLES2/gl2ext.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl3ext.h>
+	<GL/glcorearb.h>
+	<GL/glext.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+	<OpenGL/gl.h>
+	<GL/gl.h>
+	<GL/glext.h>
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat4x4.hpp
+	"./ext/matrix_double4x4.hpp"
+	"./ext/matrix_double4x4_precision.hpp"
+	"./ext/matrix_float4x4.hpp"
+	"./ext/matrix_float4x4_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x4.hpp
+	"../detail/type_mat4x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x4.hpp
+	"type_vec4.hpp"
+	<limits>
+	<cstddef>
+	"type_mat4x4.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec4.hpp
+	"qualifier.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec4.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\qualifier.hpp
+	"setup.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\setup.hpp
+	<cassert>
+	<cstddef>
+	"../simd/platform.h"
+	<cstdint>
+	<type_traits>
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\simd\platform.h
+	<cuda.h>
+	<immintrin.h>
+	<immintrin.h>
+	<popcntintrin.h>
+	<nmmintrin.h>
+	<smmintrin.h>
+	<tmmintrin.h>
+	<pmmintrin.h>
+	<emmintrin.h>
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\_swizzle.hpp
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\_swizzle_func.hpp
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec4.inl
+	"compute_vector_relational.hpp"
+	"type_vec4_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\compute_vector_relational.hpp
+	"setup.hpp"
+	<limits>
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec4_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x4.inl
+	"../matrix.hpp"
+	"type_mat4x4_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\matrix.hpp
+	"detail/qualifier.hpp"
+	"detail/setup.hpp"
+	"vec2.hpp"
+	"vec3.hpp"
+	"vec4.hpp"
+	"mat2x2.hpp"
+	"mat2x3.hpp"
+	"mat2x4.hpp"
+	"mat3x2.hpp"
+	"mat3x3.hpp"
+	"mat3x4.hpp"
+	"mat4x2.hpp"
+	"mat4x3.hpp"
+	"mat4x4.hpp"
+	"detail/func_matrix.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\vec2.hpp
+	"./ext/vector_bool2.hpp"
+	"./ext/vector_bool2_precision.hpp"
+	"./ext/vector_float2.hpp"
+	"./ext/vector_float2_precision.hpp"
+	"./ext/vector_double2.hpp"
+	"./ext/vector_double2_precision.hpp"
+	"./ext/vector_int2.hpp"
+	"./ext/vector_int2_precision.hpp"
+	"./ext/vector_uint2.hpp"
+	"./ext/vector_uint2_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool2.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec2.hpp
+	"qualifier.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec2.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec2.inl
+	"./compute_vector_relational.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool2_precision.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float2.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float2_precision.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double2.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double2_precision.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int2.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int2_precision.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint2.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint2_precision.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\vec3.hpp
+	"./ext/vector_bool3.hpp"
+	"./ext/vector_bool3_precision.hpp"
+	"./ext/vector_float3.hpp"
+	"./ext/vector_float3_precision.hpp"
+	"./ext/vector_double3.hpp"
+	"./ext/vector_double3_precision.hpp"
+	"./ext/vector_int3.hpp"
+	"./ext/vector_int3_precision.hpp"
+	"./ext/vector_uint3.hpp"
+	"./ext/vector_uint3_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool3.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec3.hpp
+	"qualifier.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec3.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec3.inl
+	"compute_vector_relational.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool3_precision.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float3.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float3_precision.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double3.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double3_precision.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int3.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int3_precision.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint3.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint3_precision.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\vec4.hpp
+	"./ext/vector_bool4.hpp"
+	"./ext/vector_bool4_precision.hpp"
+	"./ext/vector_float4.hpp"
+	"./ext/vector_float4_precision.hpp"
+	"./ext/vector_double4.hpp"
+	"./ext/vector_double4_precision.hpp"
+	"./ext/vector_int4.hpp"
+	"./ext/vector_int4_precision.hpp"
+	"./ext/vector_uint4.hpp"
+	"./ext/vector_uint4_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool4.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool4_precision.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float4.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float4_precision.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double4.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double4_precision.hpp
+	"../detail/setup.hpp"
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int4.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int4_precision.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint4.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint4_precision.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat2x2.hpp
+	"./ext/matrix_double2x2.hpp"
+	"./ext/matrix_double2x2_precision.hpp"
+	"./ext/matrix_float2x2.hpp"
+	"./ext/matrix_float2x2_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x2.hpp
+	"../detail/type_mat2x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x2.hpp
+	"type_vec2.hpp"
+	<limits>
+	<cstddef>
+	"type_mat2x2.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x2.inl
+	"../matrix.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x2_precision.hpp
+	"../detail/type_mat2x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x2.hpp
+	"../detail/type_mat2x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x2_precision.hpp
+	"../detail/type_mat2x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat2x3.hpp
+	"./ext/matrix_double2x3.hpp"
+	"./ext/matrix_double2x3_precision.hpp"
+	"./ext/matrix_float2x3.hpp"
+	"./ext/matrix_float2x3_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x3.hpp
+	"../detail/type_mat2x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x3.hpp
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	<limits>
+	<cstddef>
+	"type_mat2x3.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x3.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x3_precision.hpp
+	"../detail/type_mat2x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x3.hpp
+	"../detail/type_mat2x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x3_precision.hpp
+	"../detail/type_mat2x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat2x4.hpp
+	"./ext/matrix_double2x4.hpp"
+	"./ext/matrix_double2x4_precision.hpp"
+	"./ext/matrix_float2x4.hpp"
+	"./ext/matrix_float2x4_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x4.hpp
+	"../detail/type_mat2x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x4.hpp
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	<limits>
+	<cstddef>
+	"type_mat2x4.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat2x4.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double2x4_precision.hpp
+	"../detail/type_mat2x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x4.hpp
+	"../detail/type_mat2x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float2x4_precision.hpp
+	"../detail/type_mat2x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat3x2.hpp
+	"./ext/matrix_double3x2.hpp"
+	"./ext/matrix_double3x2_precision.hpp"
+	"./ext/matrix_float3x2.hpp"
+	"./ext/matrix_float3x2_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x2.hpp
+	"../detail/type_mat3x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x2.hpp
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	<limits>
+	<cstddef>
+	"type_mat3x2.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x2.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x2_precision.hpp
+	"../detail/type_mat3x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x2.hpp
+	"../detail/type_mat3x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x2_precision.hpp
+	"../detail/type_mat3x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat3x3.hpp
+	"./ext/matrix_double3x3.hpp"
+	"./ext/matrix_double3x3_precision.hpp"
+	"./ext/matrix_float3x3.hpp"
+	"./ext/matrix_float3x3_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x3.hpp
+	"../detail/type_mat3x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x3.hpp
+	"type_vec3.hpp"
+	<limits>
+	<cstddef>
+	"type_mat3x3.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x3.inl
+	"../matrix.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x3_precision.hpp
+	"../detail/type_mat3x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x3.hpp
+	"../detail/type_mat3x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x3_precision.hpp
+	"../detail/type_mat3x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat3x4.hpp
+	"./ext/matrix_double3x4.hpp"
+	"./ext/matrix_double3x4_precision.hpp"
+	"./ext/matrix_float3x4.hpp"
+	"./ext/matrix_float3x4_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x4.hpp
+	"../detail/type_mat3x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x4.hpp
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	<limits>
+	<cstddef>
+	"type_mat3x4.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat3x4.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double3x4_precision.hpp
+	"../detail/type_mat3x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x4.hpp
+	"../detail/type_mat3x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float3x4_precision.hpp
+	"../detail/type_mat3x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat4x2.hpp
+	"./ext/matrix_double4x2.hpp"
+	"./ext/matrix_double4x2_precision.hpp"
+	"./ext/matrix_float4x2.hpp"
+	"./ext/matrix_float4x2_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x2.hpp
+	"../detail/type_mat4x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x2.hpp
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	<limits>
+	<cstddef>
+	"type_mat4x2.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x2.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x2_precision.hpp
+	"../detail/type_mat4x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x2.hpp
+	"../detail/type_mat4x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x2_precision.hpp
+	"../detail/type_mat2x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\mat4x3.hpp
+	"./ext/matrix_double4x3.hpp"
+	"./ext/matrix_double4x3_precision.hpp"
+	"./ext/matrix_float4x3.hpp"
+	"./ext/matrix_float4x3_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x3.hpp
+	"../detail/type_mat4x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x3.hpp
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	<limits>
+	<cstddef>
+	"type_mat4x3.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x3.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x3_precision.hpp
+	"../detail/type_mat4x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x3.hpp
+	"../detail/type_mat4x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x3_precision.hpp
+	"../detail/type_mat4x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_matrix.inl
+	"../geometric.hpp"
+	<limits>
+	"func_matrix_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\geometric.hpp
+	"detail/type_vec3.hpp"
+	"detail/func_geometric.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_geometric.inl
+	"../exponential.hpp"
+	"../common.hpp"
+	"func_geometric_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\exponential.hpp
+	"detail/type_vec1.hpp"
+	"detail/type_vec2.hpp"
+	"detail/type_vec3.hpp"
+	"detail/type_vec4.hpp"
+	<cmath>
+	"detail/func_exponential.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec1.hpp
+	"qualifier.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec1.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_vec1.inl
+	"./compute_vector_relational.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_exponential.inl
+	"../vector_relational.hpp"
+	"_vectorize.hpp"
+	<limits>
+	<cmath>
+	<cassert>
+	"func_exponential_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\vector_relational.hpp
+	"detail/qualifier.hpp"
+	"detail/setup.hpp"
+	"detail/func_vector_relational.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_vector_relational.inl
+	"func_vector_relational_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_vector_relational_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\_vectorize.hpp
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_exponential_simd.inl
+	"../simd/exponential.h"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\simd\exponential.h
+	"platform.h"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\common.hpp
+	"detail/qualifier.hpp"
+	"detail/_fixes.hpp"
+	"detail/func_common.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\_fixes.hpp
+	<cmath>
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_common.inl
+	"../vector_relational.hpp"
+	"compute_common.hpp"
+	"type_vec1.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"_vectorize.hpp"
+	<limits>
+	"func_common_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\compute_common.hpp
+	"setup.hpp"
+	<limits>
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_common_simd.inl
+	"../simd/common.h"
+	<immintrin.h>
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\simd\common.h
+	"platform.h"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_geometric_simd.inl
+	"../simd/geometric.h"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\simd\geometric.h
+	"common.h"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_matrix_simd.inl
+	"type_mat4x4.hpp"
+	"../geometric.hpp"
+	"../simd/matrix.h"
+	<cstring>
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\simd\matrix.h
+	"geometric.h"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_mat4x4_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_double4x4_precision.hpp
+	"../detail/type_mat4x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x4.hpp
+	"../detail/type_mat4x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_float4x4_precision.hpp
+	"../detail/type_mat4x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\type_ptr.hpp
+	"../gtc/quaternion.hpp"
+	"../gtc/vec1.hpp"
+	"../vec2.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"../mat2x2.hpp"
+	"../mat2x3.hpp"
+	"../mat2x4.hpp"
+	"../mat3x2.hpp"
+	"../mat3x3.hpp"
+	"../mat3x4.hpp"
+	"../mat4x2.hpp"
+	"../mat4x3.hpp"
+	"../mat4x4.hpp"
+	<cstring>
+	"type_ptr.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\quaternion.hpp
+	"../gtc/constants.hpp"
+	"../gtc/matrix_transform.hpp"
+	"../ext/vector_relational.hpp"
+	"../ext/quaternion_common.hpp"
+	"../ext/quaternion_float.hpp"
+	"../ext/quaternion_float_precision.hpp"
+	"../ext/quaternion_double.hpp"
+	"../ext/quaternion_double_precision.hpp"
+	"../ext/quaternion_relational.hpp"
+	"../ext/quaternion_geometric.hpp"
+	"../ext/quaternion_trigonometric.hpp"
+	"../ext/quaternion_transform.hpp"
+	"../detail/type_mat3x3.hpp"
+	"../detail/type_mat4x4.hpp"
+	"../detail/type_vec3.hpp"
+	"../detail/type_vec4.hpp"
+	"quaternion.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\constants.hpp
+	"../ext/scalar_constants.hpp"
+	"constants.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\scalar_constants.hpp
+	"../detail/setup.hpp"
+	"scalar_constants.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\scalar_constants.inl
+	<limits>
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\constants.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\matrix_transform.hpp
+	"../mat4x4.hpp"
+	"../vec2.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"../ext/matrix_projection.hpp"
+	"../ext/matrix_clip_space.hpp"
+	"../ext/matrix_transform.hpp"
+	"matrix_transform.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_projection.hpp
+	"../gtc/constants.hpp"
+	"../geometric.hpp"
+	"../trigonometric.hpp"
+	"../matrix.hpp"
+	"matrix_projection.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\trigonometric.hpp
+	"detail/setup.hpp"
+	"detail/qualifier.hpp"
+	"detail/func_trigonometric.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_trigonometric.inl
+	"_vectorize.hpp"
+	<cmath>
+	<limits>
+	"func_trigonometric_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\func_trigonometric_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_projection.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_clip_space.hpp
+	"../ext/scalar_constants.hpp"
+	"../geometric.hpp"
+	"../trigonometric.hpp"
+	"matrix_clip_space.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_clip_space.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_transform.hpp
+	"../gtc/constants.hpp"
+	"../geometric.hpp"
+	"../trigonometric.hpp"
+	"../matrix.hpp"
+	"matrix_transform.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\matrix_transform.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\matrix_transform.inl
+	"../geometric.hpp"
+	"../trigonometric.hpp"
+	"../matrix.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_relational.hpp
+	"../detail/qualifier.hpp"
+	"vector_relational.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_relational.inl
+	"../vector_relational.hpp"
+	"../common.hpp"
+	"../detail/qualifier.hpp"
+	"../detail/type_float.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_float.hpp
+	"setup.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_common.hpp
+	"../ext/scalar_constants.hpp"
+	"../ext/quaternion_geometric.hpp"
+	"../common.hpp"
+	"../trigonometric.hpp"
+	"../exponential.hpp"
+	<limits>
+	"quaternion_common.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_geometric.hpp
+	"../geometric.hpp"
+	"../exponential.hpp"
+	"../ext/vector_relational.hpp"
+	"quaternion_geometric.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_geometric.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_common.inl
+	"quaternion_common_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_common_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_float.hpp
+	"../detail/type_quat.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_quat.hpp
+	"../detail/type_mat3x3.hpp"
+	"../detail/type_mat4x4.hpp"
+	"../detail/type_vec3.hpp"
+	"../detail/type_vec4.hpp"
+	"../ext/vector_relational.hpp"
+	"../ext/quaternion_relational.hpp"
+	"../gtc/constants.hpp"
+	"../gtc/matrix_transform.hpp"
+	"type_quat.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_relational.hpp
+	"../vector_relational.hpp"
+	"quaternion_relational.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_relational.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_quat.inl
+	"../trigonometric.hpp"
+	"../exponential.hpp"
+	"../ext/quaternion_geometric.hpp"
+	<limits>
+	"type_quat_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\detail\type_quat_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_float_precision.hpp
+	"../detail/type_quat.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_double.hpp
+	"../detail/type_quat.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_double_precision.hpp
+	"../detail/type_quat.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_trigonometric.hpp
+	"../trigonometric.hpp"
+	"../exponential.hpp"
+	"scalar_constants.hpp"
+	"vector_relational.hpp"
+	<limits>
+	"quaternion_trigonometric.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_trigonometric.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_transform.hpp
+	"../common.hpp"
+	"../trigonometric.hpp"
+	"../geometric.hpp"
+	"quaternion_transform.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\quaternion_transform.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\quaternion.inl
+	"../trigonometric.hpp"
+	"../geometric.hpp"
+	"../exponential.hpp"
+	"epsilon.hpp"
+	<limits>
+	"quaternion_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\epsilon.hpp
+	"../detail/setup.hpp"
+	"../detail/qualifier.hpp"
+	"epsilon.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\epsilon.inl
+	"../vector_relational.hpp"
+	"../common.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\quaternion_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\vec1.hpp
+	"../ext/vector_bool1.hpp"
+	"../ext/vector_bool1_precision.hpp"
+	"../ext/vector_float1.hpp"
+	"../ext/vector_float1_precision.hpp"
+	"../ext/vector_double1.hpp"
+	"../ext/vector_double1_precision.hpp"
+	"../ext/vector_int1.hpp"
+	"../ext/vector_int1_precision.hpp"
+	"../ext/vector_uint1.hpp"
+	"../ext/vector_uint1_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool1.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_bool1_precision.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float1.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_float1_precision.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double1.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_double1_precision.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int1.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_int1_precision.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint1.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\ext\vector_uint1_precision.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\glm\gtc\type_ptr.inl
+	<cstring>
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\utils.h
+	<cstdio>
+
+1731964981 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\matrices.h
+	<cstdio>
+	<cstdlib>
+	<glm/mat4x4.hpp>
+	<glm/vec4.hpp>
+	<glm/gtc/matrix_transform.hpp>
+
+1727266428 source:c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\src\textrendering.cpp
+	<string>
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	<glm/mat4x4.hpp>
+	<glm/vec4.hpp>
+	"utils.h"
+	"dejavufont.h"
+
+1727266428 c:\users\gabri\desktop\fcg\lab2\laboratorio_2_codigo_fonte_copia\laboratorio_2_codigo_fonte\include\dejavufont.h
+	<stddef.h>
+	<stdint.h>
+
+1727266428 source:c:\users\gabri\desktop\fcg\nova pasta\src\glad.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<glad/glad.h>
+	<windows.h>
+	<dlfcn.h>
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glad\glad.h
+	<windows.h>
+	<stddef.h>
+	<KHR/khrplatform.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\khr\khrplatform.h
+	<sys/cdefs.h>
+	<stdint.h>
+	<inttypes.h>
+	<stdint.h>
+
+1731969363 source:c:\users\gabri\desktop\fcg\nova pasta\src\main.cpp
+	<cmath>
+	<cstdio>
+	<cstdlib>
+	<map>
+	<string>
+	<limits>
+	<fstream>
+	<sstream>
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	<glm/mat4x4.hpp>
+	<glm/vec4.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"utils.h"
+	"matrices.h"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glfw\glfw3.h
+	<stddef.h>
+	<stdint.h>
+	<vulkan/vulkan.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GLES2/gl2.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl3.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl31.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl32.h>
+	<GLES2/gl2ext.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl3ext.h>
+	<GL/glcorearb.h>
+	<GL/glext.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+	<OpenGL/gl.h>
+	<GL/gl.h>
+	<GL/glext.h>
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\mat4x4.hpp
+	"./ext/matrix_double4x4.hpp"
+	"./ext/matrix_double4x4_precision.hpp"
+	"./ext/matrix_float4x4.hpp"
+	"./ext/matrix_float4x4_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double4x4.hpp
+	"../detail/type_mat4x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat4x4.hpp
+	"type_vec4.hpp"
+	<limits>
+	<cstddef>
+	"type_mat4x4.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_vec4.hpp
+	"qualifier.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec4.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\qualifier.hpp
+	"setup.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\setup.hpp
+	<cassert>
+	<cstddef>
+	"../simd/platform.h"
+	<cstdint>
+	<type_traits>
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\simd\platform.h
+	<cuda.h>
+	<immintrin.h>
+	<immintrin.h>
+	<popcntintrin.h>
+	<nmmintrin.h>
+	<smmintrin.h>
+	<tmmintrin.h>
+	<pmmintrin.h>
+	<emmintrin.h>
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\_swizzle.hpp
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\_swizzle_func.hpp
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_vec4.inl
+	"compute_vector_relational.hpp"
+	"type_vec4_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\compute_vector_relational.hpp
+	"setup.hpp"
+	<limits>
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_vec4_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat4x4.inl
+	"../matrix.hpp"
+	"type_mat4x4_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\matrix.hpp
+	"detail/qualifier.hpp"
+	"detail/setup.hpp"
+	"vec2.hpp"
+	"vec3.hpp"
+	"vec4.hpp"
+	"mat2x2.hpp"
+	"mat2x3.hpp"
+	"mat2x4.hpp"
+	"mat3x2.hpp"
+	"mat3x3.hpp"
+	"mat3x4.hpp"
+	"mat4x2.hpp"
+	"mat4x3.hpp"
+	"mat4x4.hpp"
+	"detail/func_matrix.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\vec2.hpp
+	"./ext/vector_bool2.hpp"
+	"./ext/vector_bool2_precision.hpp"
+	"./ext/vector_float2.hpp"
+	"./ext/vector_float2_precision.hpp"
+	"./ext/vector_double2.hpp"
+	"./ext/vector_double2_precision.hpp"
+	"./ext/vector_int2.hpp"
+	"./ext/vector_int2_precision.hpp"
+	"./ext/vector_uint2.hpp"
+	"./ext/vector_uint2_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_bool2.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_vec2.hpp
+	"qualifier.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec2.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_vec2.inl
+	"./compute_vector_relational.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_bool2_precision.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_float2.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_float2_precision.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_double2.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_double2_precision.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_int2.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_int2_precision.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_uint2.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_uint2_precision.hpp
+	"../detail/type_vec2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\vec3.hpp
+	"./ext/vector_bool3.hpp"
+	"./ext/vector_bool3_precision.hpp"
+	"./ext/vector_float3.hpp"
+	"./ext/vector_float3_precision.hpp"
+	"./ext/vector_double3.hpp"
+	"./ext/vector_double3_precision.hpp"
+	"./ext/vector_int3.hpp"
+	"./ext/vector_int3_precision.hpp"
+	"./ext/vector_uint3.hpp"
+	"./ext/vector_uint3_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_bool3.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_vec3.hpp
+	"qualifier.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec3.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_vec3.inl
+	"compute_vector_relational.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_bool3_precision.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_float3.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_float3_precision.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_double3.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_double3_precision.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_int3.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_int3_precision.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_uint3.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_uint3_precision.hpp
+	"../detail/type_vec3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\vec4.hpp
+	"./ext/vector_bool4.hpp"
+	"./ext/vector_bool4_precision.hpp"
+	"./ext/vector_float4.hpp"
+	"./ext/vector_float4_precision.hpp"
+	"./ext/vector_double4.hpp"
+	"./ext/vector_double4_precision.hpp"
+	"./ext/vector_int4.hpp"
+	"./ext/vector_int4_precision.hpp"
+	"./ext/vector_uint4.hpp"
+	"./ext/vector_uint4_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_bool4.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_bool4_precision.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_float4.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_float4_precision.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_double4.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_double4_precision.hpp
+	"../detail/setup.hpp"
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_int4.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_int4_precision.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_uint4.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_uint4_precision.hpp
+	"../detail/type_vec4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\mat2x2.hpp
+	"./ext/matrix_double2x2.hpp"
+	"./ext/matrix_double2x2_precision.hpp"
+	"./ext/matrix_float2x2.hpp"
+	"./ext/matrix_float2x2_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double2x2.hpp
+	"../detail/type_mat2x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat2x2.hpp
+	"type_vec2.hpp"
+	<limits>
+	<cstddef>
+	"type_mat2x2.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat2x2.inl
+	"../matrix.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double2x2_precision.hpp
+	"../detail/type_mat2x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float2x2.hpp
+	"../detail/type_mat2x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float2x2_precision.hpp
+	"../detail/type_mat2x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\mat2x3.hpp
+	"./ext/matrix_double2x3.hpp"
+	"./ext/matrix_double2x3_precision.hpp"
+	"./ext/matrix_float2x3.hpp"
+	"./ext/matrix_float2x3_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double2x3.hpp
+	"../detail/type_mat2x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat2x3.hpp
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	<limits>
+	<cstddef>
+	"type_mat2x3.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat2x3.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double2x3_precision.hpp
+	"../detail/type_mat2x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float2x3.hpp
+	"../detail/type_mat2x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float2x3_precision.hpp
+	"../detail/type_mat2x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\mat2x4.hpp
+	"./ext/matrix_double2x4.hpp"
+	"./ext/matrix_double2x4_precision.hpp"
+	"./ext/matrix_float2x4.hpp"
+	"./ext/matrix_float2x4_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double2x4.hpp
+	"../detail/type_mat2x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat2x4.hpp
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	<limits>
+	<cstddef>
+	"type_mat2x4.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat2x4.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double2x4_precision.hpp
+	"../detail/type_mat2x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float2x4.hpp
+	"../detail/type_mat2x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float2x4_precision.hpp
+	"../detail/type_mat2x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\mat3x2.hpp
+	"./ext/matrix_double3x2.hpp"
+	"./ext/matrix_double3x2_precision.hpp"
+	"./ext/matrix_float3x2.hpp"
+	"./ext/matrix_float3x2_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double3x2.hpp
+	"../detail/type_mat3x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat3x2.hpp
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	<limits>
+	<cstddef>
+	"type_mat3x2.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat3x2.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double3x2_precision.hpp
+	"../detail/type_mat3x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float3x2.hpp
+	"../detail/type_mat3x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float3x2_precision.hpp
+	"../detail/type_mat3x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\mat3x3.hpp
+	"./ext/matrix_double3x3.hpp"
+	"./ext/matrix_double3x3_precision.hpp"
+	"./ext/matrix_float3x3.hpp"
+	"./ext/matrix_float3x3_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double3x3.hpp
+	"../detail/type_mat3x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat3x3.hpp
+	"type_vec3.hpp"
+	<limits>
+	<cstddef>
+	"type_mat3x3.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat3x3.inl
+	"../matrix.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double3x3_precision.hpp
+	"../detail/type_mat3x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float3x3.hpp
+	"../detail/type_mat3x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float3x3_precision.hpp
+	"../detail/type_mat3x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\mat3x4.hpp
+	"./ext/matrix_double3x4.hpp"
+	"./ext/matrix_double3x4_precision.hpp"
+	"./ext/matrix_float3x4.hpp"
+	"./ext/matrix_float3x4_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double3x4.hpp
+	"../detail/type_mat3x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat3x4.hpp
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	<limits>
+	<cstddef>
+	"type_mat3x4.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat3x4.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double3x4_precision.hpp
+	"../detail/type_mat3x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float3x4.hpp
+	"../detail/type_mat3x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float3x4_precision.hpp
+	"../detail/type_mat3x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\mat4x2.hpp
+	"./ext/matrix_double4x2.hpp"
+	"./ext/matrix_double4x2_precision.hpp"
+	"./ext/matrix_float4x2.hpp"
+	"./ext/matrix_float4x2_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double4x2.hpp
+	"../detail/type_mat4x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat4x2.hpp
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	<limits>
+	<cstddef>
+	"type_mat4x2.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat4x2.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double4x2_precision.hpp
+	"../detail/type_mat4x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float4x2.hpp
+	"../detail/type_mat4x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float4x2_precision.hpp
+	"../detail/type_mat2x2.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\mat4x3.hpp
+	"./ext/matrix_double4x3.hpp"
+	"./ext/matrix_double4x3_precision.hpp"
+	"./ext/matrix_float4x3.hpp"
+	"./ext/matrix_float4x3_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double4x3.hpp
+	"../detail/type_mat4x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat4x3.hpp
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	<limits>
+	<cstddef>
+	"type_mat4x3.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat4x3.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double4x3_precision.hpp
+	"../detail/type_mat4x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float4x3.hpp
+	"../detail/type_mat4x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float4x3_precision.hpp
+	"../detail/type_mat4x3.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\func_matrix.inl
+	"../geometric.hpp"
+	<limits>
+	"func_matrix_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\geometric.hpp
+	"detail/type_vec3.hpp"
+	"detail/func_geometric.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\func_geometric.inl
+	"../exponential.hpp"
+	"../common.hpp"
+	"func_geometric_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\exponential.hpp
+	"detail/type_vec1.hpp"
+	"detail/type_vec2.hpp"
+	"detail/type_vec3.hpp"
+	"detail/type_vec4.hpp"
+	<cmath>
+	"detail/func_exponential.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_vec1.hpp
+	"qualifier.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec1.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_vec1.inl
+	"./compute_vector_relational.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\func_exponential.inl
+	"../vector_relational.hpp"
+	"_vectorize.hpp"
+	<limits>
+	<cmath>
+	<cassert>
+	"func_exponential_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\vector_relational.hpp
+	"detail/qualifier.hpp"
+	"detail/setup.hpp"
+	"detail/func_vector_relational.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\func_vector_relational.inl
+	"func_vector_relational_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\func_vector_relational_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\_vectorize.hpp
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\func_exponential_simd.inl
+	"../simd/exponential.h"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\simd\exponential.h
+	"platform.h"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\common.hpp
+	"detail/qualifier.hpp"
+	"detail/_fixes.hpp"
+	"detail/func_common.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\_fixes.hpp
+	<cmath>
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\func_common.inl
+	"../vector_relational.hpp"
+	"compute_common.hpp"
+	"type_vec1.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"_vectorize.hpp"
+	<limits>
+	"func_common_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\compute_common.hpp
+	"setup.hpp"
+	<limits>
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\func_common_simd.inl
+	"../simd/common.h"
+	<immintrin.h>
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\simd\common.h
+	"platform.h"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\func_geometric_simd.inl
+	"../simd/geometric.h"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\simd\geometric.h
+	"common.h"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\func_matrix_simd.inl
+	"type_mat4x4.hpp"
+	"../geometric.hpp"
+	"../simd/matrix.h"
+	<cstring>
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\simd\matrix.h
+	"geometric.h"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_mat4x4_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_double4x4_precision.hpp
+	"../detail/type_mat4x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float4x4.hpp
+	"../detail/type_mat4x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_float4x4_precision.hpp
+	"../detail/type_mat4x4.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\gtc\type_ptr.hpp
+	"../gtc/quaternion.hpp"
+	"../gtc/vec1.hpp"
+	"../vec2.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"../mat2x2.hpp"
+	"../mat2x3.hpp"
+	"../mat2x4.hpp"
+	"../mat3x2.hpp"
+	"../mat3x3.hpp"
+	"../mat3x4.hpp"
+	"../mat4x2.hpp"
+	"../mat4x3.hpp"
+	"../mat4x4.hpp"
+	<cstring>
+	"type_ptr.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\gtc\quaternion.hpp
+	"../gtc/constants.hpp"
+	"../gtc/matrix_transform.hpp"
+	"../ext/vector_relational.hpp"
+	"../ext/quaternion_common.hpp"
+	"../ext/quaternion_float.hpp"
+	"../ext/quaternion_float_precision.hpp"
+	"../ext/quaternion_double.hpp"
+	"../ext/quaternion_double_precision.hpp"
+	"../ext/quaternion_relational.hpp"
+	"../ext/quaternion_geometric.hpp"
+	"../ext/quaternion_trigonometric.hpp"
+	"../ext/quaternion_transform.hpp"
+	"../detail/type_mat3x3.hpp"
+	"../detail/type_mat4x4.hpp"
+	"../detail/type_vec3.hpp"
+	"../detail/type_vec4.hpp"
+	"quaternion.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\gtc\constants.hpp
+	"../ext/scalar_constants.hpp"
+	"constants.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\scalar_constants.hpp
+	"../detail/setup.hpp"
+	"scalar_constants.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\scalar_constants.inl
+	<limits>
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\gtc\constants.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\gtc\matrix_transform.hpp
+	"../mat4x4.hpp"
+	"../vec2.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"../ext/matrix_projection.hpp"
+	"../ext/matrix_clip_space.hpp"
+	"../ext/matrix_transform.hpp"
+	"matrix_transform.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_projection.hpp
+	"../gtc/constants.hpp"
+	"../geometric.hpp"
+	"../trigonometric.hpp"
+	"../matrix.hpp"
+	"matrix_projection.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\trigonometric.hpp
+	"detail/setup.hpp"
+	"detail/qualifier.hpp"
+	"detail/func_trigonometric.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\func_trigonometric.inl
+	"_vectorize.hpp"
+	<cmath>
+	<limits>
+	"func_trigonometric_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\func_trigonometric_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_projection.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_clip_space.hpp
+	"../ext/scalar_constants.hpp"
+	"../geometric.hpp"
+	"../trigonometric.hpp"
+	"matrix_clip_space.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_clip_space.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_transform.hpp
+	"../gtc/constants.hpp"
+	"../geometric.hpp"
+	"../trigonometric.hpp"
+	"../matrix.hpp"
+	"matrix_transform.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\matrix_transform.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\gtc\matrix_transform.inl
+	"../geometric.hpp"
+	"../trigonometric.hpp"
+	"../matrix.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_relational.hpp
+	"../detail/qualifier.hpp"
+	"vector_relational.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_relational.inl
+	"../vector_relational.hpp"
+	"../common.hpp"
+	"../detail/qualifier.hpp"
+	"../detail/type_float.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_float.hpp
+	"setup.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_common.hpp
+	"../ext/scalar_constants.hpp"
+	"../ext/quaternion_geometric.hpp"
+	"../common.hpp"
+	"../trigonometric.hpp"
+	"../exponential.hpp"
+	<limits>
+	"quaternion_common.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_geometric.hpp
+	"../geometric.hpp"
+	"../exponential.hpp"
+	"../ext/vector_relational.hpp"
+	"quaternion_geometric.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_geometric.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_common.inl
+	"quaternion_common_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_common_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_float.hpp
+	"../detail/type_quat.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_quat.hpp
+	"../detail/type_mat3x3.hpp"
+	"../detail/type_mat4x4.hpp"
+	"../detail/type_vec3.hpp"
+	"../detail/type_vec4.hpp"
+	"../ext/vector_relational.hpp"
+	"../ext/quaternion_relational.hpp"
+	"../gtc/constants.hpp"
+	"../gtc/matrix_transform.hpp"
+	"type_quat.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_relational.hpp
+	"../vector_relational.hpp"
+	"quaternion_relational.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_relational.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_quat.inl
+	"../trigonometric.hpp"
+	"../exponential.hpp"
+	"../ext/quaternion_geometric.hpp"
+	<limits>
+	"type_quat_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\detail\type_quat_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_float_precision.hpp
+	"../detail/type_quat.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_double.hpp
+	"../detail/type_quat.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_double_precision.hpp
+	"../detail/type_quat.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_trigonometric.hpp
+	"../trigonometric.hpp"
+	"../exponential.hpp"
+	"scalar_constants.hpp"
+	"vector_relational.hpp"
+	<limits>
+	"quaternion_trigonometric.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_trigonometric.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_transform.hpp
+	"../common.hpp"
+	"../trigonometric.hpp"
+	"../geometric.hpp"
+	"quaternion_transform.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\quaternion_transform.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\gtc\quaternion.inl
+	"../trigonometric.hpp"
+	"../geometric.hpp"
+	"../exponential.hpp"
+	"epsilon.hpp"
+	<limits>
+	"quaternion_simd.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\gtc\epsilon.hpp
+	"../detail/setup.hpp"
+	"../detail/qualifier.hpp"
+	"epsilon.inl"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\gtc\epsilon.inl
+	"../vector_relational.hpp"
+	"../common.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\gtc\quaternion_simd.inl
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\gtc\vec1.hpp
+	"../ext/vector_bool1.hpp"
+	"../ext/vector_bool1_precision.hpp"
+	"../ext/vector_float1.hpp"
+	"../ext/vector_float1_precision.hpp"
+	"../ext/vector_double1.hpp"
+	"../ext/vector_double1_precision.hpp"
+	"../ext/vector_int1.hpp"
+	"../ext/vector_int1_precision.hpp"
+	"../ext/vector_uint1.hpp"
+	"../ext/vector_uint1_precision.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_bool1.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_bool1_precision.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_float1.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_float1_precision.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_double1.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_double1_precision.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_int1.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_int1_precision.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_uint1.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\ext\vector_uint1_precision.hpp
+	"../detail/type_vec1.hpp"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\glm\gtc\type_ptr.inl
+	<cstring>
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\utils.h
+	<cstdio>
+
+1731964981 c:\users\gabri\desktop\fcg\nova pasta\include\matrices.h
+	<cstdio>
+	<cstdlib>
+	<glm/mat4x4.hpp>
+	<glm/vec4.hpp>
+	<glm/gtc/matrix_transform.hpp>
+
+1727266428 source:c:\users\gabri\desktop\fcg\nova pasta\src\textrendering.cpp
+	<string>
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	<glm/mat4x4.hpp>
+	<glm/vec4.hpp>
+	"utils.h"
+	"dejavufont.h"
+
+1727266428 c:\users\gabri\desktop\fcg\nova pasta\include\dejavufont.h
+	<stddef.h>
+	<stdint.h>
 
