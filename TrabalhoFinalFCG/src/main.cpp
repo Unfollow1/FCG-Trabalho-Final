@@ -76,6 +76,9 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 void CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
 void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 
+// Menu inicial
+void DesenharMenu(GLFWwindow* window);
+
 // Definimos uma estrutura que armazenará dados necessários para renderizar
 // cada objeto da cena virtual.
 struct SceneObject
@@ -131,6 +134,11 @@ bool tecla_D_pressionada = false;
 bool tecla_W_pressionada = false;
 
 double g_LastCursorPosX, g_LastCursorPosY;
+
+bool g_MenuAtivo = true;    // Estado do menu: ativo ou não
+bool g_DescricaoAtiva = false; // Se o texto da descrição está sendo mostrado
+
+
 int main()
 {
     // Inicializamos a biblioteca GLFW, utilizada para criar uma janela do
@@ -236,6 +244,12 @@ int main()
     float g_CameraAlturaFixa = 1.0f; // Altura fixa para a movimentação
 
     while (!glfwWindowShouldClose(window))
+    {
+            if (g_MenuAtivo)
+    {
+        DesenharMenu(window); // Renderiza o menu
+    }
+     else
     {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -484,6 +498,7 @@ int main()
         // Imprimimos na tela informação sobre o número de quadros renderizados
         // por segundo (frames per second).
         TextRendering_ShowFramesPerSecond(window);
+        }
 
         // O framebuffer onde OpenGL executa as operações de renderização não
         // é o mesmo que está sendo mostrado para o usuário, caso contrário
@@ -964,19 +979,33 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
-        // Se o usuário pressionou o botão esquerdo do mouse, guardamos a
-        // posição atual do cursor nas variáveis g_LastCursorPosX e
-        // g_LastCursorPosY.  Também, setamos a variável
-        // g_LeftMouseButtonPressed como true, para saber que o usuário está
-        // com o botão esquerdo pressionado.
-        glfwGetCursorPos(window, &g_LastCursorPosX, &g_LastCursorPosY);
-        g_LeftMouseButtonPressed = true;
-    }
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
-    {
-        // Quando o usuário soltar o botão esquerdo do mouse, atualizamos a
-        // variável abaixo para false.
-        g_LeftMouseButtonPressed = false;
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+
+        int width, height;
+        glfwGetWindowSize(window, &width, &height);
+
+        // Converte coordenadas da janela para coordenadas de tela (-1 a 1)
+        float x_normalizado = (2.0f * xpos) / width - 1.0f;
+        float y_normalizado = 1.0f - (2.0f * ypos) / height;
+
+        if (g_MenuAtivo)
+        {
+            // Verifica clique em "Jogar"
+            if (x_normalizado >= -0.1f && x_normalizado <= 0.2f &&
+                y_normalizado >= 0.05f && y_normalizado <= 0.15f)
+            {
+                g_MenuAtivo = false; // Sai do menu
+                g_DescricaoAtiva = false;
+            }
+
+            // Verifica clique em "Descricao"
+            if (x_normalizado >= -0.1f && x_normalizado <= 0.4f &&
+                y_normalizado >= -0.15f && y_normalizado <= -0.05f)
+            {
+                g_DescricaoAtiva = true;
+            }
+        }
     }
 }
 
@@ -1297,4 +1326,30 @@ void TextRendering_ShowFramesPerSecond(GLFWwindow* window)
 
 // set makeprg=cd\ ..\ &&\ make\ run\ >/dev/null
 // vim: set spell spelllang=pt_br :
+
+void DesenharMenu(GLFWwindow* window)
+{
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    float escala = 1.5f;
+
+    if (!g_DescricaoAtiva)
+    {
+        // Renderiza as opções do menu se a descrição NÃO estiver ativa
+        TextRendering_PrintString(window, "Jogar", -0.1f, 0.1f, escala);
+        TextRendering_PrintString(window, "Descricao", -0.15f, -0.1f, escala);
+    }
+    else
+    {
+        // Centraliza a descrição no centro da tela
+        float escalaDescricao = 1.0f;
+
+        // Para centralizar, use coordenadas próximas de (0, 0) e ajuste conforme necessário
+        TextRendering_PrintString(window, "Neighborhood eh um simulador de vida onde você explora uma vizinhança, faz compras,", -0.8f, 0.0f, escalaDescricao);
+
+        TextRendering_PrintString(window, "interage com moradores e encara pequenos desafios enquanto gerencia seu tempo.", -0.8f, -0.06f, escalaDescricao);
+    }
+}
+
 
