@@ -76,6 +76,9 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 void CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
 void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 
+// Menu inicial
+void DesenharMenu(GLFWwindow* window);
+
 // Definimos uma estrutura que armazenará dados necessários para renderizar
 // cada objeto da cena virtual.
 struct SceneObject
@@ -118,7 +121,7 @@ float g_CameraDistance = 2.5f; // Distância da câmera para a origem
 bool g_UsePerspectiveProjection = true;
 
 // Variável que controla se o texto informativo será mostrado na tela.
-bool g_ShowInfoText = true;
+bool g_ShowInfoText = false;
 
 // Variáveis que definem um programa de GPU (shaders). Veja função LoadShadersFromFiles().
 GLuint g_GpuProgramID = 0;
@@ -131,6 +134,11 @@ bool tecla_D_pressionada = false;
 bool tecla_W_pressionada = false;
 
 double g_LastCursorPosX, g_LastCursorPosY;
+
+bool g_MenuAtivo = true;    // Estado do menu: ativo ou não
+bool g_DescricaoAtiva = false; // Se o texto da descrição está sendo mostrado
+
+
 int main()
 {
     // Inicializamos a biblioteca GLFW, utilizada para criar uma janela do
@@ -160,7 +168,7 @@ int main()
     // Criamos uma janela do sistema operacional, com 800 colunas e 800 linhas
     // de pixels, e com título "INF01047 ...".
     GLFWwindow* window;
-    window = glfwCreateWindow(800, 800, "INF01047 - 00343479 - Gabriel Arusiewicz Berta", NULL, NULL);
+    window = glfwCreateWindow(800, 800, "Neighborhood", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -233,81 +241,55 @@ int main()
     float delta_t = 0;
     glm::vec4 camera_position_new  = glm::vec4(1.0f,1.0f,2.5f,1.0f);
 
-    // Ficamos em um loop infinito, renderizando, até que o usuário feche a janela
+    float g_CameraAlturaFixa = 1.0f; // Altura fixa para a movimentação
+
     while (!glfwWindowShouldClose(window))
     {
-        // Aqui executamos as operações de renderização
-
-        // Definimos a cor do "fundo" do framebuffer como branco.  Tal cor é
-        // definida como coeficientes RGBA: Red, Green, Blue, Alpha; isto é:
-        // Vermelho, Verde, Azul, Alpha (valor de transparência).
-        // Conversaremos sobre sistemas de cores nas aulas de Modelos de Iluminação.
-        //
-        //           R     G     B     A
+            if (g_MenuAtivo)
+    {
+        DesenharMenu(window); // Renderiza o menu
+    }
+     else
+    {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-        // "Pintamos" todos os pixels do framebuffer com a cor definida acima,
-        // e também resetamos todos os pixels do Z-buffer (depth buffer).
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        // Pedimos para a GPU utilizar o programa de GPU criado acima (contendo
-        // os shaders de vértice e fragmentos).
         glUseProgram(g_GpuProgramID);
-
-        // "Ligamos" o VAO. Informamos que queremos utilizar os atributos de
-        // vértices apontados pelo VAO criado pela função BuildTriangles(). Veja
-        // comentários detalhados dentro da definição de BuildTriangles().
         glBindVertexArray(vertex_array_object_id);
 
-        // Computamos a posição da câmera utilizando coordenadas esféricas.  As
-        // variáveis g_CameraDistance, g_CameraPhi, e g_CameraTheta são
-        // controladas pelo mouse do usuário. Veja as funções CursorPosCallback()
-        // e ScrollCallback().
+
         float r = g_CameraDistance;
-        float y = r*sin(g_CameraPhi);
-        float z = r*cos(g_CameraPhi)*cos(g_CameraTheta);
-        float x = r*cos(g_CameraPhi)*sin(g_CameraTheta);
+        float y = r * sin(g_CameraPhi); // Altura ajustada pelo ângulo phi
+        float z = r * cos(g_CameraPhi) * cos(g_CameraTheta);
+        float x = r * cos(g_CameraPhi) * sin(g_CameraTheta);
 
-        // Abaixo definimos as varáveis que efetivamente definem a câmera virtual.
-        // Veja slides 195-227 e 229-234 do documento Aula_08_Sistemas_de_Coordenadas.pdf.
-        glm::vec4 camera_position_c  = glm::vec4(x,y,z,1.0f); // Ponto "c", centro da câmera
-        glm::vec4 camera_lookat_l    = glm::vec4(0.0f,0.0f,0.0f,1.0f); // Ponto "l", para onde a câmera (look-at) estará sempre olhando
-        glm::vec4 camera_view_vector = camera_lookat_l - camera_position_c; // Vetor "view", sentido para onde a câmera está virada
-        glm::vec4 camera_up_vector   = glm::vec4(0.0f,1.0f,0.0f,0.0f); // Vetor "up" fixado para apontar para o "céu" (eito Y global)
+        glm::vec4 camera_position_c = glm::vec4(x, g_CameraAlturaFixa, z, 1.0f);
+        glm::vec4 camera_lookat_l = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        glm::vec4 camera_view_vector = camera_lookat_l - glm::vec4(x, y, z, 1.0f);
+        glm::vec4 camera_up_vector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 
-
-
-        // formula retirada das perguntas frequentes da cadeira
         // Atualiza delta de tempo
         float current_time = (float)glfwGetTime();
         delta_t = current_time - prev_time;
         prev_time = current_time;
 
-
-
-        glm::vec4 w = -camera_view_vector/norm(camera_view_vector);
+        glm::vec4 w = -camera_view_vector / norm(camera_view_vector);
         glm::vec4 u = crossproduct(camera_up_vector, w);
 
-
-        // implementação retirada das perguntas frequetnes da cadeira
-        // Realiza movimentação de objetos
+        // movimentação
         if (tecla_D_pressionada)
-            // Movimenta câmera para direita
             camera_position_new += u * speed * delta_t;
 
         if (tecla_S_pressionada)
-            // Movimenta câmera para tras
             camera_position_new += w * speed * delta_t;
 
         if (tecla_A_pressionada)
-            // Movimenta câmera para esquerda
             camera_position_new += -u * speed * delta_t;
 
         if (tecla_W_pressionada)
-            // Movimenta câmera para frente
             camera_position_new += -w * speed * delta_t;
 
-
+        // Mantém a altura fixa na movimentação
+        camera_position_new.y = g_CameraAlturaFixa;
 
 
         // Computamos a matriz "View" utilizando os parâmetros da câmera para
@@ -516,6 +498,7 @@ int main()
         // Imprimimos na tela informação sobre o número de quadros renderizados
         // por segundo (frames per second).
         TextRendering_ShowFramesPerSecond(window);
+        }
 
         // O framebuffer onde OpenGL executa as operações de renderização não
         // é o mesmo que está sendo mostrado para o usuário, caso contrário
@@ -996,19 +979,33 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
-        // Se o usuário pressionou o botão esquerdo do mouse, guardamos a
-        // posição atual do cursor nas variáveis g_LastCursorPosX e
-        // g_LastCursorPosY.  Também, setamos a variável
-        // g_LeftMouseButtonPressed como true, para saber que o usuário está
-        // com o botão esquerdo pressionado.
-        glfwGetCursorPos(window, &g_LastCursorPosX, &g_LastCursorPosY);
-        g_LeftMouseButtonPressed = true;
-    }
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
-    {
-        // Quando o usuário soltar o botão esquerdo do mouse, atualizamos a
-        // variável abaixo para false.
-        g_LeftMouseButtonPressed = false;
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+
+        int width, height;
+        glfwGetWindowSize(window, &width, &height);
+
+        // Converte coordenadas da janela para coordenadas de tela (-1 a 1)
+        float x_normalizado = (2.0f * xpos) / width - 1.0f;
+        float y_normalizado = 1.0f - (2.0f * ypos) / height;
+
+        if (g_MenuAtivo)
+        {
+            // Verifica clique em "Jogar"
+            if (x_normalizado >= -0.1f && x_normalizado <= 0.2f &&
+                y_normalizado >= 0.05f && y_normalizado <= 0.15f)
+            {
+                g_MenuAtivo = false; // Sai do menu
+                g_DescricaoAtiva = false;
+            }
+
+            // Verifica clique em "Descricao"
+            if (x_normalizado >= -0.1f && x_normalizado <= 0.4f &&
+                y_normalizado >= -0.15f && y_normalizado <= -0.05f)
+            {
+                g_DescricaoAtiva = true;
+            }
+        }
     }
 }
 
@@ -1329,4 +1326,30 @@ void TextRendering_ShowFramesPerSecond(GLFWwindow* window)
 
 // set makeprg=cd\ ..\ &&\ make\ run\ >/dev/null
 // vim: set spell spelllang=pt_br :
+
+void DesenharMenu(GLFWwindow* window)
+{
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    float escala = 1.5f;
+
+    if (!g_DescricaoAtiva)
+    {
+        // Renderiza as opções do menu se a descrição NÃO estiver ativa
+        TextRendering_PrintString(window, "Jogar", -0.1f, 0.1f, escala);
+        TextRendering_PrintString(window, "Descricao", -0.15f, -0.1f, escala);
+    }
+    else
+    {
+        // Centraliza a descrição no centro da tela
+        float escalaDescricao = 1.0f;
+
+        // Para centralizar, use coordenadas próximas de (0, 0) e ajuste conforme necessário
+        TextRendering_PrintString(window, "Neighborhood eh um simulador de vida onde você explora uma vizinhança, faz compras,", -0.8f, 0.0f, escalaDescricao);
+
+        TextRendering_PrintString(window, "interage com moradores e encara pequenos desafios enquanto gerencia seu tempo.", -0.8f, -0.06f, escalaDescricao);
+    }
+}
+
 
