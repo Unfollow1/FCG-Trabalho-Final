@@ -118,7 +118,7 @@ float g_CameraDistance = 2.5f; // Distância da câmera para a origem
 bool g_UsePerspectiveProjection = true;
 
 // Variável que controla se o texto informativo será mostrado na tela.
-bool g_ShowInfoText = true;
+bool g_ShowInfoText = false;
 
 // Variáveis que definem um programa de GPU (shaders). Veja função LoadShadersFromFiles().
 GLuint g_GpuProgramID = 0;
@@ -160,7 +160,7 @@ int main()
     // Criamos uma janela do sistema operacional, com 800 colunas e 800 linhas
     // de pixels, e com título "INF01047 ...".
     GLFWwindow* window;
-    window = glfwCreateWindow(800, 800, "INF01047 - 00343479 - Gabriel Arusiewicz Berta", NULL, NULL);
+    window = glfwCreateWindow(800, 800, "Neighborhood", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
