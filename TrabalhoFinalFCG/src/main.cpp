@@ -18,6 +18,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <ctime>
 
 // Headers abaixo são específicos de C++
 #include <map>
@@ -152,6 +153,10 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 void CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
 void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 
+/// funcoes adicionadas
+void SortearItens(int quantidade);
+void DrawShoppingList(GLFWwindow* window);
+
 // Definimos uma estrutura que armazenará dados necessários para renderizar
 // cada objeto da cena virtual.
 struct SceneObject
@@ -235,14 +240,65 @@ bool tecla_W_pressionada = false;
 bool tecla_S_pressionada = false;
 bool tecla_D_pressionada = false;
 bool tecla_A_pressionada = false;
+bool tecla_E_pressionada = false;
+
+bool bunny_picked = false;  // Para controlar se o coelho já foi pego
 
 float g_CameraAlturaFixa = 1.0f;
+
+std::map<std::string, glm::mat4> g_object_matrices;
+int g_object_highlighted = -1;
+
+std::vector<std::string> todos_itens = {
+    "Pao frances",
+    "baguete"
+    "queijo",
+    "presunto",
+    "ovo",
+    "manteiga",
+    "alface",
+    "tomate",
+    "cebola",
+    "pepino",
+    "pimentao",
+    "mostarda",
+    "maionese",
+    "bacon",
+    "azeitonas"
+};
+
+std::vector<std::string> itens_para_comprar;
+
+std::vector<bool> itens_pegos;
+
+/// Destacar objeto
+
+bool RayOBBIntersection(
+    glm::vec4 ray_origin,    // Ponto de origem do raio
+    glm::vec4 ray_direction, // Direção do raio (normalizado)
+    glm::vec4 box_center,    // Centro da box do objeto
+    glm::vec4 box_extent,    // Metade das dimensões da box
+    glm::mat4 box_rotation   // Matriz de rotação da box
+);
+
+int GetObjectUnderCrosshair(
+    glm::vec4 camera_position,
+    glm::vec4 camera_view,
+    std::map<std::string, SceneObject>& virtual_scene,
+    std::map<std::string, glm::mat4>& object_matrices
+);
 
 int main(int argc, char* argv[])
 {
     // Inicializamos a biblioteca GLFW, utilizada para criar uma janela do
     // sistema operacional, onde poderemos renderizar com OpenGL.
     int success = glfwInit();
+
+    // Inicializa o gerador de números aleatórios
+    srand(time(NULL));
+    // Sorteia 4 itens para comprar
+    SortearItens(4);
+
     if (!success)
     {
         fprintf(stderr, "ERROR: glfwInit() failed.\n");
@@ -525,11 +581,56 @@ int main(int argc, char* argv[])
         DrawVirtualObject("the_sphere");
 
         // Desenhamos o modelo do coelho
-        model = Matrix_Translate(1.0f,0.0f,0.0f)
-              * Matrix_Rotate_X(g_AngleX + (float)glfwGetTime() * 0.1f);
-        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, BUNNY);
-        DrawVirtualObject("the_bunny");
+        if (!bunny_picked)
+        {
+            model = Matrix_Translate(1.0f,0.0f,0.0f)
+            * Matrix_Rotate_X(g_AngleX + (float)glfwGetTime() * 0.1f);
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+            glUniform1i(g_object_id_uniform, BUNNY);
+            DrawVirtualObject("the_bunny");
+        }
+
+        // Salvamos a matriz do coelho para uso no raycasting
+        g_object_matrices["the_bunny"] = model;
+
+        // Verificamos qual objeto está sob o crosshair
+        g_object_highlighted = GetObjectUnderCrosshair(
+            g_camera_position_c,
+            camera_view_vector,
+            g_VirtualScene,
+            g_object_matrices
+        );
+
+        if (g_object_highlighted == BUNNY && tecla_E_pressionada && !bunny_picked)
+        {
+            bunny_picked = true;  // Marca o coelho como pego
+            tecla_E_pressionada = false;  // Reseta o estado da tecla
+        }
+
+        // Se o coelho está sob o crosshair, desenhamos ele novamente com destaque amarelo
+        if (g_object_highlighted == BUNNY && !bunny_picked) {
+            glEnable(GL_STENCIL_TEST);
+            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glStencilMask(0xFF);
+
+            // Transformações geométricas do coelho
+            model = Matrix_Translate(1.0f,0.0f,0.0f)
+                  * Matrix_Scale(1.3f, 1.3f, 1.3f)  // escala que aumentamos o coelho
+                  * Matrix_Rotate_X(g_AngleX + (float)glfwGetTime() * 0.1f);
+
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+            // Ativamos a sobreposição de cor
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), true);
+            glUniform4f(glGetUniformLocation(g_GpuProgramID, "color_override"), 1.0f, 1.0f, 0.0f, 1.0f); // cor que destacamos ele
+
+            DrawVirtualObject("the_bunny");
+
+            // Desativamos a sobreposição de cor para os próximos objetos
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), false);
+            glDisable(GL_STENCIL_TEST);
+        }
 
         // Desenhamos o plano do chão
         model = Matrix_Translate(0.0f,-1.1f,0.0f);
@@ -548,6 +649,8 @@ int main(int argc, char* argv[])
         // por segundo (frames per second).
         TextRendering_ShowFramesPerSecond(window);
 
+        DrawShoppingList(window);
+
         // O framebuffer onde OpenGL executa as operações de renderização não
         // é o mesmo que está sendo mostrado para o usuário, caso contrário
         // seria possível ver artefatos conhecidos como "screen tearing". A
@@ -555,6 +658,7 @@ int main(int argc, char* argv[])
         // tudo que foi renderizado pelas funções acima.
         // Veja o link: https://en.wikipedia.org/w/index.php?title=Multiple_buffering&oldid=793452829#Double_buffering_in_computer_graphics
         glfwSwapBuffers(window);
+
 
         // Verificamos com o sistema operacional se houve alguma interação do
         // usuário (teclado, mouse, ...). Caso positivo, as funções de callback
@@ -569,6 +673,59 @@ int main(int argc, char* argv[])
     // Fim do programa
     return 0;
 }
+
+/// destacar objeto
+bool RayOBBIntersection(glm::vec4 ray_origin, glm::vec4 ray_direction, glm::vec4 box_center, glm::vec4 box_extent, glm::mat4 box_rotation)
+{
+    // Transformamos o raio para o espaço do objeto
+    glm::mat4 box_rotation_inverse = glm::inverse(box_rotation);
+    glm::vec4 r_origin = box_rotation_inverse * (ray_origin - box_center);
+    glm::vec4 r_direction = box_rotation_inverse * ray_direction;
+
+    float tmin = -INFINITY;
+    float tmax = INFINITY;
+
+    for (int i = 0; i < 3; i++) {
+        if (abs(r_direction[i]) < 0.001f) {
+            if (r_origin[i] < -box_extent[i] || r_origin[i] > box_extent[i])
+                return false;
+        }
+        else {
+            float t1 = (-box_extent[i] - r_origin[i]) / r_direction[i];
+            float t2 = (box_extent[i] - r_origin[i]) / r_direction[i];
+
+            if (t1 > t2) std::swap(t1, t2);
+
+            tmin = glm::max(tmin, t1);
+            tmax = glm::min(tmax, t2);
+
+            if (tmin > tmax) return false;
+        }
+    }
+
+    return true;
+}
+
+int GetObjectUnderCrosshair(glm::vec4 camera_position, glm::vec4 camera_view, std::map<std::string, SceneObject>& virtual_scene, std::map<std::string, glm::mat4>& object_matrices)
+{
+    // Direção do raio é a direção da visão da câmera
+    glm::vec4 ray_direction = normalize(camera_view);
+
+    // Testamos interseção com cada objeto da cena
+    for (const auto& obj : virtual_scene) {
+        if (obj.first == "the_bunny") { // Por enquanto só testamos com o coelho
+            glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f); // Ajuste conforme o tamanho do objeto
+
+            if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first])) {
+                return BUNNY; // Retorna o ID do objeto (definido nos #define no início do arquivo)
+            }
+        }
+    }
+    return -1; // Nenhum objeto encontrado
+}
+
+///
 
 // Função que carrega uma imagem para ser utilizada como textura
 void LoadTextureImage(const char* filename)
@@ -1339,6 +1496,13 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
         else if (action == GLFW_RELEASE)
             tecla_D_pressionada = false;
     }
+    if (key == GLFW_KEY_E)
+    {
+        if (action == GLFW_PRESS)
+            tecla_E_pressionada = true;
+        else if (action == GLFW_RELEASE)
+            tecla_E_pressionada = false;
+    }
 }
 
 // Definimos o callback para impressão de erros da GLFW no terminal
@@ -1474,6 +1638,55 @@ void TextRendering_ShowFramesPerSecond(GLFWwindow* window)
 
     TextRendering_PrintString(window, buffer, 1.0f-(numchars + 1)*charwidth, 1.0f-lineheight, 1.0f);
 }
+
+/// funções usadas para sortear itens e imprimi-los na tela
+
+void SortearItens(int quantidade)
+{
+    // Limpa as listas anteriores
+    itens_para_comprar.clear();
+    itens_pegos.clear();
+
+    // Cria uma cópia da lista original para não modificá-la
+    std::vector<std::string> itens_disponiveis = todos_itens;
+
+    // Sorteia 'quantidade' itens
+    for(int i = 0; i < quantidade && !itens_disponiveis.empty(); ++i)
+    {
+        // Gera um índice aleatório
+        int indice = rand() % itens_disponiveis.size();
+
+        // Adiciona o item sorteado à lista de compras
+        itens_para_comprar.push_back(itens_disponiveis[indice]);
+        itens_pegos.push_back(false);  // Marca como não pego ainda
+
+        // Remove o item sorteado da lista de disponíveis
+        itens_disponiveis.erase(itens_disponiveis.begin() + indice);
+    }
+}
+
+void DrawShoppingList(GLFWwindow* window)
+{
+    float char_width = TextRendering_CharWidth(window);
+    float line_height = TextRendering_LineHeight(window);
+
+    // Posição inicial da lista (canto superior direito)
+    float x = 0.6f;  // posição horizontal lista
+    float y = 0.8f;  // posição vertical lista
+
+    // Título da lista
+    TextRendering_PrintString(window, "Lista de Compras:", x, y, 1.0f);
+
+    // Imprime cada item
+    for (size_t i = 0; i < itens_para_comprar.size(); ++i)
+    {
+        std::string prefix = itens_pegos[i] ? "[x] " : "[ ] ";
+        TextRendering_PrintString(window, prefix + itens_para_comprar[i],
+            x, y - ((i+1) * line_height), 1.0f);
+    }
+}
+
+/// #####################################################################################
 
 // Função para debugging: imprime no terminal todas informações de um modelo
 // geométrico carregado de um arquivo ".obj".

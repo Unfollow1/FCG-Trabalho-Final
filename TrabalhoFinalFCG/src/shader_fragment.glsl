@@ -33,6 +33,10 @@ uniform sampler2D TextureImage0;
 uniform sampler2D TextureImage1;
 uniform sampler2D TextureImage2;
 
+// cor branca para objetos destacados
+uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
+uniform bool use_color_override; // Flag para indicar se devemos usar a cor de sobreposição
+
 // O valor de saída ("out") de um Fragment Shader é a cor final do fragmento.
 out vec4 color;
 
@@ -124,21 +128,30 @@ void main()
     // Aplicamos uma iluminação base para as luzes noturnas
     float ambient_light = 0.4; // controle de intesidade das luzes!
 
-    color.rgb = Kd_final * (lambert + ambient_light);
+    if (use_color_override)
+    {
+        color = color_override;
+    }
+    else
+    {
+        // Seu código original de cor aqui
+        color.rgb = Kd_final * (lambert + ambient_light);
 
-    // NOTE: Se você quiser fazer o rendering de objetos transparentes, é
-    // necessário:
-    // 1) Habilitar a operação de "blending" de OpenGL logo antes de realizar o
-    //    desenho dos objetos transparentes, com os comandos abaixo no código C++:
-    //      glEnable(GL_BLEND);
-    //      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    // 2) Realizar o desenho de todos objetos transparentes *após* ter desenhado
-    //    todos os objetos opacos; e
-    // 3) Realizar o desenho de objetos transparentes ordenados de acordo com
-    //    suas distâncias para a câmera (desenhando primeiro objetos
-    //    transparentes que estão mais longe da câmera).
-    // Alpha default = 1 = 100% opaco = 0% transparente
-    color.a = 1;
+
+        // NOTE: Se você quiser fazer o rendering de objetos transparentes, é
+        // necessário:
+        // 1) Habilitar a operação de "blending" de OpenGL logo antes de realizar o
+        //    desenho dos objetos transparentes, com os comandos abaixo no código C++:
+        //      glEnable(GL_BLEND);
+        //      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        // 2) Realizar o desenho de todos objetos transparentes *após* ter desenhado
+        //    todos os objetos opacos; e
+        // 3) Realizar o desenho de objetos transparentes ordenados de acordo com
+        //    suas distâncias para a câmera (desenhando primeiro objetos
+        //    transparentes que estão mais longe da câmera).
+        // Alpha default = 1 = 100% opaco = 0% transparente
+        color.a = 1;
+    }
 
     // Cor final com correção gamma, considerando monitor sRGB.
     // Veja https://en.wikipedia.org/w/index.php?title=Gamma_correction&oldid=751281772#Windows.2C_Mac.2C_sRGB_and_TV.2Fvideo_standard_gammas
