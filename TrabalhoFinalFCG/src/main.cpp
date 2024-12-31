@@ -224,6 +224,20 @@ GLint g_bbox_max_uniform;
 // Número de texturas carregadas pela função LoadTextureImage()
 GLuint g_NumLoadedTextures = 0;
 
+// variaveis globais
+
+glm::vec4 g_camera_position_c  = glm::vec4(0.0f,1.0f,3.5f,1.0f); // Posição inicial da câmera
+float prev_time = (float)glfwGetTime();
+float delta_t;
+
+
+bool tecla_W_pressionada = false;
+bool tecla_S_pressionada = false;
+bool tecla_D_pressionada = false;
+bool tecla_A_pressionada = false;
+
+float g_CameraAlturaFixa = 1.0f;
+
 int main(int argc, char* argv[])
 {
     // Inicializamos a biblioteca GLFW, utilizada para criar uma janela do
@@ -365,15 +379,104 @@ int main(int argc, char* argv[])
         // Veja slides 195-227 e 229-234 do documento Aula_08_Sistemas_de_Coordenadas.pdf.
         glm::vec4 camera_position_c  = glm::vec4(x,y,z,1.0f); // Ponto "c", centro da câmera
         glm::vec4 camera_lookat_l    = glm::vec4(0.0f,0.0f,0.0f,1.0f); // Ponto "l", para onde a câmera (look-at) estará sempre olhando
-        glm::vec4 camera_view_vector = camera_lookat_l - camera_position_c; // Vetor "view", sentido para onde a câmera está virada
-        glm::vec4 camera_up_vector   = glm::vec4(0.0f,1.0f,0.0f,0.0f); // Vetor "up" fixado para apontar para o "céu" (eito Y global)
+        glm::vec4 camera_view_vector = glm::vec4(-x,-y,-z,0.0f); // Vetor "view" - olhando para frente
+        glm::vec4 camera_up_vector = glm::vec4(0.0f,1.0f,0.0f,0.0f); // Vetor "up" fixado para apontar para o "céu" (eito Y global)
 
-        // Computamos a matriz "View" utilizando os parâmetros da câmera para
-        // definir o sistema de coordenadas da câmera.  Veja slides 2-14, 184-190 e 236-242 do documento Aula_08_Sistemas_de_Coordenadas.pdf.
-        glm::mat4 view = Matrix_Camera_View(camera_position_c, camera_view_vector, camera_up_vector);
+        // Matriz view
+        glm::mat4 view = Matrix_Camera_View(g_camera_position_c, camera_view_vector, camera_up_vector);
 
         // Agora computamos a matriz de Projeção.
         glm::mat4 projection;
+
+        // Computamos a posição da câmera utilizando coordenadas esféricas
+        float current_time = (float)glfwGetTime();
+        delta_t = current_time - prev_time;
+        prev_time = current_time;
+
+        // Calculamos os vetores da base da câmera
+        glm::vec4 w = -camera_view_vector / norm(camera_view_vector);
+        glm::vec4 u = crossproduct(camera_up_vector, w);
+
+
+        float speed = 5.0f; // Ajuste de velocidade
+
+        // Movimentação WASD
+        if (tecla_W_pressionada)
+            g_camera_position_c -= w * speed * delta_t;
+        if (tecla_S_pressionada)
+            g_camera_position_c += w * speed * delta_t;
+        if (tecla_A_pressionada)
+            g_camera_position_c -= u * speed * delta_t;
+        if (tecla_D_pressionada)
+            g_camera_position_c += u * speed * delta_t;
+
+        g_camera_position_c.y = g_CameraAlturaFixa;
+
+        ///crosshair("+")
+        glUseProgram(g_GpuProgramID);
+
+        // Salvamos as matrizes atuais para restaurar depois
+        glm::mat4 saved_projection = projection;
+        glm::mat4 saved_view = view;
+
+        // Configuramos uma projeção ortográfica especial para o crosshair
+        glm::mat4 crosshair_projection = Matrix_Orthographic(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+        // View matrix identidade para o crosshair ficar fixo na tela
+        glm::mat4 crosshair_view = Matrix_Identity();
+
+        // Enviamos as novas matrizes para a GPU
+        glUniformMatrix4fv(g_projection_uniform, 1, GL_FALSE, glm::value_ptr(crosshair_projection));
+        glUniformMatrix4fv(g_view_uniform, 1, GL_FALSE, glm::value_ptr(crosshair_view));
+
+        // Configuramos a cor do crosshair para preto
+        glUniform4f(glGetUniformLocation(g_GpuProgramID, "color"), 0.0f, 0.0f, 0.0f, 1.0f);
+
+        // Matriz model é a identidade
+        glm::mat4 model = Matrix_Identity();
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+        // Desabilitamos o teste de profundidade para o crosshair sempre aparecer sobre tudo
+        glDisable(GL_DEPTH_TEST);
+
+        // Definimos os vértices do "+" (duas linhas perpendiculares)
+        float crosshair_vertices[] = {
+            // Linha horizontal
+            -0.02f,  0.0f, 0.0f, 1.0f,
+             0.02f,  0.0f, 0.0f, 1.0f,
+            // Linha vertical
+             0.0f,  -0.02f, 0.0f, 1.0f,
+             0.0f,   0.02f, 0.0f, 1.0f
+        };
+
+        GLuint VBO_crosshair;
+        glGenBuffers(1, &VBO_crosshair);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_crosshair);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(crosshair_vertices), crosshair_vertices, GL_STATIC_DRAW);
+
+        GLuint VAO_crosshair;
+        glGenVertexArrays(1, &VAO_crosshair);
+        glBindVertexArray(VAO_crosshair);
+
+        glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+        glEnableVertexAttribArray(0);
+
+        // Definimos a largura da linha
+        glLineWidth(2.0f);
+
+        // Desenhamos as duas linhas
+        glDrawArrays(GL_LINES, 0, 4);
+
+        // Reabilitamos o teste de profundidade
+        glEnable(GL_DEPTH_TEST);
+
+        // Deletamos os buffers do crosshair
+        glDeleteBuffers(1, &VBO_crosshair);
+        glDeleteVertexArrays(1, &VAO_crosshair);
+
+        // Restauramos as matrizes originais
+        glUniformMatrix4fv(g_projection_uniform, 1, GL_FALSE, glm::value_ptr(saved_projection));
+        glUniformMatrix4fv(g_view_uniform, 1, GL_FALSE, glm::value_ptr(saved_view));
+
 
         // Note que, no sistema de coordenadas da câmera, os planos near e far
         // estão no sentido negativo! Veja slides 176-204 do documento Aula_09_Projecoes.pdf.
@@ -401,7 +504,6 @@ int main(int argc, char* argv[])
             projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
         }
 
-        glm::mat4 model = Matrix_Identity(); // Transformação identidade de modelagem
 
         // Enviamos as matrizes "view" e "projection" para a placa de vídeo
         // (GPU). Veja o arquivo "shader_vertex.glsl", onde estas são
@@ -1011,50 +1113,37 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
-        // Se o usuário pressionou o botão esquerdo do mouse, guardamos a
-        // posição atual do cursor nas variáveis g_LastCursorPosX e
-        // g_LastCursorPosY.  Também, setamos a variável
-        // g_LeftMouseButtonPressed como true, para saber que o usuário está
-        // com o botão esquerdo pressionado.
+        // Se o usuário pressionou o botão esquerdo do mouse
         glfwGetCursorPos(window, &g_LastCursorPosX, &g_LastCursorPosY);
         g_LeftMouseButtonPressed = true;
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
     {
-        // Quando o usuário soltar o botão esquerdo do mouse, atualizamos a
-        // variável abaixo para false.
+        // Quando o usuário soltar o botão esquerdo do mouse
         g_LeftMouseButtonPressed = false;
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
     if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
     {
-        // Se o usuário pressionou o botão esquerdo do mouse, guardamos a
-        // posição atual do cursor nas variáveis g_LastCursorPosX e
-        // g_LastCursorPosY.  Também, setamos a variável
-        // g_RightMouseButtonPressed como true, para saber que o usuário está
-        // com o botão esquerdo pressionado.
+        // Se o usuário pressionou o botão direito do mouse
         glfwGetCursorPos(window, &g_LastCursorPosX, &g_LastCursorPosY);
         g_RightMouseButtonPressed = true;
     }
     if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
     {
-        // Quando o usuário soltar o botão esquerdo do mouse, atualizamos a
-        // variável abaixo para false.
+        // Quando o usuário soltar o botão direito do mouse
         g_RightMouseButtonPressed = false;
     }
     if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS)
     {
-        // Se o usuário pressionou o botão esquerdo do mouse, guardamos a
-        // posição atual do cursor nas variáveis g_LastCursorPosX e
-        // g_LastCursorPosY.  Também, setamos a variável
-        // g_MiddleMouseButtonPressed como true, para saber que o usuário está
-        // com o botão esquerdo pressionado.
+        // Se o usuário pressionou o botão do meio do mouse
         glfwGetCursorPos(window, &g_LastCursorPosX, &g_LastCursorPosY);
         g_MiddleMouseButtonPressed = true;
     }
     if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE)
     {
-        // Quando o usuário soltar o botão esquerdo do mouse, atualizamos a
-        // variável abaixo para false.
+        // Quando o usuário soltar o botão do meio do mouse
         g_MiddleMouseButtonPressed = false;
     }
 }
@@ -1221,6 +1310,34 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
         LoadShadersFromFiles();
         fprintf(stdout,"Shaders recarregados!\n");
         fflush(stdout);
+    }
+    if (key == GLFW_KEY_W)
+    {
+        if (action == GLFW_PRESS)
+            tecla_W_pressionada = true;
+        else if (action == GLFW_RELEASE)
+            tecla_W_pressionada = false;
+    }
+    if (key == GLFW_KEY_S)
+    {
+        if (action == GLFW_PRESS)
+            tecla_S_pressionada = true;
+        else if (action == GLFW_RELEASE)
+            tecla_S_pressionada = false;
+    }
+    if (key == GLFW_KEY_A)
+    {
+        if (action == GLFW_PRESS)
+            tecla_A_pressionada = true;
+        else if (action == GLFW_RELEASE)
+            tecla_A_pressionada = false;
+    }
+    if (key == GLFW_KEY_D)
+    {
+        if (action == GLFW_PRESS)
+            tecla_D_pressionada = true;
+        else if (action == GLFW_RELEASE)
+            tecla_D_pressionada = false;
     }
 }
 
