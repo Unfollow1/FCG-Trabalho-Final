@@ -53,6 +53,7 @@
 // Constantes
 #define VelocidadeBase 5.0f
 #define VelocidadeBike 15.0f
+#define SensibilidadeCamera 0.005f
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
 // arquivo ".obj". Veja https://en.wikipedia.org/wiki/Wavefront_.obj_file .
@@ -1333,8 +1334,8 @@ void CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
         float dy = ypos - g_LastCursorPosY;
 
         // Atualizamos parâmetros da câmera com os deslocamentos
-        g_CameraTheta -= 0.01f*dx;
-        g_CameraPhi   += 0.01f*dy;
+        g_CameraTheta -= SensibilidadeCamera*dx;
+        g_CameraPhi   += SensibilidadeCamera*dy;
 
         // Em coordenadas esféricas, o ângulo phi deve ficar entre -pi/2 e +pi/2.
         float phimax = 3.141592f/2;
