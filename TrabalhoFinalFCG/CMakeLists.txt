@@ -8,6 +8,8 @@
 set(SOURCES
   src/main.cpp
   src/textrendering.cpp
+  src/tiny_obj_loader.cpp
+  src/stb_image.cpp
   src/glad.c
 )
 
