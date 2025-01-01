@@ -49,6 +49,11 @@
 #include "utils.h"
 #include "matrices.h"
 
+
+// Constantes
+#define VelocidadeBase 5.0f
+#define VelocidadeBike 15.0f
+
 // Estrutura que representa um modelo geométrico carregado a partir de um
 // arquivo ".obj". Veja https://en.wikipedia.org/wiki/Wavefront_.obj_file .
 struct ObjModel
@@ -241,6 +246,7 @@ bool tecla_S_pressionada = false;
 bool tecla_D_pressionada = false;
 bool tecla_A_pressionada = false;
 bool tecla_E_pressionada = false;
+bool tecla_B_pressionada = false;
 
 bool bunny_picked = false;  // Para controlar se o coelho já foi pego
 
@@ -453,8 +459,12 @@ int main(int argc, char* argv[])
         glm::vec4 w = -camera_view_vector / norm(camera_view_vector);
         glm::vec4 u = crossproduct(camera_up_vector, w);
 
+        float speed = VelocidadeBase; // Ajuste de velocidade
 
-        float speed = 5.0f; // Ajuste de velocidade
+
+        if (tecla_B_pressionada){
+            speed = VelocidadeBike;
+        }
 
         // Movimentação WASD
         if (tecla_W_pressionada)
@@ -1315,9 +1325,10 @@ void CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
     // parâmetros que definem a posição da câmera dentro da cena virtual.
     // Assim, temos que o usuário consegue controlar a câmera.
 
-    if (g_LeftMouseButtonPressed)
-    {
-        // Deslocamento do cursor do mouse em x e y de coordenadas de tela!
+
+    // renovemos a condicinoal para verificar o mouse esquerdo
+    // assim temos a camera acompanhando os movimentos do mouse
+    // Deslocamento do cursor do mouse em x e y de coordenadas de tela!
         float dx = xpos - g_LastCursorPosX;
         float dy = ypos - g_LastCursorPosY;
 
@@ -1339,7 +1350,8 @@ void CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
         // cursor como sendo a última posição conhecida do cursor.
         g_LastCursorPosX = xpos;
         g_LastCursorPosY = ypos;
-    }
+
+
 
     if (g_RightMouseButtonPressed)
     {
@@ -1502,6 +1514,16 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
             tecla_E_pressionada = true;
         else if (action == GLFW_RELEASE)
             tecla_E_pressionada = false;
+    }
+
+    // basicamente um toggle pra montar e desmontar a bike
+    if (key == GLFW_KEY_B)
+    {
+        if(action == GLFW_PRESS)
+            if(tecla_B_pressionada)
+                tecla_B_pressionada = false;
+            else
+                tecla_B_pressionada = true;
     }
 }
 
