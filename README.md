@@ -14,6 +14,7 @@ Também estamos avaliando a possibilidade de um limite de tempo para a conclusã
   - Controles WASD para movimentação do jogador
   - Câmera em primeira pessoa com altura fixa
   - Mouse controla a rotação da câmera
+  - Bicicleta (tecla B) para mudar a velocidade do personagem
 
 
 2) Sistema de Interação
