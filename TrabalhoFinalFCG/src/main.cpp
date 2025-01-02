@@ -162,6 +162,7 @@ void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 /// funcoes adicionadas
 void SortearItens(int quantidade);
 void DrawShoppingList(GLFWwindow* window);
+void MarcarItemComoPego(int item_id);
 
 // Definimos uma estrutura que armazenará dados necessários para renderizar
 // cada objeto da cena virtual.
@@ -277,6 +278,45 @@ std::vector<std::string> todos_itens = {
 std::vector<std::string> itens_para_comprar;
 
 std::vector<bool> itens_pegos;
+
+        // Para facilitar a identificação dos objetos, criamos um enum com os IDs dos itens.
+
+        enum ItemID {
+            ITEM_PAO_FRANCES = 100,
+            ITEM_BAGUETE     = 101,
+            ITEM_QUEIJO      = 102,
+            ITEM_PRESUNTO    = 103,
+            ITEM_OVO         = 104,
+            ITEM_MANTEIGA    = 105,
+            ITEM_ALFACE      = 106,
+            ITEM_TOMATE      = 107,
+            ITEM_CEBOLA      = 108,
+            ITEM_PEPINO      = 109,
+            ITEM_PIMENTAO    = 110,
+            ITEM_MOSTARDA    = 111,
+            ITEM_MAIONESE    = 112,
+            ITEM_BACON       = 113,
+            ITEM_AZEITONAS   = 114
+        };
+
+        // Mapeamento de IDs para nomes de itens
+        std::map<int, std::string> id_para_nome = {
+            {ITEM_PAO_FRANCES, "Pao frances"},
+            {ITEM_BAGUETE, "Baguete"},
+            {ITEM_QUEIJO, "Queijo"},
+            {ITEM_PRESUNTO, "Presunto"},
+            {ITEM_OVO, "Ovo"},
+            {ITEM_MANTEIGA, "Manteiga"},
+            {ITEM_ALFACE, "Alface"},
+            {ITEM_TOMATE, "Tomate"},
+            {ITEM_CEBOLA, "Cebola"},
+            {ITEM_PEPINO, "Pepino"},
+            {ITEM_PIMENTAO, "Pimentao"},
+            {ITEM_MOSTARDA, "Mostarda"},
+            {ITEM_MAIONESE, "Maionese"},
+            {ITEM_BACON, "Bacon"},
+            {ITEM_AZEITONAS, "Azeitonas"}
+        };
 
 /// Destacar objeto
 
@@ -614,8 +654,20 @@ int main(int argc, char* argv[])
 
         if (g_object_highlighted == BUNNY && tecla_E_pressionada && !bunny_picked)
         {
-            bunny_picked = true;  // Marca o coelho como pego
-            tecla_E_pressionada = false;  // Reseta o estado da tecla
+            bunny_picked = true;
+            tecla_E_pressionada = false;
+            MarcarItemComoPego(ITEM_PRESUNTO);
+
+            // Verifica se o coelho está na lista de compras e marca como pego
+            for (size_t i = 0; i < itens_para_comprar.size(); ++i)
+            {
+                if (itens_para_comprar[i] == "presunto") //  "Leite" como exemplo para o coelho so pra testar
+                {
+                    itens_pegos[i] = true;
+                    printf("Item comprado: %s\n", itens_para_comprar[i].c_str());
+                    break;
+                }
+            }
         }
 
         // Se o coelho está sob o crosshair, desenhamos ele novamente com destaque amarelo
@@ -1706,6 +1758,22 @@ void DrawShoppingList(GLFWwindow* window)
         std::string prefix = itens_pegos[i] ? "[x] " : "[ ] ";
         TextRendering_PrintString(window, prefix + itens_para_comprar[i],
             x, y - ((i+1) * line_height), 1.0f);
+    }
+}
+
+/// Função usada para marcar item como "comprado" na lista
+
+void MarcarItemComoPego(int item_id)
+{
+    std::string nome_item = id_para_nome[item_id];
+    for (size_t i = 0; i < itens_para_comprar.size(); ++i)
+    {
+        if (itens_para_comprar[i] == nome_item)
+        {
+            itens_pegos[i] = true;
+            printf("Item coletado: %s\n", nome_item.c_str());
+            break;
+        }
     }
 }
 
