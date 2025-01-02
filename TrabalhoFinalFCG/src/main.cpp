@@ -236,12 +236,21 @@ GLint g_bbox_max_uniform;
 // Número de texturas carregadas pela função LoadTextureImage()
 GLuint g_NumLoadedTextures = 0;
 
-// variaveis globais
+
+// Variáveis globais que armazenam a última posição do cursor do mouse, para
+// que possamos calcular quanto que o mouse se movimentou entre dois instantes
+// de tempo. Utilizadas no callback CursorPosCallback() abaixo.
+double g_LastCursorPosX, g_LastCursorPosY;
+
+/// variaveis globais
 
 glm::vec4 g_camera_position_c  = glm::vec4(0.0f,1.0f,3.5f,1.0f); // Posição inicial da câmera
 float prev_time = (float)glfwGetTime();
 float delta_t;
 
+float tempo_total = 120.0f;  // 2 minutos
+float tempo_restante = tempo_total;
+bool game_over = false;
 
 bool tecla_W_pressionada = false;
 bool tecla_S_pressionada = false;
@@ -378,6 +387,21 @@ int main(int argc, char* argv[])
         std::exit(EXIT_FAILURE);
     }
 
+
+    /// Desabilita o cursor e o centraliza
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    /// Obtém as dimensões da janela
+    int width, height;
+    glfwGetWindowSize(window, &width, &height);
+
+    /// Inicializa a última posição do cursor no centro da tela para controlar o primeiro movimento de camera
+    g_LastCursorPosX = width/2.0;
+    g_LastCursorPosY = height/2.0;
+
+    /// Define a posição do cursor no centro
+    glfwSetCursorPos(window, g_LastCursorPosX, g_LastCursorPosY);
+
     // Definimos a função de callback que será chamada sempre que o usuário
     // pressionar alguma tecla do teclado ...
     glfwSetKeyCallback(window, KeyCallback);
@@ -496,6 +520,17 @@ int main(int argc, char* argv[])
         delta_t = current_time - prev_time;
         prev_time = current_time;
 
+        // Atualiza o tempo restante
+        if (!game_over)
+        {
+            tempo_restante -= delta_t;
+            if (tempo_restante <= 0.0f)
+            {
+                tempo_restante = 0.0f;
+                game_over = true;
+            }
+        }
+
         // Calculamos os vetores da base da câmera
         glm::vec4 w = -camera_view_vector / norm(camera_view_vector);
         glm::vec4 u = crossproduct(camera_up_vector, w);
@@ -519,71 +554,8 @@ int main(int argc, char* argv[])
 
         g_camera_position_c.y = g_CameraAlturaFixa;
 
-        ///crosshair("+")
-        glUseProgram(g_GpuProgramID);
-
-        // Salvamos as matrizes atuais para restaurar depois
-        glm::mat4 saved_projection = projection;
-        glm::mat4 saved_view = view;
-
-        // Configuramos uma projeção ortográfica especial para o crosshair
-        glm::mat4 crosshair_projection = Matrix_Orthographic(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
-        // View matrix identidade para o crosshair ficar fixo na tela
-        glm::mat4 crosshair_view = Matrix_Identity();
-
-        // Enviamos as novas matrizes para a GPU
-        glUniformMatrix4fv(g_projection_uniform, 1, GL_FALSE, glm::value_ptr(crosshair_projection));
-        glUniformMatrix4fv(g_view_uniform, 1, GL_FALSE, glm::value_ptr(crosshair_view));
-
-        // Configuramos a cor do crosshair para preto
-        glUniform4f(glGetUniformLocation(g_GpuProgramID, "color"), 0.0f, 0.0f, 0.0f, 1.0f);
-
         // Matriz model é a identidade
         glm::mat4 model = Matrix_Identity();
-        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-
-        // Desabilitamos o teste de profundidade para o crosshair sempre aparecer sobre tudo
-        glDisable(GL_DEPTH_TEST);
-
-        // Definimos os vértices do "+" (duas linhas perpendiculares)
-        float crosshair_vertices[] = {
-            // Linha horizontal
-            -0.02f,  0.0f, 0.0f, 1.0f,
-             0.02f,  0.0f, 0.0f, 1.0f,
-            // Linha vertical
-             0.0f,  -0.02f, 0.0f, 1.0f,
-             0.0f,   0.02f, 0.0f, 1.0f
-        };
-
-        GLuint VBO_crosshair;
-        glGenBuffers(1, &VBO_crosshair);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO_crosshair);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(crosshair_vertices), crosshair_vertices, GL_STATIC_DRAW);
-
-        GLuint VAO_crosshair;
-        glGenVertexArrays(1, &VAO_crosshair);
-        glBindVertexArray(VAO_crosshair);
-
-        glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-        glEnableVertexAttribArray(0);
-
-        // Definimos a largura da linha
-        glLineWidth(2.0f);
-
-        // Desenhamos as duas linhas
-        glDrawArrays(GL_LINES, 0, 4);
-
-        // Reabilitamos o teste de profundidade
-        glEnable(GL_DEPTH_TEST);
-
-        // Deletamos os buffers do crosshair
-        glDeleteBuffers(1, &VBO_crosshair);
-        glDeleteVertexArrays(1, &VAO_crosshair);
-
-        // Restauramos as matrizes originais
-        glUniformMatrix4fv(g_projection_uniform, 1, GL_FALSE, glm::value_ptr(saved_projection));
-        glUniformMatrix4fv(g_view_uniform, 1, GL_FALSE, glm::value_ptr(saved_view));
-
 
         // Note que, no sistema de coordenadas da câmera, os planos near e far
         // estão no sentido negativo! Veja slides 176-204 do documento Aula_09_Projecoes.pdf.
@@ -701,6 +673,72 @@ int main(int argc, char* argv[])
         glUniform1i(g_object_id_uniform, PLANE);
         DrawVirtualObject("the_plane");
 
+        ///crosshair("+")
+        glUseProgram(g_GpuProgramID);
+
+        // Salvamos as matrizes atuais para restaurar depois
+        glm::mat4 saved_projection = projection;
+        glm::mat4 saved_view = view;
+
+        // Configuramos uma projeção ortográfica especial para o crosshair
+        glm::mat4 crosshair_projection = Matrix_Orthographic(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+        // View matrix identidade para o crosshair ficar fixo na tela
+        glm::mat4 crosshair_view = Matrix_Identity();
+
+        // Enviamos as novas matrizes para a GPU
+        glUniformMatrix4fv(g_projection_uniform, 1, GL_FALSE, glm::value_ptr(crosshair_projection));
+        glUniformMatrix4fv(g_view_uniform, 1, GL_FALSE, glm::value_ptr(crosshair_view));
+
+        // Configuramos a cor do crosshair para preto
+        glUniform4f(glGetUniformLocation(g_GpuProgramID, "color"), 0.0f, 0.0f, 0.0f, 1.0f);
+
+        glm::mat4 crosshair_model = Matrix_Identity();
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(crosshair_model));
+
+        // Desabilitamos o teste de profundidade para o crosshair sempre aparecer sobre tudo
+        glDisable(GL_DEPTH_TEST);
+
+        // Definimos os vértices do "+" (duas linhas perpendiculares)
+        float crosshair_vertices[] = {
+            // Linha horizontal
+            -0.02f,  0.0f, 0.0f, 1.0f,
+             0.02f,  0.0f, 0.0f, 1.0f,
+            // Linha vertical
+             0.0f,  -0.02f, 0.0f, 1.0f,
+             0.0f,   0.02f, 0.0f, 1.0f
+        };
+
+        GLuint VBO_crosshair;
+        glGenBuffers(1, &VBO_crosshair);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO_crosshair);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(crosshair_vertices), crosshair_vertices, GL_STATIC_DRAW);
+
+        GLuint VAO_crosshair;
+        glGenVertexArrays(1, &VAO_crosshair);
+        glBindVertexArray(VAO_crosshair);
+
+        glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+        glEnableVertexAttribArray(0);
+
+        // Definimos a largura da linha
+        glLineWidth(2.0f);
+
+        // Desenhamos as duas linhas
+        glDrawArrays(GL_LINES, 0, 4);
+
+        // Reabilitamos o teste de profundidade
+        glEnable(GL_DEPTH_TEST);
+
+        // Deletamos os buffers do crosshair
+        glDeleteBuffers(1, &VBO_crosshair);
+        glDeleteVertexArrays(1, &VAO_crosshair);
+
+        // Restauramos as matrizes originais
+        glUniformMatrix4fv(g_projection_uniform, 1, GL_FALSE, glm::value_ptr(saved_projection));
+        glUniformMatrix4fv(g_view_uniform, 1, GL_FALSE, glm::value_ptr(saved_view));
+
+/// ######
+
         // Imprimimos na tela os ângulos de Euler que controlam a rotação do
         // terceiro cubo.
         TextRendering_ShowEulerAngles(window);
@@ -720,8 +758,8 @@ int main(int argc, char* argv[])
         // chamada abaixo faz a troca dos buffers, mostrando para o usuário
         // tudo que foi renderizado pelas funções acima.
         // Veja o link: https://en.wikipedia.org/w/index.php?title=Multiple_buffering&oldid=793452829#Double_buffering_in_computer_graphics
-        glfwSwapBuffers(window);
 
+        glfwSwapBuffers(window);
 
         // Verificamos com o sistema operacional se houve alguma interação do
         // usuário (teclado, mouse, ...). Caso positivo, as funções de callback
@@ -788,7 +826,6 @@ int GetObjectUnderCrosshair(glm::vec4 camera_position, glm::vec4 camera_view, st
     return -1; // Nenhum objeto encontrado
 }
 
-///
 
 // Função que carrega uma imagem para ser utilizada como textura
 void LoadTextureImage(const char* filename)
@@ -1323,11 +1360,6 @@ void FramebufferSizeCallback(GLFWwindow* window, int width, int height)
     g_ScreenRatio = (float)width / height;
 }
 
-// Variáveis globais que armazenam a última posição do cursor do mouse, para
-// que possamos calcular quanto que o mouse se movimentou entre dois instantes
-// de tempo. Utilizadas no callback CursorPosCallback() abaixo.
-double g_LastCursorPosX, g_LastCursorPosY;
-
 // Função callback chamada sempre que o usuário aperta algum dos botões do mouse
 void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
@@ -1336,13 +1368,13 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
         // Se o usuário pressionou o botão esquerdo do mouse
         glfwGetCursorPos(window, &g_LastCursorPosX, &g_LastCursorPosY);
         g_LeftMouseButtonPressed = true;
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+     // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
     {
         // Quando o usuário soltar o botão esquerdo do mouse
         g_LeftMouseButtonPressed = false;
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+     // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
     if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
     {
@@ -1578,6 +1610,38 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
             else
                 tecla_B_pressionada = true;
     }
+
+    if (key == GLFW_KEY_F && action == GLFW_PRESS)
+    {
+        // Verifica se está em tela cheia
+        GLFWmonitor* monitor = glfwGetWindowMonitor(window);
+
+        if (!monitor) // Se não está em tela cheia, coloca em tela cheia
+        {
+            // Obtém o monitor primário
+            monitor = glfwGetPrimaryMonitor();
+
+            // Obtém as informações do modo de vídeo do monitor
+            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+            // Muda para tela cheia
+            glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        }
+        else // Se está em tela cheia, volta para janela
+        {
+            // Define um tamanho padrão para a janela
+            int width = 800;
+            int height = 600;
+
+            // Calcula a posição central na tela
+            const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            int xpos = (mode->width - width) / 2;
+            int ypos = (mode->height - height) / 2;
+
+            // Volta para modo janela
+            glfwSetWindowMonitor(window, nullptr, xpos, ypos, width, height, 0);
+        }
+    }
 }
 
 // Definimos o callback para impressão de erros da GLFW no terminal
@@ -1746,8 +1810,8 @@ void DrawShoppingList(GLFWwindow* window)
     float line_height = TextRendering_LineHeight(window);
 
     // Posição inicial da lista (canto superior direito)
-    float x = 0.6f;  // posição horizontal lista
-    float y = 0.8f;  // posição vertical lista
+    float x = 0.6f; // posicao horizontal da lista e do timmer
+    float y = 0.8f; // posicao vertical da lista e do timmer
 
     // Título da lista
     TextRendering_PrintString(window, "Lista de Compras:", x, y, 1.0f);
@@ -1758,6 +1822,23 @@ void DrawShoppingList(GLFWwindow* window)
         std::string prefix = itens_pegos[i] ? "[x] " : "[ ] ";
         TextRendering_PrintString(window, prefix + itens_para_comprar[i],
             x, y - ((i+1) * line_height), 1.0f);
+    }
+
+    // Desenha o timer logo abaixo da lista
+    int minutos = (int)(tempo_restante / 60.0f);
+    int segundos = (int)(tempo_restante) % 60;
+
+    char buffer[32];
+    snprintf(buffer, 32, "Tempo: %02d:%02d", minutos, segundos);
+
+    // Posiciona o timer uma linha abaixo do último item
+    TextRendering_PrintString(window, buffer,
+        x, y - ((itens_para_comprar.size() + 2) * line_height), 1.0f);
+
+    // Se for game over, mostra a mensagem no centro
+    if (game_over)
+    {
+        TextRendering_PrintString(window, "GAME OVER!", -0.2f, 0.0f, 2.0f);
     }
 }
 
