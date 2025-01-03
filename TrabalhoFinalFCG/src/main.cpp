@@ -455,6 +455,12 @@ int main(int argc, char* argv[])
     ComputeNormals(&planemodel);
     BuildTrianglesAndAddToVirtualScene(&planemodel);
 
+    /// .obj adicionados
+
+    ObjModel mainbuildmodel("../../data/mainbuild.obj");
+    ComputeNormals(&mainbuildmodel);
+    BuildTrianglesAndAddToVirtualScene(&mainbuildmodel);
+
     if ( argc > 1 )
     {
         ObjModel model(argv[1]);
@@ -593,6 +599,15 @@ int main(int argc, char* argv[])
         #define SPHERE 0
         #define BUNNY  1
         #define PLANE  2
+        #define MAINBUILD 3
+
+        /// desenhos adicionados
+
+        model = Matrix_Translate(-1.0f,-1.1f,-3.0f)  // x, y, z (y = -1.1f coloca no mesmo nível do chão)
+        * Matrix_Scale(3.0f, 3.0f, 3.0f);     // aumenta 3x o tamanho em todas as direções
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, MAINBUILD);
+        DrawVirtualObject("the_mainbuild");
 
         // Desenhamos o modelo da esfera
         model = Matrix_Translate(-1.0f,0.0f,0.0f)

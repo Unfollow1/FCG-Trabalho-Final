@@ -22,6 +22,7 @@ uniform mat4 projection;
 #define SPHERE 0
 #define BUNNY  1
 #define PLANE  2
+#define MAINBUILD 3
 uniform int object_id;
 
 // Parâmetros da axis-aligned bounding box (AABB) do modelo
