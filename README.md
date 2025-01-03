@@ -11,28 +11,28 @@ Também estamos avaliando a possibilidade de um limite de tempo para a conclusã
 # Mecânicas Base Implementadas
 
 1) Sistema de Movimentação
-  - Controles WASD para movimentação do jogador
-  - Câmera em primeira pessoa com altura fixa
-  - Mouse controla a rotação da câmera
-  - Bicicleta (tecla B) para mudar a velocidade do personagem
+   - Controles WASD para movimentação do jogador
+   - Câmera em primeira pessoa com altura fixa
+   - Mouse controla a rotação da câmera
+   - Bicicleta tecla [B] para mudar a velocidade do personagem
 
-2) Sistema de Interação
+3) Sistema de Interação
    - Crosshair no centro da tela
    - Highlight em amarelo dos objetos interativos quando apontados
    - Tecla 'E' para interagir com objetos
    - Objetos desaparecem após interação
 
-3) Sistema de Lista de Compras
+4) Sistema de Lista de Compras
    - Sorteio aleatório de 4 entre vários itens possíveis
    - Exibição da lista no canto superior direito
    - Lista com formato de checkbox [ ] para itens não coletados
 
-4) Sistema de Lista de Itens Expandido
+5) Sistema de Lista de Itens Expandido
    - Ampliação para 15 itens possíveis
    - Implementação de IDs únicos para cada item
    - Mapeamento de IDs para nomes dos itens
      
-5) Sistema de Tempo
+6) Sistema de Tempo
    - Implementação de contador regressivo (2 minutos)
    - Display do tempo abaixo da lista de compras
    - Sistema de game over quando o tempo acaba
@@ -40,7 +40,7 @@ Também estamos avaliando a possibilidade de um limite de tempo para a conclusã
   # Bug fix & adaptações
 
   1) Sistema de Câmera e Controle
-     - Implementação de câmera first-person com controle de mouse, sem cursor
+     - Mudança de câmera first-person com controle de mouse, **sem cursor**
      - Tecla [F] para colocar em tela cheia
      - Bug da primeira vez mexendo no mouse a camera ir para um lugar aleatório, resolvido
 
