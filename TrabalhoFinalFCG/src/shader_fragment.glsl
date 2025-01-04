@@ -32,7 +32,7 @@ uniform vec4 bbox_max;
 // Variáveis para acesso das imagens de textura
 uniform sampler2D TextureImage0;
 uniform sampler2D TextureImage1;
-uniform sampler2D TextureImage2;
+//uniform sampler2D TextureImage2;
 
 // Textura exclusiva para a Lua
 uniform sampler2D TexturaLua;
