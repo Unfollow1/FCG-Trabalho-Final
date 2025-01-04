@@ -441,6 +441,7 @@ int main(int argc, char* argv[])
     // Carregamos duas imagens para serem utilizadas como textura
     LoadTextureImage("../../data/tc-earth_daymap_surface.jpg");      // TextureImage0
     LoadTextureImage("../../data/tc-earth_nightmap_citylights.gif"); // TextureImage1
+    LoadTextureImage("../../data/textures/TexturaLua.jpg");          // TextureImage2 Lua
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -593,6 +594,7 @@ int main(int argc, char* argv[])
         #define SPHERE 0
         #define BUNNY  1
         #define PLANE  2
+        #define LUA    3
 
         // Desenhamos o modelo da esfera
         model = Matrix_Translate(-1.0f,0.0f,0.0f)
@@ -672,6 +674,16 @@ int main(int argc, char* argv[])
         glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, PLANE);
         DrawVirtualObject("the_plane");
+
+        //Desenhamos o modelo da lua
+        model = Matrix_Translate(5.0, 8.0, -13.0f)
+                * Matrix_Rotate_Y(g_AngleY/10)
+                * Matrix_Rotate_Z(g_AngleY/5)
+                * Matrix_Rotate_X(g_AngleY/10)
+                * Matrix_Scale(2.0f, 2.0f, 2.0f);
+        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, LUA);
+        DrawVirtualObject("the_sphere");
 
         ///crosshair("+")
         glUseProgram(g_GpuProgramID);
@@ -960,6 +972,7 @@ void LoadShadersFromFiles()
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage0"), 0);
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage1"), 1);
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage2"), 2);
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TexturaLua"), 3);
     glUseProgram(0);
 }
 
