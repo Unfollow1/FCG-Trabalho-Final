@@ -55,6 +55,11 @@
 #define VelocidadeBike 15.0f
 #define SensibilidadeCamera 0.005f
 #define ControleVelocidadeCurva 0.5f
+#define CameraLivre true
+#define CameraLook false
+
+// Tempo de Inatividade para trocar de camera
+#define INACTIVITY_THRESHOLD  10.0f
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
 // arquivo ".obj". Veja https://en.wikipedia.org/wiki/Wavefront_.obj_file .
@@ -259,6 +264,8 @@ bool tecla_D_pressionada = false;
 bool tecla_A_pressionada = false;
 bool tecla_E_pressionada = false;
 bool tecla_B_pressionada = false;
+bool g_cameraType = CameraLivre;
+bool trocaCamera = false;
 
 //curva de bezier
 
@@ -544,7 +551,7 @@ int main(int argc, char* argv[])
         glm::vec4 camera_view_vector = glm::vec4(-x,-y,-z,0.0f); // Vetor "view" - olhando para frente
         glm::vec4 camera_up_vector = glm::vec4(0.0f,1.0f,0.0f,0.0f); // Vetor "up" fixado para apontar para o "céu" (eito Y global)
 
-        // Matriz view
+         // Matriz view
         glm::mat4 view = Matrix_Camera_View(g_camera_position_c, camera_view_vector, camera_up_vector);
 
         // Agora computamos a matriz de Projeção.
@@ -566,57 +573,143 @@ int main(int argc, char* argv[])
             }
         }
 
-        // Calculamos os vetores da base da câmera
-        glm::vec4 w = -camera_view_vector / norm(camera_view_vector);
-        glm::vec4 u = crossproduct(camera_up_vector, w);
-
         float speed = VelocidadeBase; // Ajuste de velocidade
 
 
-        if (tecla_B_pressionada){
+        if (tecla_B_pressionada)
+        {
             speed = VelocidadeBike;
         }
-
-        // Movimentação WASD
-        if (tecla_W_pressionada)
-            g_camera_position_c -= w * speed * delta_t;
-        if (tecla_S_pressionada)
-            g_camera_position_c += w * speed * delta_t;
-        if (tecla_A_pressionada)
-            g_camera_position_c -= u * speed * delta_t;
-        if (tecla_D_pressionada)
-            g_camera_position_c += u * speed * delta_t;
-
-        g_camera_position_c.y = g_CameraAlturaFixa;
 
         // Matriz model é a identidade
         glm::mat4 model = Matrix_Identity();
 
-        // Note que, no sistema de coordenadas da câmera, os planos near e far
-        // estão no sentido negativo! Veja slides 176-204 do documento Aula_09_Projecoes.pdf.
-        float nearplane = -0.1f;  // Posição do "near plane"
-        float farplane  = -10.0f; // Posição do "far plane"
 
-        if (g_UsePerspectiveProjection)
+        // para controle de qual camera vai ser usada
+
+        // Variáveis globais para rastrear tempo de inatividade
+
+        static float ultimoMovimento = 0.0f;
+        static bool inativo = false;
+
+
+        // Verifica se houve movimento
+        if (tecla_W_pressionada || tecla_S_pressionada || tecla_A_pressionada || tecla_D_pressionada)
         {
-            // Projeção Perspectiva.
-            // Para definição do field of view (FOV), veja slides 205-215 do documento Aula_09_Projecoes.pdf.
-            float field_of_view = 3.141592 / 3.0f;
-            projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
+            ultimoMovimento = current_time; // Atualiza o último tempo de movimento
+            inativo = false;           // Reseta a flag de inatividade
+            g_cameraType = CameraLivre;
         }
         else
         {
-            // Projeção Ortográfica.
-            // Para definição dos valores l, r, b, t ("left", "right", "bottom", "top"),
-            // PARA PROJEÇÃO ORTOGRÁFICA veja slides 219-224 do documento Aula_09_Projecoes.pdf.
-            // Para simular um "zoom" ortográfico, computamos o valor de "t"
-            // utilizando a variável g_CameraDistance.
-            float t = 1.5f*g_CameraDistance/2.5f;
-            float b = -t;
-            float r = t*g_ScreenRatio;
-            float l = -r;
-            projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
+            // Calcula o tempo de inatividade
+            if ((current_time - ultimoMovimento) > INACTIVITY_THRESHOLD)
+            {
+                inativo = true; // Levanta a flag se passar do limite
+            }
         }
+
+        // Verifica se a flag de inatividade foi levantada
+        if (inativo)
+        {
+            g_cameraType = CameraLook;
+        }
+
+
+        //
+
+
+
+
+        if(g_cameraType)
+        {
+
+                // Calculamos os vetores da base da câmera
+            glm::vec4 w = -camera_view_vector / norm(camera_view_vector);
+            glm::vec4 u = crossproduct(camera_up_vector, w);
+
+
+            // Movimentação WASD
+            if (tecla_W_pressionada)
+                g_camera_position_c -= w * speed * delta_t;
+            if (tecla_S_pressionada)
+                g_camera_position_c += w * speed * delta_t;
+            if (tecla_A_pressionada)
+                g_camera_position_c -= u * speed * delta_t;
+            if (tecla_D_pressionada)
+                g_camera_position_c += u * speed * delta_t;
+
+            g_camera_position_c.y = g_CameraAlturaFixa;
+
+
+            // Note que, no sistema de coordenadas da câmera, os planos near e far
+            // estão no sentido negativo! Veja slides 176-204 do documento Aula_09_Projecoes.pdf.
+            float nearplane = -0.1f;  // Posição do "near plane"
+            float farplane  = -100.0f; // Posição do "far plane"
+
+            if (g_UsePerspectiveProjection)
+            {
+                // Projeção Perspectiva.
+                // Para definição do field of view (FOV), veja slides 205-215 do documento Aula_09_Projecoes.pdf.
+                float field_of_view = 3.141592 / 3.0f;
+                projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
+            }
+            else
+            {
+                // Projeção Ortográfica.
+                // Para definição dos valores l, r, b, t ("left", "right", "bottom", "top"),
+                // PARA PROJEÇÃO ORTOGRÁFICA veja slides 219-224 do documento Aula_09_Projecoes.pdf.
+                // Para simular um "zoom" ortográfico, computamos o valor de "t"
+                // utilizando a variável g_CameraDistance.
+                float t = 1.5f*g_CameraDistance/2.5f;
+                float b = -t;
+                float r = t*g_ScreenRatio;
+                float l = -r;
+                projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
+            }
+        }
+
+            else
+            {
+                // O ponto de interesse é o último ponto de onde a câmera livre esteve
+                glm::vec4 camera_lookat_l = g_camera_position_c;
+                glm::vec4 camera_up_vector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+
+                // Ângulo de rotação baseado no tempo
+                float rotation_speed = 0.5f; // Velocidade de rotação
+                float angle = (float)glfwGetTime() * rotation_speed;
+
+                // Posição da câmera girando ao redor do ponto de interesse
+                float radius = 5.0f; // Distância fixa do ponto de interesse
+                float x = radius * cos(angle);
+                float z = radius * sin(angle);
+                glm::vec4 camera_position_c = glm::vec4(x, g_CameraAlturaFixa, z, 1.0f); // Altura fixa da câmera
+
+                // Matriz view para a câmera Look-At rotacionando
+                view = Matrix_Camera_View(camera_position_c, camera_lookat_l - camera_position_c, camera_up_vector);
+
+                // Configuração da matriz de projeção
+                float nearplane = -0.1f;  // Posição do "near plane"
+                float farplane  = -100.0f; // Posição do "far plane"
+
+                if (g_UsePerspectiveProjection)
+                {
+                    // Projeção Perspectiva para Look-At
+                    float field_of_view = 3.141592 / 3.0f;
+                    projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
+                }
+                else
+                {
+                    // Projeção Ortográfica para Look-At
+                    float t = 1.5f;
+                    float b = -t;
+                    float r = t * g_ScreenRatio;
+                    float l = -r;
+                    projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
+                }
+            }
+
+
 
 
         // Enviamos as matrizes "view" e "projection" para a placa de vídeo
