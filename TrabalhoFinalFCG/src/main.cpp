@@ -268,7 +268,7 @@ glm::vec4 p1 = glm::vec4(-1.0f, 2.0f, -5.0f, 1.0f);  // Primeiro ponto de contro
 glm::vec4 p2 = glm::vec4(1.0f, -2.0f, -10.0f, 1.0f);  // Segundo ponto de controle (desce)
 glm::vec4 p3 = glm::vec4(3.0f, 0.0f, -10.0f, 1.0f);   // Ponto final
 
-glm::vec4 ComputeBezierPoint(float t, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, glm::vec4 p3)
+glm::vec4 PontoBezier(float t, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, glm::vec4 p3)
 {
     float u = 1.0f - t;
     float tt = t * t;
@@ -284,10 +284,10 @@ glm::vec4 ComputeBezierPoint(float t, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, 
     return point;
 }
 
-glm::vec4 UpdateSpherePositionCyclicBezier(float time, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, glm::vec4 p3)
+glm::vec4 AtualizaPonto(float time, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, glm::vec4 p3)
 {
     float t = 0.5f * (1.0f - cos(2.0f * 3.141592f * fmod(time, 1.0f))); // Senoide suave entre 0 e 1
-    return ComputeBezierPoint(t, p0, p1, p2, p3);
+    return PontoBezier(t, p0, p1, p2, p3);
 }
 
 // fim da curva de bezier
@@ -719,7 +719,7 @@ int main(int argc, char* argv[])
         glUniform1i(g_object_id_uniform, LUA);
         DrawVirtualObject("the_sphere");
 
-        glm::vec4 sphere_position = UpdateSpherePositionCyclicBezier(current_time * ControleVelocidadeCurva , p0, p1, p2, p3);
+        glm::vec4 sphere_position = AtualizaPonto(current_time * ControleVelocidadeCurva , p0, p1, p2, p3);
         model = Matrix_Translate(sphere_position.x, sphere_position.y, sphere_position.z)
             * Matrix_Scale(0.5f, 0.5f, 0.5f);
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
