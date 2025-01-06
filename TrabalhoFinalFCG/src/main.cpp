@@ -59,7 +59,7 @@
 #define CameraLook false
 
 // Tempo de Inatividade para trocar de camera
-#define INACTIVITY_THRESHOLD  10.0f
+#define INACTIVITY_THRESHOLD  5.0f
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
 // arquivo ".obj". Veja https://en.wikipedia.org/wiki/Wavefront_.obj_file .
@@ -497,6 +497,10 @@ int main(int argc, char* argv[])
     ComputeNormals(&planemodel);
     BuildTrianglesAndAddToVirtualScene(&planemodel);
 
+    ObjModel personagemmodel("../../data/objs/personagem/personagem.obj");
+    ComputeNormals(&personagemmodel);
+    BuildTrianglesAndAddToVirtualScene(&personagemmodel);
+
     if ( argc > 1 )
     {
         ObjModel model(argv[1]);
@@ -669,45 +673,45 @@ int main(int argc, char* argv[])
             }
         }
 
+        else
+        {
+            // O ponto de interesse é o último ponto de onde a câmera livre esteve
+            glm::vec4 camera_lookat_l = g_camera_position_c;
+            glm::vec4 camera_up_vector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+
+            // Ângulo de rotação baseado no tempo
+            float rotation_speed = 0.5f; // Velocidade de rotação
+            float angle = (float)glfwGetTime() * rotation_speed;
+
+            // Posição da câmera girando ao redor do ponto de interesse
+            float radius = 5.0f; // Distância fixa do ponto de interesse
+            float x = radius * cos(angle);
+            float z = radius * sin(angle);
+            glm::vec4 camera_position_c = glm::vec4(x, g_CameraAlturaFixa, z, 1.0f); // Altura fixa da câmera
+
+            // Matriz view para a câmera Look-At rotacionando
+            view = Matrix_Camera_View(camera_position_c, camera_lookat_l - camera_position_c, camera_up_vector);
+
+            // Configuração da matriz de projeção
+            float nearplane = -0.1f;  // Posição do "near plane"
+            float farplane  = -100.0f; // Posição do "far plane"
+
+            if (g_UsePerspectiveProjection)
+            {
+                // Projeção Perspectiva para Look-At
+                float field_of_view = 3.141592 / 3.0f;
+                projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
+            }
             else
             {
-                // O ponto de interesse é o último ponto de onde a câmera livre esteve
-                glm::vec4 camera_lookat_l = g_camera_position_c;
-                glm::vec4 camera_up_vector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
-
-                // Ângulo de rotação baseado no tempo
-                float rotation_speed = 0.5f; // Velocidade de rotação
-                float angle = (float)glfwGetTime() * rotation_speed;
-
-                // Posição da câmera girando ao redor do ponto de interesse
-                float radius = 5.0f; // Distância fixa do ponto de interesse
-                float x = radius * cos(angle);
-                float z = radius * sin(angle);
-                glm::vec4 camera_position_c = glm::vec4(x, g_CameraAlturaFixa, z, 1.0f); // Altura fixa da câmera
-
-                // Matriz view para a câmera Look-At rotacionando
-                view = Matrix_Camera_View(camera_position_c, camera_lookat_l - camera_position_c, camera_up_vector);
-
-                // Configuração da matriz de projeção
-                float nearplane = -0.1f;  // Posição do "near plane"
-                float farplane  = -100.0f; // Posição do "far plane"
-
-                if (g_UsePerspectiveProjection)
-                {
-                    // Projeção Perspectiva para Look-At
-                    float field_of_view = 3.141592 / 3.0f;
-                    projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
-                }
-                else
-                {
-                    // Projeção Ortográfica para Look-At
-                    float t = 1.5f;
-                    float b = -t;
-                    float r = t * g_ScreenRatio;
-                    float l = -r;
-                    projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
-                }
+                // Projeção Ortográfica para Look-At
+                float t = 1.5f;
+                float b = -t;
+                float r = t * g_ScreenRatio;
+                float l = -r;
+                projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
             }
+        }
 
 
 
@@ -722,6 +726,7 @@ int main(int argc, char* argv[])
         #define BUNNY  1
         #define PLANE  2
         #define LUA    3
+        #define PERSONAGEM 15
 
         // Desenhamos o modelo da esfera
         model = Matrix_Translate(-1.0f,0.0f,0.0f)
@@ -812,6 +817,42 @@ int main(int argc, char* argv[])
         glUniform1i(g_object_id_uniform, LUA);
         DrawVirtualObject("the_sphere");
 
+
+        //personagem
+        glm::vec4 g_posicao_personagem = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+        if (g_cameraType)
+        {
+            glm::vec3 offset = -0.5f * glm::vec3(camera_view_vector);
+            offset.y = -3.0f;
+            offset.x = offset.x - 1;
+
+            g_posicao_personagem = g_camera_position_c + glm::vec4(offset, 0.0f);
+
+            model = Matrix_Translate(g_posicao_personagem.x, g_posicao_personagem.y, g_posicao_personagem.z)
+                    * Matrix_Scale(2.0f, 2.0f, 2.0f); // Escala fixa
+        }
+        else
+        {
+            model = Matrix_Translate(g_posicao_personagem.x, g_posicao_personagem.y, g_posicao_personagem.z)
+                    * Matrix_Scale(2.0f, 2.0f, 2.0f); // Escala fixa
+        }
+
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PERSONAGEM);
+        DrawVirtualObject("personagem");
+
+
+
+
+        // Enviar a matriz para o shader e desenhar o objeto
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PERSONAGEM);
+        DrawVirtualObject("personagem");
+
+
+
+        //esfera seguindo a curva de bezier
         glm::vec4 sphere_position = AtualizaPonto(current_time * ControleVelocidadeCurva , p0, p1, p2, p3);
         model = Matrix_Translate(sphere_position.x, sphere_position.y, sphere_position.z)
             * Matrix_Scale(0.5f, 0.5f, 0.5f);
@@ -1105,8 +1146,8 @@ void LoadShadersFromFiles()
     glUseProgram(g_GpuProgramID);
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage0"), 0);
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage1"), 1);
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage2"), 2);
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TexturaLua"), 3);
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TexturaLua"), 2);
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TexturaPersonagem"), 3);
     glUseProgram(0);
 }
 
