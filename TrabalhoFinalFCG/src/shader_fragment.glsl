@@ -23,6 +23,7 @@ uniform mat4 projection;
 #define BUNNY  1
 #define PLANE  2
 #define MAINBUILD 3
+#define BAGUETE 4
 uniform int object_id;
 
 // Parâmetros da axis-aligned bounding box (AABB) do modelo
@@ -33,6 +34,7 @@ uniform vec4 bbox_max;
 uniform sampler2D TextureImage0;
 uniform sampler2D TextureImage1;
 uniform sampler2D TextureImage2;
+uniform sampler2D TextureImage3;
 
 // cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
@@ -112,22 +114,31 @@ void main()
         U = texcoords.x;
         V = texcoords.y;
     }
-
-    // Obtemos a refletância difusa do mapa diurno (TextureImage0)
-    vec3 Kd0 = texture(TextureImage0, vec2(U,V)).rgb;
-
-    // Obtemos a refletância das luzes noturnas (TextureImage1)
-    vec3 Kd1 = texture(TextureImage1, vec2(U,V)).rgb;
+    else if ( object_id == BAGUETE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
 
     // Equação de Iluminação
     float lambert = max(0,dot(n,l));
+    float ambient_light = 0.4;
 
-    // Fazemos uma interpolação suave entre o mapa diurno e noturno
-    // usando o termo de Lambert como fator de interpolação
-    vec3 Kd_final = mix(Kd1, Kd0, lambert);
+    // Calculamos cores diferentes dependendo do objeto
+    vec3 Kd_final;
 
-    // Aplicamos uma iluminação base para as luzes noturnas
-    float ambient_light = 0.4; // controle de intesidade das luzes!
+    if ( object_id == BAGUETE )
+    {
+        // Baguete usa apenas TextureImage2
+        Kd_final = texture(TextureImage2, vec2(U,V)).rgb;
+    }
+    else
+    {
+        // Outros objetos usam TextureImage0 e TextureImage1 com interpolação
+        vec3 Kd0 = texture(TextureImage0, vec2(U,V)).rgb;
+        vec3 Kd1 = texture(TextureImage1, vec2(U,V)).rgb;
+        Kd_final = mix(Kd1, Kd0, lambert);
+    }
 
     if (use_color_override)
     {
@@ -135,26 +146,10 @@ void main()
     }
     else
     {
-        // Seu código original de cor aqui
         color.rgb = Kd_final * (lambert + ambient_light);
-
-
-        // NOTE: Se você quiser fazer o rendering de objetos transparentes, é
-        // necessário:
-        // 1) Habilitar a operação de "blending" de OpenGL logo antes de realizar o
-        //    desenho dos objetos transparentes, com os comandos abaixo no código C++:
-        //      glEnable(GL_BLEND);
-        //      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        // 2) Realizar o desenho de todos objetos transparentes *após* ter desenhado
-        //    todos os objetos opacos; e
-        // 3) Realizar o desenho de objetos transparentes ordenados de acordo com
-        //    suas distâncias para a câmera (desenhando primeiro objetos
-        //    transparentes que estão mais longe da câmera).
-        // Alpha default = 1 = 100% opaco = 0% transparente
         color.a = 1;
     }
 
     // Cor final com correção gamma, considerando monitor sRGB.
-    // Veja https://en.wikipedia.org/w/index.php?title=Gamma_correction&oldid=751281772#Windows.2C_Mac.2C_sRGB_and_TV.2Fvideo_standard_gammas
     color.rgb = pow(color.rgb, vec3(1.0,1.0,1.0)/2.2);
 }

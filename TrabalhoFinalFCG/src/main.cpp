@@ -54,6 +54,7 @@
 #define VelocidadeBase 5.0f
 #define VelocidadeBike 15.0f
 #define SensibilidadeCamera 0.005f
+#define M_PI   3.14159265358979323846
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
 // arquivo ".obj". Veja https://en.wikipedia.org/wiki/Wavefront_.obj_file .
@@ -259,7 +260,12 @@ bool tecla_A_pressionada = false;
 bool tecla_E_pressionada = false;
 bool tecla_B_pressionada = false;
 
-bool bunny_picked = false;  // Para controlar se o coelho já foi pego
+/// variáveis para controlar se os itens foram pegos
+bool bunny_picked = false;
+bool baguete_picked = false;
+bool egg_picked = false;
+bool butter_picked = false;
+bool cheese_picked = false;
 
 float g_CameraAlturaFixa = 1.0f;
 
@@ -268,7 +274,7 @@ int g_object_highlighted = -1;
 
 std::vector<std::string> todos_itens = {
     "Pao frances",
-    "baguete"
+    "baguete",
     "queijo",
     "presunto",
     "ovo",
@@ -344,6 +350,186 @@ int GetObjectUnderCrosshair(
     std::map<std::string, glm::mat4>& object_matrices
 );
 
+/// estrutura de dados usada para instanciar calçadas
+
+struct Calcada {
+    glm::vec3 position;
+    float rotation;
+    glm::mat4 model;
+};
+
+std::vector<Calcada> calcadas;
+
+void GerarCalcadas() {
+    Calcada calcada;
+    float largura_calcada = 1.5f;
+    float altura_calcada = -0.75f;
+    float profundidade_calcada = 0.5f;
+    float posicao_lateral = 6.53f;
+    float espacamento = 9.05f;
+
+    /// Array com as 17 posições Z para os segmentos verticais
+    float posicoes_z[17];
+    posicoes_z[0] = -0.5f;
+    for(int i = 1; i < 17; i++) {
+        posicoes_z[i] = posicoes_z[0] - (espacamento * i);
+    }
+
+    // Lateral direita - os segmentos C verticais
+    for(int i = 0; i < 17; i++) {
+        calcada.position = glm::vec3(posicao_lateral, altura_calcada, posicoes_z[i]);
+        calcada.rotation = M_PI/2;
+        calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+                     * Matrix_Rotate_Y(calcada.rotation)
+                     * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+        calcadas.push_back(calcada);
+    }
+
+    // Lateral esquerda - os segmentos C verticais
+    for(int i = 0; i < 17; i++) {
+        calcada.position = glm::vec3(-posicao_lateral, altura_calcada, posicoes_z[i]);
+        calcada.rotation = -M_PI/2;
+        calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+                     * Matrix_Rotate_Y(calcada.rotation)
+                     * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+        calcadas.push_back(calcada);
+    }
+
+    // Segmentos A - horizontais nas pontas superiores
+    // Segmentos A da direita (agora com 3 segmentos)
+    for(int i = 0; i < 3; i++)
+    {
+        calcada.position = glm::vec3(posicao_lateral + 5.05 + largura_calcada + (i * (largura_calcada + 7.55)), altura_calcada, 2.0f);
+        calcada.rotation = 0.0f;
+        calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+        * Matrix_Rotate_Y(calcada.rotation)
+        * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+        calcadas.push_back(calcada);
+    }
+
+    // Segmentos A da esquerda (agora com 3 segmentos)
+    for(int i = 0; i < 3; i++)
+    {
+        calcada.position = glm::vec3(-posicao_lateral - 5.05 - largura_calcada - (i * (largura_calcada + 7.55)), altura_calcada, 2.0f);
+        calcada.rotation = 0.0f;
+        calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+        * Matrix_Rotate_Y(calcada.rotation)
+        * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+        calcadas.push_back(calcada);
+    }
+
+    // Segmento A vertical - ponta direita (primeiro segmento)
+    float x_pos_direita = posicao_lateral + 7.55 + largura_calcada + (2 * (largura_calcada + 7.55));
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 8.55f);
+    calcada.rotation = M_PI/2;
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    // Segmento A vertical - ponta direita (segundo segmento)
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 17.6f);
+    calcada.rotation = M_PI/2;
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    // Segmento A vertical - ponta direita (terceiro segmento)
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 26.65f); // Mantive o mesmo espaçamento (~9.05)
+    calcada.rotation = M_PI/2;
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    // Segmento A vertical - ponta esquerda (primeiro segmento)
+    float x_pos_esquerda = -posicao_lateral - 7.55 - largura_calcada - (2 * (largura_calcada + 7.55));
+    calcada.position = glm::vec3(x_pos_esquerda, altura_calcada, 8.55f);
+    calcada.rotation = -M_PI/2;
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    // Segmento A vertical - ponta esquerda (segundo segmento)
+    calcada.position = glm::vec3(x_pos_esquerda, altura_calcada, 17.6f);
+    calcada.rotation = -M_PI/2;
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    // Segmento A vertical - ponta esquerda (terceiro segmento)
+    calcada.position = glm::vec3(x_pos_esquerda, altura_calcada, 26.65f); // Mantive espaçamento similar
+    calcada.rotation = -M_PI/2;
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+        // Segmento A horizontal - extremidade direita do topo
+    x_pos_direita = posicao_lateral + 7.55 + largura_calcada + (2 * (largura_calcada + 4.27));
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 29.15f); // Usando a altura do último segmento vertical
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    x_pos_direita = posicao_lateral + 7.55 + largura_calcada + (2 * (largura_calcada - 0.25));
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 29.15f); // Usando a altura do último segmento vertical
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    x_pos_direita = posicao_lateral + 7.55 + largura_calcada + (2 * (largura_calcada - 4.77));
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 29.15f); // Usando a altura do último segmento vertical
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+
+    x_pos_direita = posicao_lateral + 7.55 + largura_calcada + (2 * (largura_calcada - 9.29));
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 29.15f); // Usando a altura do último segmento vertical
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    // Segmento A horizontal - extremidade esquerda do topo
+    x_pos_esquerda = -posicao_lateral - 7.55 - largura_calcada - (2 * (largura_calcada + 4.27));
+    calcada.position = glm::vec3(x_pos_esquerda, altura_calcada, 29.15f); // Mesma altura do direito
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    x_pos_esquerda = -posicao_lateral - 7.55 - largura_calcada - (2 * (largura_calcada - 0.25));
+    calcada.position = glm::vec3(x_pos_esquerda, altura_calcada, 29.15f); // Mesma altura do direito
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    x_pos_esquerda = -posicao_lateral - 7.55 - largura_calcada - (2 * (largura_calcada - 4.77));
+    calcada.position = glm::vec3(x_pos_esquerda, altura_calcada, 29.15f); // Mesma altura do direito
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+
+}
+
 int main(int argc, char* argv[])
 {
     // Inicializamos a biblioteca GLFW, utilizada para criar uma janela do
@@ -415,6 +601,8 @@ int main(int argc, char* argv[])
     // Indicamos que as chamadas OpenGL deverão renderizar nesta janela
     glfwMakeContextCurrent(window);
 
+    GerarCalcadas();
+
     // Carregamento de todas funções definidas por OpenGL 3.3, utilizando a
     // biblioteca GLAD.
     gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
@@ -442,6 +630,12 @@ int main(int argc, char* argv[])
     LoadTextureImage("../../data/tc-earth_daymap_surface.jpg");      // TextureImage0
     LoadTextureImage("../../data/tc-earth_nightmap_citylights.gif"); // TextureImage1
 
+    /// texturas adicionadas
+
+    LoadTextureImage("../../data/baguete_COLOR.png");               // TextureImage3
+    LoadTextureImage("../../data/baguete_NRM.png");                 // TextureImage4
+    LoadTextureImage("../../data/baguete_SPEC.png");                // TextureImage5
+
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
     ComputeNormals(&spheremodel);
@@ -460,6 +654,31 @@ int main(int argc, char* argv[])
     ObjModel mainbuildmodel("../../data/mainbuild.obj");
     ComputeNormals(&mainbuildmodel);
     BuildTrianglesAndAddToVirtualScene(&mainbuildmodel);
+
+    // Carregando o modelo da calçada
+    ObjModel calcadamodel("../../data/calcada.obj");
+    ComputeNormals(&calcadamodel);
+    BuildTrianglesAndAddToVirtualScene(&calcadamodel);
+
+    // baguete
+    ObjModel baguetemodel("../../data/baguete.obj");
+    ComputeNormals(&baguetemodel);
+    BuildTrianglesAndAddToVirtualScene(&baguetemodel);
+
+    ObjModel eggmodel("../../data/eggs.obj");
+    ComputeNormals(&eggmodel);
+    BuildTrianglesAndAddToVirtualScene(&eggmodel);
+
+    ObjModel buttermodel("../../data/butter.obj");
+    ComputeNormals(&buttermodel);
+    BuildTrianglesAndAddToVirtualScene(&buttermodel);
+
+    ObjModel cheesemodel("../../data/cheese.obj");
+    ComputeNormals(&cheesemodel);
+    BuildTrianglesAndAddToVirtualScene(&cheesemodel);
+
+
+
 
     if ( argc > 1 )
     {
@@ -600,14 +819,152 @@ int main(int argc, char* argv[])
         #define BUNNY  1
         #define PLANE  2
         #define MAINBUILD 3
+        #define BAGUETE 4
+        #define EGG 5
+        #define BUTTER 6
+        #define CHEESE 7
+
+        #define CALCADA 20
 
         /// desenhos adicionados
 
-        model = Matrix_Translate(-1.0f,-1.1f,-3.0f)  // x, y, z (y = -1.1f coloca no mesmo nível do chão)
-        * Matrix_Scale(3.0f, 3.0f, 3.0f);     // aumenta 3x o tamanho em todas as direções
-        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, MAINBUILD);
-        DrawVirtualObject("the_mainbuild");
+       // model = Matrix_Translate(-1.0f,-1.1f,-3.0f)  // x, y, z (y = -1.1f coloca no mesmo nível do chão)
+       // * Matrix_Scale(2.4f, 2.4f, 2.4f);     // aumenta 3x o tamanho em todas as direções
+       // glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+       // glUniform1i(g_object_id_uniform, MAINBUILD);
+       // DrawVirtualObject("the_mainbuild");
+
+       // Desenhamos todas as instâncias da calçada
+        for(const Calcada& calcada : calcadas) {
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(calcada.model));
+            glUniform1i(g_object_id_uniform, CALCADA);
+            DrawVirtualObject("calcada");  // use o nome correto do seu objeto
+        }
+
+       // Desenhamos o modelo do queijo
+        if (!cheese_picked)
+        {
+            model = Matrix_Translate(2.5f, -1.0f, 2.5f)
+            * Matrix_Scale(0.5f, 0.5f, 0.5f);
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+            glUniform1i(g_object_id_uniform, CHEESE);
+            DrawVirtualObject("the_cheese");
+
+            // Salvamos a matriz do objeto para uso no raycasting
+            g_object_matrices["the_cheese"] = model;
+        }
+
+        if (g_object_highlighted == CHEESE && tecla_E_pressionada && !cheese_picked)
+        {
+            cheese_picked = true;
+            MarcarItemComoPego(ITEM_QUEIJO);
+            tecla_E_pressionada = false;
+
+            // Verifica se o objeto está na lista de compras e marca como pego
+            for (size_t i = 0; i < itens_para_comprar.size(); ++i)
+            {
+                if (itens_para_comprar[i] == "queijo")
+                {
+                    itens_pegos[i] = true;
+                    printf("Item comprado: %s\n", itens_para_comprar[i].c_str());
+                    break;
+                }
+            }
+        }
+
+        // Desenhamos o modelo da manteiga
+        if (!butter_picked)
+        {
+            model = Matrix_Translate(2.0f, 2.5f, 2.0f)
+            * Matrix_Scale(0.3f, 0.3f, 0.3f);
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+            glUniform1i(g_object_id_uniform, BUTTER);
+            DrawVirtualObject("the_butter");
+
+            // Salvamos a matriz do objeto para uso no raycasting
+            g_object_matrices["the_butter"] = model;
+        }
+
+        if (g_object_highlighted == BUTTER && tecla_E_pressionada && !butter_picked)
+        {
+            butter_picked = true;
+            MarcarItemComoPego(ITEM_MANTEIGA);
+            tecla_E_pressionada = false;
+
+            // Verifica se o objeto está na lista de compras e marca como pego
+            for (size_t i = 0; i < itens_para_comprar.size(); ++i)
+            {
+                if (itens_para_comprar[i] == "manteiga")
+                {
+                    itens_pegos[i] = true;
+                    printf("Item comprado: %s\n", itens_para_comprar[i].c_str());
+                    break;
+                }
+            }
+        }
+
+
+        // Desenhamos o modelo do ovo
+        if (!egg_picked)
+        {
+            model = Matrix_Translate(2.0f,0.0f,2.0f)
+            * Matrix_Scale(4.0f, 4.0f, 4.0f);
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+            glUniform1i(g_object_id_uniform, EGG);
+            DrawVirtualObject("the_eggs");
+
+            // Salvamos a matriz do ovo para uso no raycasting
+            g_object_matrices["the_eggs"] = model;
+        }
+
+        if (g_object_highlighted == EGG && tecla_E_pressionada && !egg_picked)
+        {
+            egg_picked = true;
+            MarcarItemComoPego(ITEM_OVO);
+            tecla_E_pressionada = false;
+
+            // Verifica se o ovo está na lista de compras e marca como pego
+            for (size_t i = 0; i < itens_para_comprar.size(); ++i)
+            {
+                if (itens_para_comprar[i] == "ovo")
+                {
+                    itens_pegos[i] = true;
+                    printf("Item comprado: %s\n", itens_para_comprar[i].c_str());
+                    break;
+                }
+            }
+        }
+
+        // Desenhamos o modelo da baguete
+        if (!baguete_picked)
+        {
+            model = Matrix_Translate(4.0f,0.0f,0.0f)
+            * Matrix_Scale(0.15f, 0.15f, 0.15f);
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+            glUniform1i(g_object_id_uniform, BAGUETE);
+            DrawVirtualObject("the_baguete");
+
+            // Salvamos a matriz da baguete para uso no raycasting
+            g_object_matrices["the_baguete"] = model;
+        }
+
+        if (g_object_highlighted == BAGUETE && tecla_E_pressionada && !baguete_picked)
+        {
+            baguete_picked = true;
+            MarcarItemComoPego(ITEM_BAGUETE);
+            tecla_E_pressionada = false;
+
+            // Verificamos se a baguete está na lista de compras e marca como pego
+            for (size_t i = 0; i < itens_para_comprar.size(); ++i)
+            {
+                if (itens_para_comprar[i] == "baguete")
+                {
+                    itens_pegos[i] = true;
+                    printf("Item comprado: %s\n", itens_para_comprar[i].c_str());
+                    break;
+                }
+            }
+        }
 
         // Desenhamos o modelo da esfera
         model = Matrix_Translate(-1.0f,0.0f,0.0f)
@@ -682,9 +1039,101 @@ int main(int argc, char* argv[])
             glDisable(GL_STENCIL_TEST);
         }
 
+        else if (g_object_highlighted == BAGUETE && !baguete_picked)
+        {
+            glEnable(GL_STENCIL_TEST);
+            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glStencilMask(0xFF);
+
+            model = Matrix_Translate(4.0f,0.0f,0.0f)
+            * Matrix_Scale(0.195f, 0.195f, 0.195f);  // Escala um pouco maior para o highlight
+
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+            // Ativamos a sobreposição de cor
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), true);
+            glUniform4f(glGetUniformLocation(g_GpuProgramID, "color_override"), 1.0f, 1.0f, 0.0f, 1.0f);
+
+            DrawVirtualObject("the_baguete");
+
+            // Desativamos a sobreposição de cor para os próximos objetos
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), false);
+            glDisable(GL_STENCIL_TEST);
+        }
+        else if (g_object_highlighted == EGG && !egg_picked)
+        {
+            glEnable(GL_STENCIL_TEST);
+            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glStencilMask(0xFF);
+
+            model = Matrix_Translate(2.0f,0.0f,2.0f)
+            * Matrix_Scale(4.7f, 4.7f, 4.7f);  // Escala um pouco maior para o highlight
+
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+            // Ativamos a sobreposição de cor
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), true);
+            glUniform4f(glGetUniformLocation(g_GpuProgramID, "color_override"), 1.0f, 1.0f, 0.0f, 1.0f);
+
+            DrawVirtualObject("the_eggs");
+
+            // Desativamos a sobreposição de cor para os próximos objetos
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), false);
+            glDisable(GL_STENCIL_TEST);
+        }
+
+        else if (g_object_highlighted == BUTTER && !butter_picked)
+        {
+            glEnable(GL_STENCIL_TEST);
+            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glStencilMask(0xFF);
+
+            model = Matrix_Translate(2.0f, 2.5f, 2.0f)
+            * Matrix_Scale(0.5f, 0.5f, 0.5f);  // Escala um pouco maior para o highlight
+
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+            // Ativamos a sobreposição de cor
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), true);
+            glUniform4f(glGetUniformLocation(g_GpuProgramID, "color_override"), 1.0f, 1.0f, 0.0f, 1.0f);
+
+            DrawVirtualObject("the_butter");
+
+            // Desativamos a sobreposição de cor para os próximos objetos
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), false);
+            glDisable(GL_STENCIL_TEST);
+        }
+
+        else if (g_object_highlighted == CHEESE && !cheese_picked)
+        {
+            glEnable(GL_STENCIL_TEST);
+            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glStencilMask(0xFF);
+
+            model = Matrix_Translate(2.5f, -1.1f, 2.5f)
+            * Matrix_Scale(0.6f, 0.6f, 0.6f);  // Escala um pouco maior para o highlight
+
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+            // Ativamos a sobreposição de cor
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), true);
+            glUniform4f(glGetUniformLocation(g_GpuProgramID, "color_override"), 1.0f, 1.0f, 0.0f, 1.0f);
+
+            DrawVirtualObject("the_cheese");
+
+            // Desativamos a sobreposição de cor para os próximos objetos
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), false);
+            glDisable(GL_STENCIL_TEST);
+        }
+
+
         // Desenhamos o plano do chão
         model = Matrix_Translate(0.0f,-1.1f,0.0f)
-        * Matrix_Scale(20.0f, 1.0f, 20.0f); /// Aumenta 20x no eixo X e Z
+        * Matrix_Scale(40.0f, 1.0f, 40.0f); /// Aumenta 20x no eixo X e Z
 
         glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, PLANE);
@@ -831,12 +1280,52 @@ int GetObjectUnderCrosshair(glm::vec4 camera_position, glm::vec4 camera_view, st
 
     // Testamos interseção com cada objeto da cena
     for (const auto& obj : virtual_scene) {
-        if (obj.first == "the_bunny") { // Por enquanto só testamos com o coelho
+        if (obj.first == "the_bunny") {
             glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f); // Ajuste conforme o tamanho do objeto
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
 
             if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first])) {
-                return BUNNY; // Retorna o ID do objeto (definido nos #define no início do arquivo)
+                return BUNNY;
+            }
+        }
+        else if (obj.first == "the_baguete") {
+            glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+
+            if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first])) {
+                return BAGUETE;
+            }
+        }
+        else if (obj.first == "the_eggs")
+        {
+            glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+
+            if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first]))
+            {
+                return EGG;
+            }
+        }
+
+        else if (obj.first == "the_butter")
+        {
+            glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+
+            if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first]))
+            {
+                return BUTTER;
+            }
+        }
+
+        else if (obj.first == "the_cheese")
+        {
+            glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+
+            if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first]))
+            {
+                return CHEESE;
             }
         }
     }
@@ -977,6 +1466,11 @@ void LoadShadersFromFiles()
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage0"), 0);
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage1"), 1);
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage2"), 2);
+
+    /// Variáveis em "shader_fragment.glsl" para acesso das imagens de textura adicionadas
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage3"), 3); // Textura COLOR da baguete
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage4"), 4); // Textura NRM da baguete
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage5"), 5); // Textura SPEC da baguete
     glUseProgram(0);
 }
 
