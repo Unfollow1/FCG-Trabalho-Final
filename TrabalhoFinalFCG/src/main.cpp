@@ -721,6 +721,10 @@ int main(int argc, char* argv[])
     ComputeNormals(&personagemmodel);
     BuildTrianglesAndAddToVirtualScene(&personagemmodel);
 
+    ObjModel mansionmodel("../../data/mansion.obj");
+    ComputeNormals(&mansionmodel);
+    BuildTrianglesAndAddToVirtualScene(&mansionmodel);
+
 
 
     if ( argc > 1 )
@@ -842,11 +846,6 @@ int main(int argc, char* argv[])
         }
 
 
-        //
-
-
-
-
         if(g_cameraType)
         {
 
@@ -949,14 +948,15 @@ int main(int argc, char* argv[])
         #define EGG 5
         #define BUTTER 6
         #define CHEESE 7
+        #define LUA 8
+        #define MANSION 9
 
-        #define LUA    8
         #define PERSONAGEM 15
-
         #define CALCADA 20
 
         /// desenhos adicionados
 
+        // Construções
         model = Matrix_Translate(13.0f,-1.0f,-165.0f)  // x, y, z (y = -1.1f coloca no mesmo nível do chão)
         * Matrix_Scale(0.4f, 0.4f, 0.4f)
         * Matrix_Rotate(165.0f, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));     // aumenta 3x o tamanho em todas as direções
@@ -964,11 +964,19 @@ int main(int argc, char* argv[])
         glUniform1i(g_object_id_uniform, MAINBUILD);
         DrawVirtualObject("the_mainbuild");
 
+        // Desenhamos o modelo da mansão
+        model = Matrix_Translate(-30.0f, -1.1f, -40.0f)  // Ajuste a posição conforme necessário
+        * Matrix_Rotate_Y(M_PI/2.0f)
+        * Matrix_Scale(9.0f, 9.0f, 9.0f);         // Ajuste a escala conforme necessário
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, MANSION);
+        DrawVirtualObject("the_mansion");
+
        // Desenhamos todas as instâncias da calçada
         for(const Calcada& calcada : calcadas) {
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(calcada.model));
             glUniform1i(g_object_id_uniform, CALCADA);
-            DrawVirtualObject("calcada");  // use o nome correto do seu objeto
+            DrawVirtualObject("calcada");
         }
 
        // Desenhamos o modelo do queijo
@@ -1262,8 +1270,8 @@ int main(int argc, char* argv[])
 
 
         // Desenhamos o plano do chão
-        model = Matrix_Translate(0.0f,-1.1f,0.0f)
-        * Matrix_Scale(40.0f, 1.0f, 40.0f); /// Aumenta 20x no eixo X e Z
+        model = Matrix_Translate(0.0f,-1.1f,-96.0f)
+        * Matrix_Scale(5.0f, 1.0f, 100.0f); /// Aumenta 20x no eixo X e Z
 
         glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, PLANE);
