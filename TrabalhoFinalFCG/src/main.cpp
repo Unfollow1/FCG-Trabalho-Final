@@ -673,9 +673,8 @@ int main(int argc, char* argv[])
 
     /// texturas adicionadas
 
-    LoadTextureImage("../../data/baguete_COLOR.png");               // TextureImage3
-    LoadTextureImage("../../data/baguete_NRM.png");                 // TextureImage4
-    LoadTextureImage("../../data/baguete_SPEC.png");                // TextureImage5
+    LoadTextureImage("../../data/baguete_COLOR.png");               // TextureImage2
+    LoadTextureImage("../../data/asfalto.png");                     // TextureImage3
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -1642,12 +1641,10 @@ void LoadShadersFromFiles()
     glUseProgram(g_GpuProgramID);
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage0"), 0);
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage1"), 1);
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage2"), 2);
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage2"), 2); // Textura da baguete
 
     /// Variáveis em "shader_fragment.glsl" para acesso das imagens de textura adicionadas
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage3"), 3); // Textura COLOR da baguete
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage4"), 4); // Textura NRM da baguete
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage5"), 5); // Textura SPEC da baguete
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage3"), 3); // Textura asfalto
     glUseProgram(0);
 }
 

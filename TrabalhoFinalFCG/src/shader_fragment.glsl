@@ -132,6 +132,10 @@ void main()
         // Baguete usa apenas TextureImage2
         Kd_final = texture(TextureImage2, vec2(U,V)).rgb;
     }
+        else if ( object_id == PLANE )
+    {
+        Kd_final = texture(TextureImage3, vec2(U,V)).rgb;
+    }
     else
     {
         // Outros objetos usam TextureImage0 e TextureImage1 com interpolação
