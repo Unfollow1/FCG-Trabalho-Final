@@ -52,7 +52,7 @@
 
 // Constantes
 #define VelocidadeBase 5.0f
-#define VelocidadeBike 15.0f
+#define VelocidadeBike 30.0f
 #define SensibilidadeCamera 0.005f
 #define M_PI   3.14159265358979323846
 
@@ -828,11 +828,12 @@ int main(int argc, char* argv[])
 
         /// desenhos adicionados
 
-       // model = Matrix_Translate(-1.0f,-1.1f,-3.0f)  // x, y, z (y = -1.1f coloca no mesmo nível do chão)
-       // * Matrix_Scale(2.4f, 2.4f, 2.4f);     // aumenta 3x o tamanho em todas as direções
-       // glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-       // glUniform1i(g_object_id_uniform, MAINBUILD);
-       // DrawVirtualObject("the_mainbuild");
+        model = Matrix_Translate(13.0f,-1.0f,-165.0f)  // x, y, z (y = -1.1f coloca no mesmo nível do chão)
+        * Matrix_Scale(0.4f, 0.4f, 0.4f)
+        * Matrix_Rotate(165.0f, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));     // aumenta 3x o tamanho em todas as direções
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, MAINBUILD);
+        DrawVirtualObject("the_mainbuild");
 
        // Desenhamos todas as instâncias da calçada
         for(const Calcada& calcada : calcadas) {
@@ -844,7 +845,7 @@ int main(int argc, char* argv[])
        // Desenhamos o modelo do queijo
         if (!cheese_picked)
         {
-            model = Matrix_Translate(2.5f, -1.0f, 2.5f)
+            model = Matrix_Translate(10.0f, 4.0f, -156.0f)
             * Matrix_Scale(0.5f, 0.5f, 0.5f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, CHEESE);
@@ -875,7 +876,7 @@ int main(int argc, char* argv[])
         // Desenhamos o modelo da manteiga
         if (!butter_picked)
         {
-            model = Matrix_Translate(2.0f, 2.5f, 2.0f)
+            model = Matrix_Translate(10.0f, 4.0f, -160.0f)
             * Matrix_Scale(0.3f, 0.3f, 0.3f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, BUTTER);
@@ -907,7 +908,7 @@ int main(int argc, char* argv[])
         // Desenhamos o modelo do ovo
         if (!egg_picked)
         {
-            model = Matrix_Translate(2.0f,0.0f,2.0f)
+            model = Matrix_Translate(-6.0f, 4.0f, -156.0f)
             * Matrix_Scale(4.0f, 4.0f, 4.0f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, EGG);
@@ -938,7 +939,7 @@ int main(int argc, char* argv[])
         // Desenhamos o modelo da baguete
         if (!baguete_picked)
         {
-            model = Matrix_Translate(4.0f,0.0f,0.0f)
+            model = Matrix_Translate(-6.0f, 4.0f, -160.0f)
             * Matrix_Scale(0.15f, 0.15f, 0.15f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, BAGUETE);
