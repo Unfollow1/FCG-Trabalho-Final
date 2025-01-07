@@ -718,6 +718,9 @@ int main(int argc, char* argv[])
     ComputeNormals(&cheesemodel);
     BuildTrianglesAndAddToVirtualScene(&cheesemodel);
 
+    ObjModel personagemmodel("../../data/objs/personagem/personagem.obj");
+    ComputeNormals(&personagemmodel);
+    BuildTrianglesAndAddToVirtualScene(&personagemmodel);
 
 
 
