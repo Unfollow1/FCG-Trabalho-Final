@@ -52,9 +52,15 @@
 
 // Constantes
 #define VelocidadeBase 5.0f
-#define VelocidadeBike 30.0f
+#define VelocidadeBike 15.0f
 #define SensibilidadeCamera 0.005f
+#define ControleVelocidadeCurva 0.5f
+#define CameraLivre true
+#define CameraLook false
 #define M_PI   3.14159265358979323846
+
+// Tempo de Inatividade para trocar de camera
+#define INACTIVITY_THRESHOLD  5.0f
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
 // arquivo ".obj". Veja https://en.wikipedia.org/wiki/Wavefront_.obj_file .
@@ -259,6 +265,41 @@ bool tecla_D_pressionada = false;
 bool tecla_A_pressionada = false;
 bool tecla_E_pressionada = false;
 bool tecla_B_pressionada = false;
+bool g_cameraType = CameraLivre;
+bool trocaCamera = false;
+
+//curva de bezier
+
+// Pontos de controle da curva de Bézier
+glm::vec4 p0 = glm::vec4(-3.0f, 0.0f, -5.0f, 1.0f);  // Ponto inicial
+glm::vec4 p1 = glm::vec4(-1.0f, 2.0f, -5.0f, 1.0f);  // Primeiro ponto de controle (sobe)
+glm::vec4 p2 = glm::vec4(1.0f, -2.0f, -10.0f, 1.0f);  // Segundo ponto de controle (desce)
+glm::vec4 p3 = glm::vec4(3.0f, 0.0f, -10.0f, 1.0f);   // Ponto final
+
+glm::vec4 PontoBezier(float t, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, glm::vec4 p3)
+{
+    float u = 1.0f - t;
+    float tt = t * t;
+    float uu = u * u;
+    float uuu = uu * u;
+    float ttt = tt * t;
+
+    glm::vec4 point = uuu * p0;
+    point += 3 * uu * t * p1;
+    point += 3 * u * tt * p2;
+    point += ttt * p3;
+
+    return point;
+}
+
+glm::vec4 AtualizaPonto(float time, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, glm::vec4 p3)
+{
+    float t = 0.5f * (1.0f - cos(2.0f * 3.141592f * fmod(time, 1.0f))); // Senoide suave entre 0 e 1
+    return PontoBezier(t, p0, p1, p2, p3);
+}
+
+// fim da curva de bezier
+
 
 /// variáveis para controlar se os itens foram pegos
 bool bunny_picked = false;
@@ -734,7 +775,7 @@ int main(int argc, char* argv[])
         glm::vec4 camera_view_vector = glm::vec4(-x,-y,-z,0.0f); // Vetor "view" - olhando para frente
         glm::vec4 camera_up_vector = glm::vec4(0.0f,1.0f,0.0f,0.0f); // Vetor "up" fixado para apontar para o "céu" (eito Y global)
 
-        // Matriz view
+         // Matriz view
         glm::mat4 view = Matrix_Camera_View(g_camera_position_c, camera_view_vector, camera_up_vector);
 
         // Agora computamos a matriz de Projeção.
@@ -756,58 +797,141 @@ int main(int argc, char* argv[])
             }
         }
 
-        // Calculamos os vetores da base da câmera
-        glm::vec4 w = -camera_view_vector / norm(camera_view_vector);
-        glm::vec4 u = crossproduct(camera_up_vector, w);
-
         float speed = VelocidadeBase; // Ajuste de velocidade
 
 
-        if (tecla_B_pressionada){
+        if (tecla_B_pressionada)
+        {
             speed = VelocidadeBike;
         }
-
-        // Movimentação WASD
-        if (tecla_W_pressionada)
-            g_camera_position_c -= w * speed * delta_t;
-        if (tecla_S_pressionada)
-            g_camera_position_c += w * speed * delta_t;
-        if (tecla_A_pressionada)
-            g_camera_position_c -= u * speed * delta_t;
-        if (tecla_D_pressionada)
-            g_camera_position_c += u * speed * delta_t;
-
-        g_camera_position_c.y = g_CameraAlturaFixa;
 
         // Matriz model é a identidade
         glm::mat4 model = Matrix_Identity();
 
-        // Note que, no sistema de coordenadas da câmera, os planos near e far
-        // estão no sentido negativo! Veja slides 176-204 do documento Aula_09_Projecoes.pdf.
-        float nearplane = -0.1f;  // Posição do "near plane"
-        float farplane  = -100.0f; // Posição do "far plane"
 
-        if (g_UsePerspectiveProjection)
+        // para controle de qual camera vai ser usada
+
+        // Variáveis globais para rastrear tempo de inatividade
+
+        static float ultimoMovimento = 0.0f;
+        static bool inativo = false;
+
+
+        // Verifica se houve movimento
+        if (tecla_W_pressionada || tecla_S_pressionada || tecla_A_pressionada || tecla_D_pressionada)
         {
-            // Projeção Perspectiva.
-            // Para definição do field of view (FOV), veja slides 205-215 do documento Aula_09_Projecoes.pdf.
-            float field_of_view = 3.141592 / 3.0f;
-            projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
+            ultimoMovimento = current_time; // Atualiza o último tempo de movimento
+            inativo = false;           // Reseta a flag de inatividade
+            g_cameraType = CameraLivre;
         }
         else
         {
-            // Projeção Ortográfica.
-            // Para definição dos valores l, r, b, t ("left", "right", "bottom", "top"),
-            // PARA PROJEÇÃO ORTOGRÁFICA veja slides 219-224 do documento Aula_09_Projecoes.pdf.
-            // Para simular um "zoom" ortográfico, computamos o valor de "t"
-            // utilizando a variável g_CameraDistance.
-            float t = 1.5f*g_CameraDistance/2.5f;
-            float b = -t;
-            float r = t*g_ScreenRatio;
-            float l = -r;
-            projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
+            // Calcula o tempo de inatividade
+            if ((current_time - ultimoMovimento) > INACTIVITY_THRESHOLD)
+            {
+                inativo = true; // Levanta a flag se passar do limite
+            }
         }
 
+        // Verifica se a flag de inatividade foi levantada
+        if (inativo)
+        {
+            g_cameraType = CameraLook;
+        }
+
+
+        //
+
+
+
+
+        if(g_cameraType)
+        {
+
+                // Calculamos os vetores da base da câmera
+            glm::vec4 w = -camera_view_vector / norm(camera_view_vector);
+            glm::vec4 u = crossproduct(camera_up_vector, w);
+
+
+            // Movimentação WASD
+            if (tecla_W_pressionada)
+                g_camera_position_c -= w * speed * delta_t;
+            if (tecla_S_pressionada)
+                g_camera_position_c += w * speed * delta_t;
+            if (tecla_A_pressionada)
+                g_camera_position_c -= u * speed * delta_t;
+            if (tecla_D_pressionada)
+                g_camera_position_c += u * speed * delta_t;
+
+            g_camera_position_c.y = g_CameraAlturaFixa;
+
+
+            // Note que, no sistema de coordenadas da câmera, os planos near e far
+            // estão no sentido negativo! Veja slides 176-204 do documento Aula_09_Projecoes.pdf.
+            float nearplane = -0.1f;  // Posição do "near plane"
+            float farplane  = -100.0f; // Posição do "far plane"
+
+            if (g_UsePerspectiveProjection)
+            {
+                // Projeção Perspectiva.
+                // Para definição do field of view (FOV), veja slides 205-215 do documento Aula_09_Projecoes.pdf.
+                float field_of_view = 3.141592 / 3.0f;
+                projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
+            }
+            else
+            {
+                // Projeção Ortográfica.
+                // Para definição dos valores l, r, b, t ("left", "right", "bottom", "top"),
+                // PARA PROJEÇÃO ORTOGRÁFICA veja slides 219-224 do documento Aula_09_Projecoes.pdf.
+                // Para simular um "zoom" ortográfico, computamos o valor de "t"
+                // utilizando a variável g_CameraDistance.
+                float t = 1.5f*g_CameraDistance/2.5f;
+                float b = -t;
+                float r = t*g_ScreenRatio;
+                float l = -r;
+                projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
+            }
+        }
+
+        else
+        {
+            // O ponto de interesse é o último ponto de onde a câmera livre esteve
+            glm::vec4 camera_lookat_l = g_camera_position_c;
+            glm::vec4 camera_up_vector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+
+            // Ângulo de rotação baseado no tempo
+            float rotation_speed = 0.5f; // Velocidade de rotação
+            float angle = (float)glfwGetTime() * rotation_speed;
+
+            // Posição da câmera girando ao redor do ponto de interesse
+            float radius = 5.0f; // Distância fixa do ponto de interesse
+            float x = radius * cos(angle);
+            float z = radius * sin(angle);
+            glm::vec4 camera_position_c = glm::vec4(x, g_CameraAlturaFixa, z, 1.0f); // Altura fixa da câmera
+
+            // Matriz view para a câmera Look-At rotacionando
+            view = Matrix_Camera_View(camera_position_c, camera_lookat_l - camera_position_c, camera_up_vector);
+
+            // Configuração da matriz de projeção
+            float nearplane = -0.1f;  // Posição do "near plane"
+            float farplane  = -100.0f; // Posição do "far plane"
+
+            if (g_UsePerspectiveProjection)
+            {
+                // Projeção Perspectiva para Look-At
+                float field_of_view = 3.141592 / 3.0f;
+                projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
+            }
+            else
+            {
+                // Projeção Ortográfica para Look-At
+                float t = 1.5f;
+                float b = -t;
+                float r = t * g_ScreenRatio;
+                float l = -r;
+                projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
+            }
+        }
 
         // Enviamos as matrizes "view" e "projection" para a placa de vídeo
         // (GPU). Veja o arquivo "shader_vertex.glsl", onde estas são
@@ -823,6 +947,9 @@ int main(int argc, char* argv[])
         #define EGG 5
         #define BUTTER 6
         #define CHEESE 7
+
+        #define LUA    8
+        #define PERSONAGEM 15
 
         #define CALCADA 20
 
@@ -1139,6 +1266,52 @@ int main(int argc, char* argv[])
         glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, PLANE);
         DrawVirtualObject("the_plane");
+
+
+        //Desenhamos o modelo da lua
+        model = Matrix_Translate(5.0, 8.0, -13.0f)
+                * Matrix_Rotate_Y(g_AngleY/10)
+                * Matrix_Rotate_Z(g_AngleY/5)
+                * Matrix_Rotate_X(g_AngleY/10)
+                * Matrix_Scale(2.0f, 2.0f, 2.0f);
+        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, LUA);
+        DrawVirtualObject("the_sphere");
+
+        //personagem
+        glm::vec4 g_posicao_personagem = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+        if (g_cameraType)
+        {
+            glm::vec3 offset = -0.5f * glm::vec3(camera_view_vector);
+            offset.y = -3.0f;
+            offset.x = offset.x - 1;
+
+            g_posicao_personagem = g_camera_position_c + glm::vec4(offset, 0.0f);
+
+            model = Matrix_Translate(g_posicao_personagem.x, g_posicao_personagem.y, g_posicao_personagem.z)
+                    * Matrix_Scale(2.0f, 2.0f, 2.0f); // Escala fixa
+        }
+        else
+        {
+            model = Matrix_Translate(g_posicao_personagem.x, g_posicao_personagem.y, g_posicao_personagem.z)
+                    * Matrix_Scale(2.0f, 2.0f, 2.0f); // Escala fixa
+        }
+
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PERSONAGEM);
+        DrawVirtualObject("personagem");
+
+
+        //esfera seguindo a curva de bezier
+        glm::vec4 sphere_position = AtualizaPonto(current_time * ControleVelocidadeCurva , p0, p1, p2, p3);
+        model = Matrix_Translate(sphere_position.x, sphere_position.y, sphere_position.z)
+            * Matrix_Scale(0.5f, 0.5f, 0.5f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, SPHERE);
+        DrawVirtualObject("the_sphere");
+
+
 
         ///crosshair("+")
         glUseProgram(g_GpuProgramID);
