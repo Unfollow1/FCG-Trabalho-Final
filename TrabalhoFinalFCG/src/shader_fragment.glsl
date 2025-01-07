@@ -23,6 +23,7 @@ uniform mat4 projection;
 #define BUNNY  1
 #define PLANE  2
 #define LUA    3 // Adicionamos um identificador para a Lua
+#define PERSONAGEM 15
 uniform int object_id;
 
 // Parâmetros da axis-aligned bounding box (AABB) do modelo
@@ -32,10 +33,11 @@ uniform vec4 bbox_max;
 // Variáveis para acesso das imagens de textura
 uniform sampler2D TextureImage0;
 uniform sampler2D TextureImage1;
-uniform sampler2D TextureImage2;
 
 // Textura exclusiva para a Lua
 uniform sampler2D TexturaLua;
+
+uniform sampler2D TexturaPersonagem;
 
 // Cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
@@ -107,6 +109,7 @@ void main()
         U = texcoords.x;
         V = texcoords.y;
     }
+
 
     // Aplicamos texturas diferentes dependendo do objeto
     vec3 Kd_final;
