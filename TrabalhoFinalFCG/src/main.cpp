@@ -568,7 +568,6 @@ void GerarCalcadas() {
     * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
     calcadas.push_back(calcada);
 
-
 }
 
 int main(int argc, char* argv[])
@@ -677,6 +676,9 @@ int main(int argc, char* argv[])
     LoadTextureImage("../../data/asfalto.png");                     // TextureImage3
     LoadTextureImage("../../data/poleTexture.png");                 // TextureImage4
     LoadTextureImage("../../data/TexturaLua.jpg");                  // TextureImage5
+    LoadTextureImage("../../data/texturaCalcada.png");              // TextureImage6
+    LoadTextureImage("../../data/smallHouseTexture.jpg");           // TextureImage7
+    LoadTextureImage("../../data/grassTexture.png");                // TextureImage8
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -730,6 +732,10 @@ int main(int argc, char* argv[])
     ObjModel polemodel("../../data/pole.obj");
     ComputeNormals(&polemodel);
     BuildTrianglesAndAddToVirtualScene(&polemodel);
+
+    ObjModel smallhousemodel("../../data/smallHouse.obj");
+    ComputeNormals(&smallhousemodel);
+    BuildTrianglesAndAddToVirtualScene(&smallhousemodel);
 
     if ( argc > 1 )
     {
@@ -874,7 +880,7 @@ int main(int argc, char* argv[])
             // Note que, no sistema de coordenadas da câmera, os planos near e far
             // estão no sentido negativo! Veja slides 176-204 do documento Aula_09_Projecoes.pdf.
             float nearplane = -0.1f;  // Posição do "near plane"
-            float farplane  = -100.0f; // Posição do "far plane"
+            float farplane  = -200.0f; // Posição do "far plane"
 
             if (g_UsePerspectiveProjection)
             {
@@ -954,7 +960,9 @@ int main(int argc, char* argv[])
         #define CHEESE 7
         #define LUA 8
         #define MANSION 9
-
+        #define PLANE_ASPHALT 10
+        #define PLANE_GRASS 11
+        #define SMALLHOUSE 12
 
         #define PERSONAGEM 15
         #define POLE 19
@@ -965,33 +973,80 @@ int main(int argc, char* argv[])
         // Construções
         model = Matrix_Translate(13.0f,-1.0f,-165.0f)  // x, y, z (y = -1.1f coloca no mesmo nível do chão)
         * Matrix_Scale(0.4f, 0.4f, 0.4f)
-        * Matrix_Rotate(165.0f, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));     // aumenta 3x o tamanho em todas as direções
+        * Matrix_Rotate(165.0f, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, MAINBUILD);
         DrawVirtualObject("the_mainbuild");
 
         // Desenhamos o modelo da mansão
-        model = Matrix_Translate(-30.0f, -1.1f, -40.0f)  // Ajuste a posição conforme necessário
+        //model = Matrix_Translate(-30.0f, -1.1f, -40.0f)
+        //* Matrix_Rotate_Y(M_PI/2.0f)
+        //* Matrix_Scale(10.0f, 10.0f, 10.0f);
+        //glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        //glUniform1i(g_object_id_uniform, MANSION);
+        //DrawVirtualObject("the_mansion");
+
+        // Desenhamos o modelo da casa
+        model = Matrix_Translate(-25.0f, -1.1f, -20.0f)
         * Matrix_Rotate_Y(M_PI/2.0f)
-        * Matrix_Scale(9.0f, 9.0f, 9.0f);         // Ajuste a escala conforme necessário
+        * Matrix_Scale(0.7f, 0.7f, 0.7f);
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, MANSION);
-        DrawVirtualObject("the_mansion");
+        glUniform1i(g_object_id_uniform, SMALLHOUSE);
+        DrawVirtualObject("the_smallHouse");
 
        // Desenhamos todas as instâncias da calçada
         for(const Calcada& calcada : calcadas) {
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(calcada.model));
             glUniform1i(g_object_id_uniform, CALCADA);
             DrawVirtualObject("calcada");
+
+
+        /// Desenhamos os planos do chão
+
+        //asfalto
+        model = Matrix_Translate(0.0f,-1.1f,-87.0f)
+        * Matrix_Scale(5.0f, 1.0f, 90.0f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE);
+        DrawVirtualObject("the_plane");
+
+        model = Matrix_Translate(0.0f,-1.1f,16.0f)
+        * Matrix_Scale(35.0f, 1.0f, 13.0f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_ASPHALT);
+        DrawVirtualObject("the_plane");
         }
+
+        //grama
+        model = Matrix_Translate(45.0f,-1.1f,-97.0f)
+        * Matrix_Scale(40.0f, 1.0f, 100.0f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_GRASS);
+        DrawVirtualObject("the_plane");
+
+        model = Matrix_Translate(-45.0f,-1.1f,-97.0f)
+        * Matrix_Scale(40.0f, 1.0f, 100.0f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_GRASS);
+        DrawVirtualObject("the_plane");
 
         // Desenhamos o poste
         model = Matrix_Translate(-7.0f, -1.1f, -5.5f)
         * Matrix_Rotate_Y(-M_PI/2)
-        * Matrix_Scale(0.4f, 0.4f, 0.4f);
+        * Matrix_Scale(0.6f, 0.6f, 0.6f);
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, POLE);
         DrawVirtualObject("the_pole");
+
+        //Desenhamos o modelo da lua
+        model = Matrix_Translate(5.0, 40.0, -35.0f)
+        * Matrix_Rotate_Y(g_AngleY/10)
+        * Matrix_Rotate_Z(g_AngleY/5)
+        * Matrix_Rotate_X(g_AngleY/10)
+        * Matrix_Scale(5.0f, 5.0f, 5.0f);
+        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, LUA);
+        DrawVirtualObject("the_sphere");
 
        // Desenhamos o modelo do queijo
         if (!cheese_picked)
@@ -1198,7 +1253,7 @@ int main(int argc, char* argv[])
             glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
             glStencilMask(0xFF);
 
-            model = Matrix_Translate(4.0f,0.0f,0.0f)
+            model = Matrix_Translate(-6.0f, 4.0f, -160.0f)
             * Matrix_Scale(0.195f, 0.195f, 0.195f);  // Escala um pouco maior para o highlight
 
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
@@ -1220,7 +1275,7 @@ int main(int argc, char* argv[])
             glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
             glStencilMask(0xFF);
 
-            model = Matrix_Translate(2.0f,0.0f,2.0f)
+            model = Matrix_Translate(-6.0f, 4.0f, -156.0f)
             * Matrix_Scale(4.7f, 4.7f, 4.7f);  // Escala um pouco maior para o highlight
 
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
@@ -1243,7 +1298,7 @@ int main(int argc, char* argv[])
             glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
             glStencilMask(0xFF);
 
-            model = Matrix_Translate(2.0f, 2.5f, 2.0f)
+            model = Matrix_Translate(10.0f, 4.0f, -160.0f)
             * Matrix_Scale(0.5f, 0.5f, 0.5f);  // Escala um pouco maior para o highlight
 
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
@@ -1266,7 +1321,7 @@ int main(int argc, char* argv[])
             glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
             glStencilMask(0xFF);
 
-            model = Matrix_Translate(2.5f, -1.1f, 2.5f)
+            model = Matrix_Translate(10.0f, 4.0f, -156.0f)
             * Matrix_Scale(0.6f, 0.6f, 0.6f);  // Escala um pouco maior para o highlight
 
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
@@ -1282,25 +1337,6 @@ int main(int argc, char* argv[])
             glDisable(GL_STENCIL_TEST);
         }
 
-
-        // Desenhamos o plano do chão
-        model = Matrix_Translate(0.0f,-1.1f,-96.0f)
-        * Matrix_Scale(5.0f, 1.0f, 100.0f); /// Aumenta 20x no eixo X e Z
-
-        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, PLANE);
-        DrawVirtualObject("the_plane");
-
-
-        //Desenhamos o modelo da lua
-        model = Matrix_Translate(5.0, 8.0, -13.0f)
-                * Matrix_Rotate_Y(g_AngleY/10)
-                * Matrix_Rotate_Z(g_AngleY/5)
-                * Matrix_Rotate_X(g_AngleY/10)
-                * Matrix_Scale(2.0f, 2.0f, 2.0f);
-        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, LUA);
-        DrawVirtualObject("the_sphere");
 
         //personagem
         glm::vec4 g_posicao_personagem = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
@@ -1669,6 +1705,9 @@ void LoadShadersFromFiles()
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage3"), 3); // Textura asfalto
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage4"), 4); // Textura do poste
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage5"), 5); // Textura do lua
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage6"), 6); // Textura do calcada
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage7"), 7); // Textura da casa pequena
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage8"), 8); // Textura da grama
     glUseProgram(0);
 }
 

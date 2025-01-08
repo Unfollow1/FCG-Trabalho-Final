@@ -24,9 +24,14 @@ uniform mat4 projection;
 #define PLANE  2
 #define MAINBUILD 3
 #define BAGUETE 4
-
 #define LUA 8
+
+#define PLANE_ASPHALT 10
+#define PLANE_GRASS 11
+#define SMALLHOUSE 12
+
 #define POLE 19
+#define CALCADA 20
 uniform int object_id;
 
 // Parâmetros da axis-aligned bounding box (AABB) do modelo
@@ -40,6 +45,9 @@ uniform sampler2D TextureImage2;
 uniform sampler2D TextureImage3;
 uniform sampler2D TextureImage4;
 uniform sampler2D TextureImage5;
+uniform sampler2D TextureImage6;
+uniform sampler2D TextureImage7;
+uniform sampler2D TextureImage8;
 
 // cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
@@ -114,7 +122,7 @@ void main()
         U = (position_model.x - minx) / (maxx - minx);
         V = (position_model.y - miny) / (maxy - miny);
     }
-    else if ( object_id == PLANE )
+    else if ( object_id == PLANE || object_id == PLANE_ASPHALT || object_id == PLANE_GRASS)
     {
         U = texcoords.x;
         V = texcoords.y;
@@ -125,6 +133,16 @@ void main()
         V = texcoords.y;
     }
     else if ( object_id == POLE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+       else if ( object_id == CALCADA )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == SMALLHOUSE )
     {
         U = texcoords.x;
         V = texcoords.y;
@@ -142,7 +160,7 @@ void main()
         // Baguete usa apenas TextureImage2
         Kd_final = texture(TextureImage2, vec2(U,V)).rgb;
     }
-        else if ( object_id == PLANE )
+        else if ( object_id == PLANE || object_id == PLANE_ASPHALT )
     {
         Kd_final = texture(TextureImage3, vec2(U,V)).rgb;
     }
@@ -153,6 +171,18 @@ void main()
     else if ( object_id == LUA )
     {
         Kd_final = texture(TextureImage5, vec2(U,V)).rgb;
+    }
+        else if ( object_id == CALCADA )
+    {
+        Kd_final = texture(TextureImage6, vec2(U,V)).rgb;
+    }
+    else if ( object_id == SMALLHOUSE )
+    {
+        Kd_final = texture(TextureImage7, vec2(U,V)).rgb;
+    }
+        else if ( object_id == PLANE_GRASS )
+    {
+        Kd_final = texture(TextureImage8, vec2(U,V)).rgb;
     }
     else
     {
