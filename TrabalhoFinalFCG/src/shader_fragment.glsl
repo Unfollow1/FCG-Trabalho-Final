@@ -24,6 +24,9 @@ uniform mat4 projection;
 #define PLANE  2
 #define MAINBUILD 3
 #define BAGUETE 4
+
+#define LUA 8
+#define POLE 19
 uniform int object_id;
 
 // Parâmetros da axis-aligned bounding box (AABB) do modelo
@@ -35,6 +38,8 @@ uniform sampler2D TextureImage0;
 uniform sampler2D TextureImage1;
 uniform sampler2D TextureImage2;
 uniform sampler2D TextureImage3;
+uniform sampler2D TextureImage4;
+uniform sampler2D TextureImage5;
 
 // cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
@@ -75,7 +80,7 @@ void main()
     float U = 0.0;
     float V = 0.0;
 
-    if ( object_id == SPHERE )
+    if ( object_id == SPHERE || object_id == LUA) // a lua também é uma esfera
     {
         vec4 bbox_center = (bbox_min + bbox_max) / 2.0;
 
@@ -119,6 +124,11 @@ void main()
         U = texcoords.x;
         V = texcoords.y;
     }
+    else if ( object_id == POLE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
 
     // Equação de Iluminação
     float lambert = max(0,dot(n,l));
@@ -135,6 +145,14 @@ void main()
         else if ( object_id == PLANE )
     {
         Kd_final = texture(TextureImage3, vec2(U,V)).rgb;
+    }
+    else if ( object_id == POLE )
+    {
+        Kd_final = texture(TextureImage4, vec2(U,V)).rgb;
+    }
+    else if ( object_id == LUA )
+    {
+        Kd_final = texture(TextureImage5, vec2(U,V)).rgb;
     }
     else
     {

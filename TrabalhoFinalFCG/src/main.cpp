@@ -606,7 +606,7 @@ int main(int argc, char* argv[])
     // Criamos uma janela do sistema operacional, com 800 colunas e 600 linhas
     // de pixels, e com título "INF01047 ...".
     GLFWwindow* window;
-    window = glfwCreateWindow(800, 600, "INF01047 - 00343897 - Gleydson de Sousa Campos", NULL, NULL);
+    window = glfwCreateWindow(800, 600, "Neighborhood", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -675,6 +675,8 @@ int main(int argc, char* argv[])
 
     LoadTextureImage("../../data/baguete_COLOR.png");               // TextureImage2
     LoadTextureImage("../../data/asfalto.png");                     // TextureImage3
+    LoadTextureImage("../../data/poleTexture.png");                 // TextureImage4
+    LoadTextureImage("../../data/TexturaLua.jpg");                  // TextureImage5
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -725,7 +727,9 @@ int main(int argc, char* argv[])
     ComputeNormals(&mansionmodel);
     BuildTrianglesAndAddToVirtualScene(&mansionmodel);
 
-
+    ObjModel polemodel("../../data/pole.obj");
+    ComputeNormals(&polemodel);
+    BuildTrianglesAndAddToVirtualScene(&polemodel);
 
     if ( argc > 1 )
     {
@@ -951,7 +955,9 @@ int main(int argc, char* argv[])
         #define LUA 8
         #define MANSION 9
 
+
         #define PERSONAGEM 15
+        #define POLE 19
         #define CALCADA 20
 
         /// desenhos adicionados
@@ -978,6 +984,14 @@ int main(int argc, char* argv[])
             glUniform1i(g_object_id_uniform, CALCADA);
             DrawVirtualObject("calcada");
         }
+
+        // Desenhamos o poste
+        model = Matrix_Translate(-7.0f, -1.1f, -5.5f)
+        * Matrix_Rotate_Y(-M_PI/2)
+        * Matrix_Scale(0.4f, 0.4f, 0.4f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, POLE);
+        DrawVirtualObject("the_pole");
 
        // Desenhamos o modelo do queijo
         if (!cheese_picked)
@@ -1653,6 +1667,8 @@ void LoadShadersFromFiles()
 
     /// Variáveis em "shader_fragment.glsl" para acesso das imagens de textura adicionadas
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage3"), 3); // Textura asfalto
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage4"), 4); // Textura do poste
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage5"), 5); // Textura do lua
     glUseProgram(0);
 }
 
