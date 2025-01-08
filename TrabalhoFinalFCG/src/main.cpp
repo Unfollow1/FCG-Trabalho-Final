@@ -679,6 +679,9 @@ int main(int argc, char* argv[])
     LoadTextureImage("../../data/texturaCalcada.png");              // TextureImage6
     LoadTextureImage("../../data/smallHouseTexture.jpg");           // TextureImage7
     LoadTextureImage("../../data/grassTexture.png");                // TextureImage8
+    LoadTextureImage("../../data/gasStationTexture.jpg");           // TextureImage9
+    LoadTextureImage("../../data/myhouseTexture.png");              // TextureImage10
+    LoadTextureImage("../../data/longHouseTexture.jpg");            // TextureImage11
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -736,6 +739,19 @@ int main(int argc, char* argv[])
     ObjModel smallhousemodel("../../data/smallHouse.obj");
     ComputeNormals(&smallhousemodel);
     BuildTrianglesAndAddToVirtualScene(&smallhousemodel);
+
+    ObjModel gasstationmodel("../../data/gasStation.obj");
+    ComputeNormals(&gasstationmodel);
+    BuildTrianglesAndAddToVirtualScene(&gasstationmodel);
+
+    ObjModel myhousemodel("../../data/myhouse.obj");
+    ComputeNormals(&myhousemodel);
+    BuildTrianglesAndAddToVirtualScene(&myhousemodel);
+
+    ObjModel longhousemodel("../../data/longHouse.obj");
+    ComputeNormals(&longhousemodel);
+    BuildTrianglesAndAddToVirtualScene(&longhousemodel);
+
 
     if ( argc > 1 )
     {
@@ -963,8 +979,11 @@ int main(int argc, char* argv[])
         #define PLANE_ASPHALT 10
         #define PLANE_GRASS 11
         #define SMALLHOUSE 12
-
+        #define GASSTATION 13
+        #define MYHOUSE 14
         #define PERSONAGEM 15
+        #define LONGHOUSE 16
+
         #define POLE 19
         #define CALCADA 20
 
@@ -993,6 +1012,30 @@ int main(int argc, char* argv[])
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, SMALLHOUSE);
         DrawVirtualObject("the_smallHouse");
+
+        // Desenhamos o modelo do posto de gasolina
+        model = Matrix_Translate(-68.0f, -1.3f, -110.0f)
+        * Matrix_Rotate_Y(M_PI)
+        * Matrix_Scale(0.5f, 0.5f, 0.5f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, GASSTATION);
+        DrawVirtualObject("the_gasstation");
+
+        // Desenhamos o modelo da nossa casa
+        model = Matrix_Translate(0.0f, -1.3f, 58.0f)
+        * Matrix_Rotate_Y(M_PI/2)
+        * Matrix_Scale(0.90f, 0.90f, 0.90f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, MYHOUSE);
+        DrawVirtualObject("myHouse");
+
+        // Desenhamos o modelo de uma das casas
+        model = Matrix_Translate(40.0f, -1.3f, -30.0f)
+        * Matrix_Rotate_Y(M_PI)
+        * Matrix_Scale(0.90f, 0.90f, 0.90f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, LONGHOUSE);
+        DrawVirtualObject("the_longhouse");
 
        // Desenhamos todas as instâncias da calçada
         for(const Calcada& calcada : calcadas) {
@@ -1699,15 +1742,18 @@ void LoadShadersFromFiles()
     glUseProgram(g_GpuProgramID);
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage0"), 0);
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage1"), 1);
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage2"), 2); // Textura da baguete
 
     /// Variáveis em "shader_fragment.glsl" para acesso das imagens de textura adicionadas
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage3"), 3); // Textura asfalto
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage2"), 2); // Textura da baguete
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage3"), 3); // Textura do asfalto
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage4"), 4); // Textura do poste
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage5"), 5); // Textura do lua
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage6"), 6); // Textura do calcada
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage7"), 7); // Textura da casa pequena
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage8"), 8); // Textura da grama
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage9"), 9); // Textura do posto de gasolina
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage10"), 10); // Textura do nossa casa
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage11"), 11); // Textura de uma das casa
     glUseProgram(0);
 }
 

@@ -29,6 +29,9 @@ uniform mat4 projection;
 #define PLANE_ASPHALT 10
 #define PLANE_GRASS 11
 #define SMALLHOUSE 12
+#define GASSTATION 13
+#define MYHOUSE 14
+#define LONGHOUSE 16
 
 #define POLE 19
 #define CALCADA 20
@@ -48,6 +51,9 @@ uniform sampler2D TextureImage5;
 uniform sampler2D TextureImage6;
 uniform sampler2D TextureImage7;
 uniform sampler2D TextureImage8;
+uniform sampler2D TextureImage9;
+uniform sampler2D TextureImage10;
+uniform sampler2D TextureImage11;
 
 // cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
@@ -147,6 +153,22 @@ void main()
         U = texcoords.x;
         V = texcoords.y;
     }
+    else if ( object_id == GASSTATION )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == MYHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+
+    else if ( object_id == LONGHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
 
     // Equação de Iluminação
     float lambert = max(0,dot(n,l));
@@ -180,9 +202,21 @@ void main()
     {
         Kd_final = texture(TextureImage7, vec2(U,V)).rgb;
     }
-        else if ( object_id == PLANE_GRASS )
+    else if ( object_id == PLANE_GRASS )
     {
         Kd_final = texture(TextureImage8, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  GASSTATION )
+    {
+        Kd_final = texture(TextureImage9, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  MYHOUSE )
+    {
+        Kd_final = texture(TextureImage10, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  LONGHOUSE )
+    {
+        Kd_final = texture(TextureImage11, vec2(U,V)).rgb;
     }
     else
     {
