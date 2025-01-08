@@ -271,10 +271,10 @@ bool trocaCamera = false;
 //curva de bezier
 
 // Pontos de controle da curva de Bézier
-glm::vec4 p0 = glm::vec4(-3.0f, 0.0f, -5.0f, 1.0f);  // Ponto inicial
-glm::vec4 p1 = glm::vec4(-1.0f, 2.0f, -5.0f, 1.0f);  // Primeiro ponto de controle (sobe)
-glm::vec4 p2 = glm::vec4(1.0f, -2.0f, -10.0f, 1.0f);  // Segundo ponto de controle (desce)
-glm::vec4 p3 = glm::vec4(3.0f, 0.0f, -10.0f, 1.0f);   // Ponto final
+glm::vec4 p0 = glm::vec4(-8.0f, 10.0f, -5.0f, 1.0f);  // Ponto inicial
+glm::vec4 p1 = glm::vec4(-5.0f, 12.0f, -8.0f, 1.0f);  // Primeiro ponto de controle (sobe)
+glm::vec4 p2 = glm::vec4(-2.0f, 8.0f, -10.0f, 1.0f);  // Segundo ponto de controle (desce)
+glm::vec4 p3 = glm::vec4(1.0f, 12.0f, -5.0f, 1.0f);   // Ponto final
 
 glm::vec4 PontoBezier(float t, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, glm::vec4 p3)
 {
@@ -1366,7 +1366,7 @@ int main(int argc, char* argv[])
         //esfera seguindo a curva de bezier
         glm::vec4 sphere_position = AtualizaPonto(current_time * ControleVelocidadeCurva , p0, p1, p2, p3);
         model = Matrix_Translate(sphere_position.x, sphere_position.y, sphere_position.z)
-            * Matrix_Scale(0.5f, 0.5f, 0.5f);
+            * Matrix_Scale(0.1f, 0.1f, 0.1f);
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, SPHERE);
         DrawVirtualObject("the_sphere");
