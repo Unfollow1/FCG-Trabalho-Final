@@ -272,9 +272,9 @@ bool trocaCamera = false;
 
 // Pontos de controle da curva de Bézier
 glm::vec4 p0 = glm::vec4(-8.0f, 10.0f, -5.0f, 1.0f);  // Ponto inicial
-glm::vec4 p1 = glm::vec4(-5.0f, 12.0f, -8.0f, 1.0f);  // Primeiro ponto de controle (sobe)
-glm::vec4 p2 = glm::vec4(-2.0f, 8.0f, -10.0f, 1.0f);  // Segundo ponto de controle (desce)
-glm::vec4 p3 = glm::vec4(1.0f, 12.0f, -5.0f, 1.0f);   // Ponto final
+glm::vec4 p1 = glm::vec4(-5.0f, 12.0f, -8.0f, 1.0f);  // 2o
+glm::vec4 p2 = glm::vec4(-2.0f, 8.0f, -10.0f, 1.0f);  // 3o
+glm::vec4 p3 = glm::vec4(1.0f, 12.0f, -5.0f, 1.0f);   // 4o
 
 glm::vec4 PontoBezier(float t, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, glm::vec4 p3)
 {
@@ -859,7 +859,7 @@ int main(int argc, char* argv[])
         if(g_cameraType)
         {
 
-                // Calculamos os vetores da base da câmera
+            // Calculamos os vetores da base da câmera
             glm::vec4 w = -camera_view_vector / norm(camera_view_vector);
             glm::vec4 u = crossproduct(camera_up_vector, w);
 
@@ -882,31 +882,14 @@ int main(int argc, char* argv[])
             float nearplane = -0.1f;  // Posição do "near plane"
             float farplane  = -200.0f; // Posição do "far plane"
 
-            if (g_UsePerspectiveProjection)
-            {
-                // Projeção Perspectiva.
-                // Para definição do field of view (FOV), veja slides 205-215 do documento Aula_09_Projecoes.pdf.
-                float field_of_view = 3.141592 / 3.0f;
-                projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
-            }
-            else
-            {
-                // Projeção Ortográfica.
-                // Para definição dos valores l, r, b, t ("left", "right", "bottom", "top"),
-                // PARA PROJEÇÃO ORTOGRÁFICA veja slides 219-224 do documento Aula_09_Projecoes.pdf.
-                // Para simular um "zoom" ortográfico, computamos o valor de "t"
-                // utilizando a variável g_CameraDistance.
-                float t = 1.5f*g_CameraDistance/2.5f;
-                float b = -t;
-                float r = t*g_ScreenRatio;
-                float l = -r;
-                projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
-            }
+            // Projeção Perspectiva.
+            // Para definição do field of view (FOV), veja slides 205-215 do documento Aula_09_Projecoes.pdf.
+            float field_of_view = 3.141592 / 3.0f;
+            projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
         }
 
         else
         {
-            // O ponto de interesse é o último ponto de onde a câmera livre esteve
             glm::vec4 camera_lookat_l = g_camera_position_c;
             glm::vec4 camera_up_vector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 
@@ -927,21 +910,10 @@ int main(int argc, char* argv[])
             float nearplane = -0.1f;  // Posição do "near plane"
             float farplane  = -100.0f; // Posição do "far plane"
 
-            if (g_UsePerspectiveProjection)
-            {
-                // Projeção Perspectiva para Look-At
-                float field_of_view = 3.141592 / 3.0f;
-                projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
-            }
-            else
-            {
-                // Projeção Ortográfica para Look-At
-                float t = 1.5f;
-                float b = -t;
-                float r = t * g_ScreenRatio;
-                float l = -r;
-                projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
-            }
+            // Projeção Perspectiva para Look-At
+            float field_of_view = 3.141592 / 3.0f;
+            projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
+
         }
 
         // Enviamos as matrizes "view" e "projection" para a placa de vídeo
