@@ -29,9 +29,17 @@ uniform mat4 projection;
 #define PLANE_ASPHALT 10
 #define PLANE_GRASS 11
 #define SMALLHOUSE 12
+#define GASSTATION 13
+#define MYHOUSE 14
 
+#define LONGHOUSE 16
+#define WOODHOUSE 17
+#define LASTHOUSE 18
 #define POLE 19
 #define CALCADA 20
+#define LILHOUSE 21
+#define MAQUINA 22
+
 uniform int object_id;
 
 // Parâmetros da axis-aligned bounding box (AABB) do modelo
@@ -48,6 +56,13 @@ uniform sampler2D TextureImage5;
 uniform sampler2D TextureImage6;
 uniform sampler2D TextureImage7;
 uniform sampler2D TextureImage8;
+uniform sampler2D TextureImage9;
+uniform sampler2D TextureImage10;
+uniform sampler2D TextureImage11;
+uniform sampler2D TextureImage12;
+uniform sampler2D TextureImage13;
+uniform sampler2D TextureImage14;
+uniform sampler2D TextureImage15;
 
 // cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
@@ -147,6 +162,42 @@ void main()
         U = texcoords.x;
         V = texcoords.y;
     }
+    else if ( object_id == GASSTATION )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == MYHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+
+    else if ( object_id == LONGHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == WOODHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == LASTHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == LILHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == MAQUINA )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
 
     // Equação de Iluminação
     float lambert = max(0,dot(n,l));
@@ -183,6 +234,34 @@ void main()
         else if ( object_id == PLANE_GRASS )
     {
         Kd_final = texture(TextureImage8, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  GASSTATION )
+    {
+        Kd_final = texture(TextureImage9, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  MYHOUSE )
+    {
+        Kd_final = texture(TextureImage10, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  LONGHOUSE )
+    {
+        Kd_final = texture(TextureImage11, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  WOODHOUSE )
+    {
+        Kd_final = texture(TextureImage12, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  LASTHOUSE )
+    {
+        Kd_final = texture(TextureImage13, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  LILHOUSE )
+    {
+        Kd_final = texture(TextureImage14, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  MAQUINA )
+    {
+        Kd_final = texture(TextureImage15, vec2(U,V)).rgb;
     }
     else
     {

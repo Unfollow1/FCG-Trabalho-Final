@@ -1608,7 +1608,7 @@
 	<array>
 	"mapbox/earcut.hpp"
 
-1736324518 source:c:\users\gleyd\onedrive\documentos\github\fcg-trabalho-final\trabalhofinalfcg\src\main.cpp
+1736408115 source:c:\users\gleyd\onedrive\documentos\github\fcg-trabalho-final\trabalhofinalfcg\src\main.cpp
 	<cmath>
 	<cstdio>
 	<cstdlib>
@@ -2847,4 +2847,11 @@
 
 1735750734 source:c:\users\gabri\documents\github\fcg-trabalho-final\trabalhofinalfcg\src\tiny_obj_loader.cpp
 	"tiny_obj_loader.h"
+
+1736410121 source:c:\users\gleyd\onedrive\documentos\github\fcg-trabalho-final\trabalhofinalfcg\src\collisions.cpp
+	"collisions.hpp"
+	<cmath>
+
+1736408493 c:\users\gleyd\onedrive\documentos\github\fcg-trabalho-final\trabalhofinalfcg\include\collisions.hpp
+	<glm/vec4.hpp>
 
