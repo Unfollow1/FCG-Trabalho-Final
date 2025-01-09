@@ -39,6 +39,7 @@ uniform mat4 projection;
 #define CALCADA 20
 #define LILHOUSE 21
 #define MAQUINA 22
+#define SKY 23
 
 uniform int object_id;
 
@@ -63,6 +64,7 @@ uniform sampler2D TextureImage12;
 uniform sampler2D TextureImage13;
 uniform sampler2D TextureImage14;
 uniform sampler2D TextureImage15;
+uniform sampler2D TextureImage16;
 
 // cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
@@ -103,7 +105,7 @@ void main()
     float U = 0.0;
     float V = 0.0;
 
-    if ( object_id == SPHERE || object_id == LUA) // a lua também é uma esfera
+    if ( object_id == SPHERE || object_id == LUA ) // a lua também é uma esfera
     {
         vec4 bbox_center = (bbox_min + bbox_max) / 2.0;
 
@@ -198,6 +200,16 @@ void main()
         U = texcoords.x;
         V = texcoords.y;
     }
+    else if (object_id == SKY)
+    {
+        vec4 bbox_center = (bbox_min + bbox_max) / 2.0;
+
+        float theta = atan(position_model.x, position_model.z);
+        float phi = asin(position_model.y);
+
+        U = (theta + M_PI) / (2*M_PI);
+        V = (phi + M_PI_2) / M_PI;
+    }
 
     // Equação de Iluminação
     float lambert = max(0,dot(n,l));
@@ -262,6 +274,10 @@ void main()
     else if ( object_id ==  MAQUINA )
     {
         Kd_final = texture(TextureImage15, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  SKY )
+    {
+        Kd_final = texture(TextureImage16, vec2(U,V)).rgb;
     }
     else
     {

@@ -3,6 +3,37 @@
 
 #include <glm/vec4.hpp>
 
-bool CheckCollisionWithBunny(glm::vec4 player_position, glm::vec4 bunny_position, float radius = 0.5f);
+// Estrutura para uma AABB (Axis-Aligned Bounding Box)
+struct BoundingBox {
+    glm::vec4 min;
+    glm::vec4 max;
+};
+
+// Estrutura para um plano
+struct Plane {
+    glm::vec4 point;  // Um ponto no plano
+    glm::vec4 normal; // Normal do plano (normalizada)
+};
+
+// Colisão esfera-esfera (usado para o coelho)
+bool SphereToSphereCollision(
+    const glm::vec4& center1,
+    float radius1,
+    const glm::vec4& center2,
+    float radius2
+);
+
+// Colisão caixa-caixa (usado para objetos maiores)
+bool BoxToBoxCollision(
+    const BoundingBox& box1,
+    const BoundingBox& box2
+);
+
+// Colisão ponto-plano (usado para limites do mapa)
+bool PointToPlaneCollision(
+    const glm::vec4& point,
+    const Plane& plane,
+    float threshold
+);
 
 #endif

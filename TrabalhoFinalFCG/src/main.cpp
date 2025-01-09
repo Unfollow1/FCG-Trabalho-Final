@@ -48,7 +48,7 @@
 // Headers locais, definidos na pasta "include/"
 #include "utils.h"
 #include "matrices.h"
-
+#include "collisions.hpp"
 
 // Constantes
 #define VelocidadeBase 5.0f
@@ -301,6 +301,11 @@ glm::vec4 AtualizaPonto(float time, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, gl
 
 // fim da curva de bezier
 
+/// tudo sobre colisoes
+
+const float PLAYER_RADIUS = 1.5f;
+const float BUNNY_RADIUS = 1.5f;
+
 
 /// variáveis para controlar se os itens foram pegos
 bool bunny_picked = false;
@@ -321,7 +326,7 @@ bool g_PaymentCompleted = false;            // Flag para indicar se o pagamento 
 glm::vec4 g_HomePosition = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);  // Posição da casa (ajuste conforme necessário)
 bool g_GameWon = false;  // Flag para indicar se o jogador ganhou o jogo
 
-float g_CameraAlturaFixa = 1.0f;
+float g_CameraAlturaFixa = 2.0f;
 
 std::map<std::string, glm::mat4> g_object_matrices;
 int g_object_highlighted = -1;
@@ -727,6 +732,7 @@ int main(int argc, char* argv[])
     LoadTextureImage("../../data/lastHouseTexture.png");            // TextureImage13
     LoadTextureImage("../../data/lilHouseTexture.png");             // TextureImage14
     LoadTextureImage("../../data/maquinaTextura.png");              // TextureImage15
+    LoadTextureImage("../../data/ceuEstrelado.jpg");                // TextureImage15
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -956,7 +962,7 @@ int main(int argc, char* argv[])
             // Note que, no sistema de coordenadas da câmera, os planos near e far
             // estão no sentido negativo! Veja slides 176-204 do documento Aula_09_Projecoes.pdf.
             float nearplane = -0.1f;  // Posição do "near plane"
-            float farplane  = -200.0f; // Posição do "far plane"
+            float farplane  = -500.0f; // Posição do "far plane"
 
             // Projeção Perspectiva.
             // Para definição do field of view (FOV), veja slides 205-215 do documento Aula_09_Projecoes.pdf.
@@ -1021,8 +1027,21 @@ int main(int argc, char* argv[])
         #define CALCADA 20
         #define LILHOUSE 21
         #define MAQUINA 22
+        #define SKY 23
 
-    /// desenhos adicionados
+        /// desenhos adicionados
+
+        // Skybox
+        glCullFace(GL_FRONT);
+        glDepthMask(GL_FALSE);
+        model = Matrix_Translate(camera_position_c.x, camera_position_c.y, camera_position_c.z)
+        * Matrix_Scale(200.0f, 200.0f, 200.0f);  // Aumenta o tamanho para evitar flickering nas bordas
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, SKY);
+        DrawVirtualObject("the_sphere");
+        // Reativa escrita no z-buffer
+        glDepthMask(GL_TRUE);
+        glCullFace(GL_BACK);
 
         // Construções
         //model = Matrix_Translate(13.0f,-1.0f,-165.0f)  // x, y, z (y = -1.1f coloca no mesmo nível do chão)
@@ -1189,11 +1208,11 @@ int main(int argc, char* argv[])
         DrawVirtualObject("the_pole");
 
         //Desenhamos o modelo da lua
-        model = Matrix_Translate(5.0, 40.0, -35.0f)
+        model = Matrix_Translate(15.0, 60.0, -100.0f)
         * Matrix_Rotate_Y(g_AngleY/10)
         * Matrix_Rotate_Z(g_AngleY/5)
         * Matrix_Rotate_X(g_AngleY/10)
-        * Matrix_Scale(5.0f, 5.0f, 5.0f);
+        * Matrix_Scale(6.0f, 6.0f, 6.0f);
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, LUA);
         DrawVirtualObject("the_sphere");
@@ -1387,7 +1406,6 @@ int main(int argc, char* argv[])
         glUniform1i(g_object_id_uniform, SPHERE);
         DrawVirtualObject("the_sphere");
 
-        // Desenhamos o modelo do coelho
         if (!bunny_picked)
         {
             model = Matrix_Translate(1.0f,0.0f,0.0f)
@@ -1395,6 +1413,16 @@ int main(int argc, char* argv[])
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, BUNNY);
             DrawVirtualObject("the_bunny");
+
+            glm::vec4 bunny_position = model * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+            // Verifica colisão com o jogador
+            if (SphereToSphereCollision(g_camera_position_c, PLAYER_RADIUS, bunny_position, BUNNY_RADIUS))
+            {
+                bunny_picked = true;
+                g_PlayerMoney += 50.0f;
+                printf("Coelho encontrado! +R$ 50.00\n");
+            }
         }
 
         // Salvamos a matriz do coelho para uso no raycasting
@@ -1986,6 +2014,7 @@ void LoadShadersFromFiles()
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage13"), 13); // Textura da ultima casa
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage14"), 14); // Textura da casa pequena
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage15"), 15); // Textura da casa pequena
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage16"), 16); // Textura da casa pequena
     glUseProgram(0);
 }
 
