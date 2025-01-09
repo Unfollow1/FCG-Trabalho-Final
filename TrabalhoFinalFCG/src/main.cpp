@@ -346,7 +346,6 @@ int g_object_highlighted = -1;
 std::vector<std::string> todos_itens = {
     "baguete",
     "queijo",
-    "presunto",
     "ovo",
     "manteiga"
 };
@@ -382,8 +381,8 @@ void InitializeMoneyAndPrices()
 
     // Define preços para os itens (valores com 2 casas decimais)
     g_ItemPrices["baguete"] = 15.24f;
-    g_ItemPrices["queijo"] = 25.99f;
-    g_ItemPrices["presunto"] = 18.75f;
+    g_ItemPrices["queijo"] = 17.99f;
+    g_ItemPrices["presunto"] = 1.75f;
     g_ItemPrices["ovo"] = 14.32f;
     g_ItemPrices["manteiga"] = 13.99f;
 }
@@ -626,8 +625,8 @@ int main(int argc, char* argv[])
 
     // Inicializa o gerador de números aleatórios
     srand(time(NULL));
-    // Sorteia 3 itens para comprar
-    SortearItens(3);
+    // Sorteia 2 itens para comprar
+    SortearItens(2);
     // Inicializa o sistema monetário do jogo
     InitializeMoneyAndPrices();
 
@@ -739,6 +738,7 @@ int main(int argc, char* argv[])
     LoadTextureImage("../../data/ceuEstrelado.jpg");                // TextureImage16
     LoadTextureImage("../../data/goldTexture.jpg");                 // TextureImage17
     LoadTextureImage("../../data/queijo.jpg");                      // TextureImage18
+    LoadTextureImage("../../data/parmaTexture.jpg");                // TextureImage19
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -973,24 +973,6 @@ int main(int argc, char* argv[])
 
             glm::vec4 new_camera_position = g_camera_position_c; // Posição atual
 
-            // Atualiza a bounding box do jogador
-            g_PlayerBox.min = new_camera_position - glm::vec4(1.5f, 1.5f, 1.5f, 0.0f);
-            g_PlayerBox.max = new_camera_position + glm::vec4(1.5f, 1.5f, 1.5f, 0.0f);
-
-            // Verifica e resolve colisão com a casa
-            CollisionResult houseCollision = ResolveBoxCollision(g_PlayerBox, g_HouseBox, g_camera_position_c, new_camera_position);
-            if (houseCollision.collided) {
-                new_camera_position = houseCollision.correctedPosition;
-            }
-
-            // Verifica e resolve colisão com a máquina
-            CollisionResult cashierCollision = ResolveBoxCollision(g_PlayerBox, g_CashierBox, g_camera_position_c, new_camera_position);
-            if (cashierCollision.collided) {
-                new_camera_position = cashierCollision.correctedPosition;
-            }
-
-            // Atualiza a posição final
-            g_camera_position_c = new_camera_position;
 
 
             // Note que, no sistema de coordenadas da câmera, os planos near e far
@@ -1286,12 +1268,6 @@ int main(int argc, char* argv[])
             int items_coletados = 0;
             g_TotalPurchaseValue = 0.0f;
 
-            // Calcula o valor total de TODOS os itens coletados
-            if (bunny_picked) g_TotalPurchaseValue += g_ItemPrices["presunto"];
-            if (baguete_picked) g_TotalPurchaseValue += g_ItemPrices["baguete"];
-            if (egg_picked) g_TotalPurchaseValue += g_ItemPrices["ovo"];
-            if (butter_picked) g_TotalPurchaseValue += g_ItemPrices["manteiga"];
-            if (cheese_picked) g_TotalPurchaseValue += g_ItemPrices["queijo"];
 
             // Verifica quantos itens foram coletados
             for (size_t i = 0; i < itens_pegos.size(); i++)
@@ -1325,7 +1301,7 @@ int main(int argc, char* argv[])
        // Desenhamos o modelo do queijo
         if (!cheese_picked)
         {
-            model = Matrix_Translate(10.0f, 1.0f, -156.0f)
+            model = Matrix_Translate(10.0f, -1.0f, -156.0f)
             * Matrix_Scale(0.5f, 0.5f, 0.5f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, CHEESE);
@@ -1356,7 +1332,7 @@ int main(int argc, char* argv[])
         // Desenhamos o modelo da manteiga
         if (!butter_picked)
         {
-            model = Matrix_Translate(10.0f, 1.0f, -160.0f)
+            model = Matrix_Translate(10.0f, -1.0f, -160.0f)
             * Matrix_Scale(0.3f, 0.3f, 0.3f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, BUTTER);
@@ -1388,8 +1364,8 @@ int main(int argc, char* argv[])
         // Desenhamos o modelo do ovo
         if (!egg_picked)
         {
-            model = Matrix_Translate(-6.0f, 1.0f, -156.0f)
-            * Matrix_Scale(4.0f, 4.0f, 4.0f);
+            model = Matrix_Translate(-6.0f, -1.0f, -156.0f)
+            * Matrix_Scale(0.60f, 0.60f, 0.60f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, EGG);
             DrawVirtualObject("the_eggs");
@@ -1419,7 +1395,7 @@ int main(int argc, char* argv[])
         // Desenhamos o modelo da baguete
         if (!baguete_picked)
         {
-            model = Matrix_Translate(-6.0f, 1.0f, -160.0f)
+            model = Matrix_Translate(-6.0f, -1.0f, -160.0f)
             * Matrix_Scale(0.15f, 0.15f, 0.15f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, BAGUETE);
@@ -1449,20 +1425,13 @@ int main(int argc, char* argv[])
 
         if (!bunny_picked)
         {
-            model = Matrix_Translate(1.0f,0.0f,-10.0f);
+            model = Matrix_Translate(50.0f,0.0f,-40.0f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, BUNNY);
             DrawVirtualObject("the_bunny");
 
             glm::vec4 bunny_position = model * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
-            // Verifica colisão com o jogador
-            if (SphereToSphereCollision(g_camera_position_c, PLAYER_RADIUS, bunny_position, BUNNY_RADIUS))
-            {
-                bunny_picked = true;
-                g_PlayerMoney += 500.0f;
-                printf("Coelho encontrado! +R$ 50.00\n");
-            }
         }
 
         // Salvamos a matriz do coelho para uso no raycasting
@@ -1526,7 +1495,7 @@ int main(int argc, char* argv[])
             glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
             glStencilMask(0xFF);
 
-            model = Matrix_Translate(-6.0f, 1.0f, -160.0f)
+            model = Matrix_Translate(-6.0f, -1.0f, -160.0f)
             * Matrix_Scale(0.195f, 0.195f, 0.195f);  // Escala um pouco maior para o highlight
 
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
@@ -1548,8 +1517,8 @@ int main(int argc, char* argv[])
             glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
             glStencilMask(0xFF);
 
-            model = Matrix_Translate(-6.0f, 1.0f, -156.0f)
-            * Matrix_Scale(4.7f, 4.7f, 4.7f);  // Escala um pouco maior para o highlight
+            model = Matrix_Translate(-6.0f, -1.0f, -156.0f)
+            * Matrix_Scale(1.20f, 1.20f, 1.20f);  // Escala um pouco maior para o highlight
 
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
 
@@ -1571,7 +1540,7 @@ int main(int argc, char* argv[])
             glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
             glStencilMask(0xFF);
 
-            model = Matrix_Translate(10.0f, 2.0f, -160.0f)
+            model = Matrix_Translate(10.0f, -1.0f, -160.0f)
             * Matrix_Scale(0.5f, 0.5f, 0.5f);  // Escala um pouco maior para o highlight
 
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
@@ -1594,7 +1563,7 @@ int main(int argc, char* argv[])
             glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
             glStencilMask(0xFF);
 
-            model = Matrix_Translate(10.0f, 1.0f, -156.0f)
+            model = Matrix_Translate(10.0f, -1.0f, -156.0f)
             * Matrix_Scale(0.6f, 0.6f, 0.6f);  // Escala um pouco maior para o highlight
 
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
@@ -2057,6 +2026,7 @@ void LoadShadersFromFiles()
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage16"), 16); // Textura do ceu estrelado
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage17"), 17); // Textura do coelho dourado
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage18"), 18); // Textura do queijo
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage19"), 18); // Textura do queijo
     glUseProgram(0);
 }
 
