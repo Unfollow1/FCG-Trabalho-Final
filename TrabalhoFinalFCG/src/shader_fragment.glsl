@@ -62,14 +62,6 @@ uniform sampler2D TextureImage12;
 uniform sampler2D TextureImage13;
 uniform sampler2D TextureImage14;
 
-// Variáveis para a luz do poste
-uniform float polelight_pos_x;
-uniform float polelight_pos_y;
-uniform float polelight_pos_z;
-uniform float polelight_dir_x;
-uniform float polelight_dir_y;
-uniform float polelight_dir_z;
-
 
 // cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
@@ -201,23 +193,6 @@ void main()
         V = texcoords.y;
     }
 
-
-    // Configuração da luz do poste
-    vec4 pontoLPole = vec4(polelight_pos_x, polelight_pos_y, polelight_pos_z, 1.0f);
-    vec4 direcaoPole = normalize(vec4(polelight_dir_x, polelight_dir_y, polelight_dir_z, 0.0f));
-
-    float pole_influence = 0.0;
-    float cos_angle = dot(normalize(p - pontoLPole), -normalize(direcaoPole)); // Note o sinal negativo
-    float abertura = cos(M_PI/6); // 30 graus de abertura
-
-    if(cos_angle >= abertura)
-    {
-        // Aumentei a intensidade e modifiquei a atenuação
-        pole_influence = 5.0 / (max(pow(length(pontoLPole-p), 2), 1));
-    }
-
-
-
     // Equação de Iluminação
     float lambert = max(0,dot(n,l));
     float ambient_light = 0.4;
@@ -286,16 +261,13 @@ void main()
         Kd_final = mix(Kd1, Kd0, lambert);
     }
 
-    // Cálculo do termo difuso da luz do poste
-    vec3 pole_diffuse_term = Kd_final * max(0, dot(n, -direcaoPole)) * pole_influence;
-
     if (use_color_override)
     {
         color = color_override;
     }
     else
     {
-        color.rgb = Kd_final * lambert + pole_diffuse_term + Kd_final * ambient_light;
+        color.rgb = Kd_final * (lambert + ambient_light);
         color.a = 1;
     }
 

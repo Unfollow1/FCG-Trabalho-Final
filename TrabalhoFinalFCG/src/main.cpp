@@ -251,14 +251,6 @@ double g_LastCursorPosX, g_LastCursorPosY;
 
 /// variaveis globais
 
-// poste
-GLfloat polelight_pos_x;
-GLfloat polelight_pos_y;
-GLfloat polelight_pos_z;
-GLfloat polelight_dir_x;
-GLfloat polelight_dir_y;
-GLfloat polelight_dir_z;
-
 glm::vec4 g_camera_position_c  = glm::vec4(0.0f,1.0f,3.5f,1.0f); // Posição inicial da câmera
 float prev_time = (float)glfwGetTime();
 float delta_t;
@@ -694,14 +686,6 @@ int main(int argc, char* argv[])
     LoadTextureImage("../../data/lastHouseTexture.png");            // TextureImage13
     LoadTextureImage("../../data/lilHouseTexture.png");             // TextureImage14
 
-    //
-    polelight_pos_x = glGetUniformLocation(g_GpuProgramID, "polelight_pos_x");
-    polelight_pos_y = glGetUniformLocation(g_GpuProgramID, "polelight_pos_y");
-    polelight_pos_z = glGetUniformLocation(g_GpuProgramID, "polelight_pos_z");
-    polelight_dir_x = glGetUniformLocation(g_GpuProgramID, "polelight_dir_x");
-    polelight_dir_y = glGetUniformLocation(g_GpuProgramID, "polelight_dir_y");
-    polelight_dir_z = glGetUniformLocation(g_GpuProgramID, "polelight_dir_z");
-
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
     ComputeNormals(&spheremodel);
@@ -996,16 +980,6 @@ int main(int argc, char* argv[])
         glUniformMatrix4fv(g_view_uniform       , 1 , GL_FALSE , glm::value_ptr(view));
         glUniformMatrix4fv(g_projection_uniform , 1 , GL_FALSE , glm::value_ptr(projection));
 
-        // Atualiza a posição e direção da luz do poste
-        glUniform1f(polelight_pos_x, -7.0f);     // posição x do poste
-        glUniform1f(polelight_pos_y, 1.0f);      // topo do poste
-        glUniform1f(polelight_pos_z, -5.5f);     // posição z do poste
-
-        // Direção da luz (apontando para baixo)
-        glUniform1f(polelight_dir_x, 0.0f);
-        glUniform1f(polelight_dir_y, -1.0f);
-        glUniform1f(polelight_dir_z, 0.0f);
-
         #define SPHERE 0
         #define BUNNY  1
         #define PLANE  2
@@ -1041,14 +1015,6 @@ int main(int argc, char* argv[])
         glUniform1i(g_object_id_uniform, MAINBUILD);
         DrawVirtualObject("the_mainbuild");
 
-        // Desenhamos o modelo da mansão
-        //model = Matrix_Translate(-30.0f, -1.1f, -40.0f)
-        //* Matrix_Rotate_Y(M_PI/2.0f)
-        //* Matrix_Scale(10.0f, 10.0f, 10.0f);
-        //glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-        //glUniform1i(g_object_id_uniform, MANSION);
-        //DrawVirtualObject("the_mansion");
-
         // Desenhamos o modelo da casa
         model = Matrix_Translate(-25.0f, -1.1f, -20.0f)
         * Matrix_Rotate_Y(M_PI/2.0f)
@@ -1057,17 +1023,17 @@ int main(int argc, char* argv[])
         glUniform1i(g_object_id_uniform, SMALLHOUSE);
         DrawVirtualObject("the_smallHouse");
 
-        model = Matrix_Translate(-33.0f, -1.1f, -60.0f)
-        * Matrix_Rotate_Y(M_PI)
+        model = Matrix_Translate(33.0f, -1.1f, -75.0f)
+        * Matrix_Rotate_Y(M_PI*2)
         * Matrix_Scale(0.7f, 0.7f, 0.7f);
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, SMALLHOUSE);
         DrawVirtualObject("the_smallHouse");
 
         // Desenhamos o modelo do posto de gasolina
-        model = Matrix_Translate(-68.0f, -1.3f, -110.0f)
+        model = Matrix_Translate(-70.0f, -1.3f, -105.0f)
         * Matrix_Rotate_Y(M_PI)
-        * Matrix_Scale(0.5f, 0.5f, 0.5f);
+        * Matrix_Scale(0.55f, 0.55f, 0.55f);
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, GASSTATION);
         DrawVirtualObject("the_gasstation");
@@ -1088,7 +1054,7 @@ int main(int argc, char* argv[])
         glUniform1i(g_object_id_uniform, LONGHOUSE);
         DrawVirtualObject("the_longhouse");
 
-        // Desenhamos o modelo da casa de madeira
+        // Desenhamos o modelo da casa de madeira 1
         model = Matrix_Translate(60.0f, -1.3f, 17.50f)
         * Matrix_Rotate_Y(M_PI)
         * Matrix_Scale(0.40f, 0.40f, 0.40f);
@@ -1096,21 +1062,29 @@ int main(int argc, char* argv[])
         glUniform1i(g_object_id_uniform, WOODHOUSE);
         DrawVirtualObject("the_woodhouse");
 
-        // Desenhamos o modelo da ultima casa
-        model = Matrix_Translate(35.0f, -1.3f, -95.0f)
-        * Matrix_Rotate_Y(M_PI/2)
-        * Matrix_Scale(1.60f, 1.60f, 1.60f);
-        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, LASTHOUSE);
-        DrawVirtualObject("the_lasthouse");
-
-        // Desenhamos o modelo da casa de madeira
+        // Desenhamos o modelo da casa de madeira 2
         model = Matrix_Translate(-60.0f, -1.3f, 17.50f)
         * Matrix_Rotate_Y(M_PI*2)
         * Matrix_Scale(0.40f, 0.40f, 0.40f);
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, WOODHOUSE);
         DrawVirtualObject("the_woodhouse");
+
+        // Desenhamos o modelo da casa de madeira 3
+        model = Matrix_Translate(-30.0f, -1.3f, -50.50f)
+        * Matrix_Rotate_Y(M_PI/2)
+        * Matrix_Scale(0.40f, 0.40f, 0.40f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, WOODHOUSE);
+        DrawVirtualObject("the_woodhouse");
+
+        // Desenhamos o modelo da ultima casa
+        //model = Matrix_Translate(35.0f, -1.3f, -95.0f)
+        //* Matrix_Rotate_Y(M_PI/2)
+        //* Matrix_Scale(1.60f, 1.60f, 1.60f);
+        //glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        //glUniform1i(g_object_id_uniform, LASTHOUSE);
+        //DrawVirtualObject("the_lasthouse");
 
         //model = Matrix_Translate(-20.0f, -1.3f, -60.0f)
         //* Matrix_Rotate_Y(M_PI/2)
@@ -1129,8 +1103,8 @@ int main(int argc, char* argv[])
         /// Desenhamos os planos do chão
 
         //asfalto
-        model = Matrix_Translate(0.0f,-1.1f,-87.0f)
-        * Matrix_Scale(5.0f, 1.0f, 90.0f); // Aumentar o tamanho do plano
+        model = Matrix_Translate(0.0f,-1.1f,-73.5f)
+        * Matrix_Scale(5.0f, 1.0f, 76.5f); // Aumentar o tamanho do plano
         glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, PLANE);
         DrawVirtualObject("the_plane");
@@ -1151,6 +1125,30 @@ int main(int argc, char* argv[])
 
         model = Matrix_Translate(-45.0f,-1.1f,-97.0f)
         * Matrix_Scale(40.0f, 1.0f, 100.0f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_GRASS);
+        DrawVirtualObject("the_plane");
+
+        model = Matrix_Translate(60.0f,-1.1f,43.0f)
+        * Matrix_Scale(25.0f, 1.0f, 40.0f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_GRASS);
+        DrawVirtualObject("the_plane");
+
+        model = Matrix_Translate(-60.0f,-1.1f,43.0f)
+        * Matrix_Scale(25.0f, 1.0f, 40.0f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_GRASS);
+        DrawVirtualObject("the_plane");
+
+        model = Matrix_Translate(0.0f,-1.1f,55.5f)
+        * Matrix_Scale(35.0f, 1.0f, 27.5f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_GRASS);
+        DrawVirtualObject("the_plane");
+
+        model = Matrix_Translate(0.0f,-1.1f,-173.5f)
+        * Matrix_Scale(5.0f, 1.0f, 23.5f); // Aumentar o tamanho do plano
         glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, PLANE_GRASS);
         DrawVirtualObject("the_plane");
