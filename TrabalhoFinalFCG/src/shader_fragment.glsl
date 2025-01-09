@@ -31,10 +31,14 @@ uniform mat4 projection;
 #define SMALLHOUSE 12
 #define GASSTATION 13
 #define MYHOUSE 14
-#define LONGHOUSE 16
 
+#define LONGHOUSE 16
+#define WOODHOUSE 17
+#define LASTHOUSE 18
 #define POLE 19
 #define CALCADA 20
+#define LILHOUSE 21
+
 uniform int object_id;
 
 // Parâmetros da axis-aligned bounding box (AABB) do modelo
@@ -54,6 +58,18 @@ uniform sampler2D TextureImage8;
 uniform sampler2D TextureImage9;
 uniform sampler2D TextureImage10;
 uniform sampler2D TextureImage11;
+uniform sampler2D TextureImage12;
+uniform sampler2D TextureImage13;
+uniform sampler2D TextureImage14;
+
+// Variáveis para a luz do poste
+uniform float polelight_pos_x;
+uniform float polelight_pos_y;
+uniform float polelight_pos_z;
+uniform float polelight_dir_x;
+uniform float polelight_dir_y;
+uniform float polelight_dir_z;
+
 
 // cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
@@ -169,6 +185,38 @@ void main()
         U = texcoords.x;
         V = texcoords.y;
     }
+    else if ( object_id == WOODHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == LASTHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == LILHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+
+
+    // Configuração da luz do poste
+    vec4 pontoLPole = vec4(polelight_pos_x, polelight_pos_y, polelight_pos_z, 1.0f);
+    vec4 direcaoPole = normalize(vec4(polelight_dir_x, polelight_dir_y, polelight_dir_z, 0.0f));
+
+    float pole_influence = 0.0;
+    float cos_angle = dot(normalize(p - pontoLPole), -normalize(direcaoPole)); // Note o sinal negativo
+    float abertura = cos(M_PI/6); // 30 graus de abertura
+
+    if(cos_angle >= abertura)
+    {
+        // Aumentei a intensidade e modifiquei a atenuação
+        pole_influence = 5.0 / (max(pow(length(pontoLPole-p), 2), 1));
+    }
+
+
 
     // Equação de Iluminação
     float lambert = max(0,dot(n,l));
@@ -218,6 +266,18 @@ void main()
     {
         Kd_final = texture(TextureImage11, vec2(U,V)).rgb;
     }
+    else if ( object_id ==  WOODHOUSE )
+    {
+        Kd_final = texture(TextureImage12, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  LASTHOUSE )
+    {
+        Kd_final = texture(TextureImage13, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  LILHOUSE )
+    {
+        Kd_final = texture(TextureImage14, vec2(U,V)).rgb;
+    }
     else
     {
         // Outros objetos usam TextureImage0 e TextureImage1 com interpolação
@@ -226,13 +286,16 @@ void main()
         Kd_final = mix(Kd1, Kd0, lambert);
     }
 
+    // Cálculo do termo difuso da luz do poste
+    vec3 pole_diffuse_term = Kd_final * max(0, dot(n, -direcaoPole)) * pole_influence;
+
     if (use_color_override)
     {
         color = color_override;
     }
     else
     {
-        color.rgb = Kd_final * (lambert + ambient_light);
+        color.rgb = Kd_final * lambert + pole_diffuse_term + Kd_final * ambient_light;
         color.a = 1;
     }
 

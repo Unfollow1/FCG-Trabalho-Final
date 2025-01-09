@@ -251,6 +251,14 @@ double g_LastCursorPosX, g_LastCursorPosY;
 
 /// variaveis globais
 
+// poste
+GLfloat polelight_pos_x;
+GLfloat polelight_pos_y;
+GLfloat polelight_pos_z;
+GLfloat polelight_dir_x;
+GLfloat polelight_dir_y;
+GLfloat polelight_dir_z;
+
 glm::vec4 g_camera_position_c  = glm::vec4(0.0f,1.0f,3.5f,1.0f); // Posição inicial da câmera
 float prev_time = (float)glfwGetTime();
 float delta_t;
@@ -682,6 +690,17 @@ int main(int argc, char* argv[])
     LoadTextureImage("../../data/gasStationTexture.jpg");           // TextureImage9
     LoadTextureImage("../../data/myhouseTexture.png");              // TextureImage10
     LoadTextureImage("../../data/longHouseTexture.jpg");            // TextureImage11
+    LoadTextureImage("../../data/woodHouseTexture.png");            // TextureImage12
+    LoadTextureImage("../../data/lastHouseTexture.png");            // TextureImage13
+    LoadTextureImage("../../data/lilHouseTexture.png");             // TextureImage14
+
+    //
+    polelight_pos_x = glGetUniformLocation(g_GpuProgramID, "polelight_pos_x");
+    polelight_pos_y = glGetUniformLocation(g_GpuProgramID, "polelight_pos_y");
+    polelight_pos_z = glGetUniformLocation(g_GpuProgramID, "polelight_pos_z");
+    polelight_dir_x = glGetUniformLocation(g_GpuProgramID, "polelight_dir_x");
+    polelight_dir_y = glGetUniformLocation(g_GpuProgramID, "polelight_dir_y");
+    polelight_dir_z = glGetUniformLocation(g_GpuProgramID, "polelight_dir_z");
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -752,6 +771,17 @@ int main(int argc, char* argv[])
     ComputeNormals(&longhousemodel);
     BuildTrianglesAndAddToVirtualScene(&longhousemodel);
 
+    ObjModel woodhousemodel("../../data/woodhouse.obj");
+    ComputeNormals(&woodhousemodel);
+    BuildTrianglesAndAddToVirtualScene(&woodhousemodel);
+
+    ObjModel lasthousemodel("../../data/lasthouse.obj");
+    ComputeNormals(&lasthousemodel);
+    BuildTrianglesAndAddToVirtualScene(&lasthousemodel);
+
+    ObjModel lilhousemodel("../../data/lilhouse.obj");
+    ComputeNormals(&lilhousemodel);
+    BuildTrianglesAndAddToVirtualScene(&lilhousemodel);
 
     if ( argc > 1 )
     {
@@ -966,6 +996,16 @@ int main(int argc, char* argv[])
         glUniformMatrix4fv(g_view_uniform       , 1 , GL_FALSE , glm::value_ptr(view));
         glUniformMatrix4fv(g_projection_uniform , 1 , GL_FALSE , glm::value_ptr(projection));
 
+        // Atualiza a posição e direção da luz do poste
+        glUniform1f(polelight_pos_x, -7.0f);     // posição x do poste
+        glUniform1f(polelight_pos_y, 1.0f);      // topo do poste
+        glUniform1f(polelight_pos_z, -5.5f);     // posição z do poste
+
+        // Direção da luz (apontando para baixo)
+        glUniform1f(polelight_dir_x, 0.0f);
+        glUniform1f(polelight_dir_y, -1.0f);
+        glUniform1f(polelight_dir_z, 0.0f);
+
         #define SPHERE 0
         #define BUNNY  1
         #define PLANE  2
@@ -983,9 +1023,13 @@ int main(int argc, char* argv[])
         #define MYHOUSE 14
         #define PERSONAGEM 15
         #define LONGHOUSE 16
+        #define WOODHOUSE 17
+        #define LASTHOUSE 18
+
 
         #define POLE 19
         #define CALCADA 20
+        #define LILHOUSE 21
 
         /// desenhos adicionados
 
@@ -1013,6 +1057,13 @@ int main(int argc, char* argv[])
         glUniform1i(g_object_id_uniform, SMALLHOUSE);
         DrawVirtualObject("the_smallHouse");
 
+        model = Matrix_Translate(-33.0f, -1.1f, -60.0f)
+        * Matrix_Rotate_Y(M_PI)
+        * Matrix_Scale(0.7f, 0.7f, 0.7f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, SMALLHOUSE);
+        DrawVirtualObject("the_smallHouse");
+
         // Desenhamos o modelo do posto de gasolina
         model = Matrix_Translate(-68.0f, -1.3f, -110.0f)
         * Matrix_Rotate_Y(M_PI)
@@ -1024,7 +1075,7 @@ int main(int argc, char* argv[])
         // Desenhamos o modelo da nossa casa
         model = Matrix_Translate(0.0f, -1.3f, 58.0f)
         * Matrix_Rotate_Y(M_PI/2)
-        * Matrix_Scale(0.90f, 0.90f, 0.90f);
+        * Matrix_Scale(1.0f, 1.0f, 1.0f);
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, MYHOUSE);
         DrawVirtualObject("myHouse");
@@ -1036,6 +1087,37 @@ int main(int argc, char* argv[])
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, LONGHOUSE);
         DrawVirtualObject("the_longhouse");
+
+        // Desenhamos o modelo da casa de madeira
+        model = Matrix_Translate(60.0f, -1.3f, 17.50f)
+        * Matrix_Rotate_Y(M_PI)
+        * Matrix_Scale(0.40f, 0.40f, 0.40f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, WOODHOUSE);
+        DrawVirtualObject("the_woodhouse");
+
+        // Desenhamos o modelo da ultima casa
+        model = Matrix_Translate(35.0f, -1.3f, -95.0f)
+        * Matrix_Rotate_Y(M_PI/2)
+        * Matrix_Scale(1.60f, 1.60f, 1.60f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, LASTHOUSE);
+        DrawVirtualObject("the_lasthouse");
+
+        // Desenhamos o modelo da casa de madeira
+        model = Matrix_Translate(-60.0f, -1.3f, 17.50f)
+        * Matrix_Rotate_Y(M_PI*2)
+        * Matrix_Scale(0.40f, 0.40f, 0.40f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, WOODHOUSE);
+        DrawVirtualObject("the_woodhouse");
+
+        //model = Matrix_Translate(-20.0f, -1.3f, -60.0f)
+        //* Matrix_Rotate_Y(M_PI/2)
+        //* Matrix_Scale(0.60f, 0.60f, 0.60f);
+        //glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        //glUniform1i(g_object_id_uniform, LILHOUSE);
+        //DrawVirtualObject("the_lilhouse");
 
        // Desenhamos todas as instâncias da calçada
         for(const Calcada& calcada : calcadas) {
@@ -1754,6 +1836,9 @@ void LoadShadersFromFiles()
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage9"), 9); // Textura do posto de gasolina
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage10"), 10); // Textura do nossa casa
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage11"), 11); // Textura de uma das casa
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage12"), 12); // Textura de uma da casa de madeira
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage13"), 13); // Textura da ultima casa
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage14"), 14); // Textura da casa pequena
     glUseProgram(0);
 }
 
