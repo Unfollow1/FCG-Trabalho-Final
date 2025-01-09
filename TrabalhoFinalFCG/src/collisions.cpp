@@ -71,3 +71,20 @@ bool PointToPlaneCollision(const glm::vec4& point, const Plane& plane, float thr
     float distance = std::abs(v.x * plane.normal.x + v.y * plane.normal.y + v.z * plane.normal.z);
     return distance <= threshold;
 }
+
+bool CheckBunnyCollision(glm::vec4& camera_position_c, glm::vec4 bunny_position)
+{
+    // Calcula a distância entre o jogador e o coelho
+    float dx = camera_position_c.x - bunny_position.x;
+    float dy = camera_position_c.y - bunny_position.y;
+    float dz = camera_position_c.z - bunny_position.z;
+
+    // Calcula a distância ao quadrado (evita cálculo de raiz quadrada)
+    float distance_squared = dx*dx + dy*dy + dz*dz;
+
+    // Define um raio de colisão
+    const float COLLISION_RADIUS = 1.0f;  // Ajuste este valor conforme necessário
+
+    // Se a distância ao quadrado for menor que o dobro do raio ao quadrado, há colisão
+    return distance_squared <= (COLLISION_RADIUS * 2) * (COLLISION_RADIUS * 2);
+}

@@ -48,4 +48,6 @@ CollisionResult ResolveBoxCollision(
     const glm::vec4& desiredPosition
 );
 
+bool CheckBunnyCollision(glm::vec4& camera_position_c, glm::vec4 bunny_position);
+
 #endif

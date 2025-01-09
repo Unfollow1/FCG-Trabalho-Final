@@ -318,6 +318,7 @@ extern struct BoundingBox g_CashierBox;
 extern struct BoundingBox g_HouseBox;
 
 glm::vec4 g_CashierPosition = glm::vec4(-5.0f, -1.0f, -20.0f, 1.0f);
+glm::vec4 g_BunnyPosition = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
 
 /// variáveis para controlar se os itens foram pegos
 bool bunny_picked = false;
@@ -973,6 +974,24 @@ int main(int argc, char* argv[])
 
             glm::vec4 new_camera_position = g_camera_position_c; // Posição atual
 
+            // Atualiza a bounding box do jogador
+            g_PlayerBox.min = new_camera_position - glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+            g_PlayerBox.max = new_camera_position + glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+
+            // Verifica e resolve colisão com a casa
+            CollisionResult houseCollision = ResolveBoxCollision(g_PlayerBox, g_HouseBox, g_camera_position_c, new_camera_position);
+            if (houseCollision.collided) {
+                new_camera_position = houseCollision.correctedPosition;
+            }
+
+            // Verifica e resolve colisão com a máquina
+            CollisionResult cashierCollision = ResolveBoxCollision(g_PlayerBox, g_CashierBox, g_camera_position_c, new_camera_position);
+            if (cashierCollision.collided) {
+                new_camera_position = cashierCollision.correctedPosition;
+            }
+
+            // Atualiza a posição final
+            g_camera_position_c = new_camera_position;
 
 
             // Note que, no sistema de coordenadas da câmera, os planos near e far
@@ -1425,15 +1444,22 @@ int main(int argc, char* argv[])
 
         if (!bunny_picked)
         {
-            model = Matrix_Translate(50.0f,0.0f,-40.0f);
+            model = Matrix_Translate(50.0f,0.0f,-40.0f)
+            * Matrix_Rotate_X(g_AngleX + (float)glfwGetTime() * 0.1f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, BUNNY);
             DrawVirtualObject("the_bunny");
 
             glm::vec4 bunny_position = model * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
+            // Verifica colisão com o jogador
+            if (SphereToSphereCollision(g_camera_position_c, PLAYER_RADIUS, bunny_position, BUNNY_RADIUS))
+            {
+                bunny_picked = true;
+                g_PlayerMoney += 50.0f;
+                printf("Coelho encontrado! +R$ 50.00\n");
+            }
         }
-
         // Salvamos a matriz do coelho para uso no raycasting
         g_object_matrices["the_bunny"] = model;
 
@@ -1445,23 +1471,6 @@ int main(int argc, char* argv[])
             g_object_matrices
         );
 
-        if (g_object_highlighted == BUNNY && tecla_E_pressionada && !bunny_picked)
-        {
-            bunny_picked = true;
-            tecla_E_pressionada = false;
-            MarcarItemComoPego(ITEM_PRESUNTO);
-
-            // Verifica se o coelho está na lista de compras e marca como pego
-            for (size_t i = 0; i < itens_para_comprar.size(); ++i)
-            {
-                if (itens_para_comprar[i] == "presunto") //  "Leite" como exemplo para o coelho so pra testar
-                {
-                    itens_pegos[i] = true;
-                    printf("Item comprado: %s\n", itens_para_comprar[i].c_str());
-                    break;
-                }
-            }
-        }
 
         // Se o coelho está sob o crosshair, desenhamos ele novamente com destaque amarelo
         if (g_object_highlighted == BUNNY && !bunny_picked) {
