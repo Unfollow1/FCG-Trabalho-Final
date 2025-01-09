@@ -67,8 +67,13 @@ bool BoxToBoxCollision(const BoundingBox& box1, const BoundingBox& box2)
 
 bool PointToPlaneCollision(const glm::vec4& point, const Plane& plane, float threshold)
 {
+    // Calcula o vetor do ponto do plano até o ponto que estamos testando
     glm::vec4 v = point - plane.point;
+
+    // A distância do ponto ao plano é a projeção do vetor v na normal do plano
     float distance = std::abs(v.x * plane.normal.x + v.y * plane.normal.y + v.z * plane.normal.z);
+
+    // Retorna verdadeiro se a distância é menor que o threshold
     return distance <= threshold;
 }
 

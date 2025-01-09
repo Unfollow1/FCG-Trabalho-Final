@@ -70,6 +70,7 @@ uniform sampler2D TextureImage16;
 uniform sampler2D TextureImage17;
 uniform sampler2D TextureImage18;
 uniform sampler2D TextureImage19;
+uniform sampler2D TextureImage20;
 
 // cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
@@ -215,6 +216,11 @@ void main()
         U = texcoords.x;
         V = texcoords.y;
     }
+    else if ( object_id == MAINBUILD )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
     else if (object_id == SKY)
     {
         vec4 bbox_center = (bbox_min + bbox_max) / 2.0;
@@ -305,6 +311,10 @@ void main()
     else if ( object_id ==  BUTTER )
     {
         Kd_final = texture(TextureImage18, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  MAINBUILD )
+    {
+        Kd_final = texture(TextureImage20, vec2(U,V)).rgb;
     }
     else
     {

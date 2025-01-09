@@ -5,8 +5,9 @@
 //    INF01047 Fundamentos de Computação Gráfica
 //               Prof. Eduardo Gastal
 //
-//                   LABORATÓRIO 5
+//       TRABALHO FINAL BASEADO NO LABORATÓRIO 5
 //
+//          GABRIEL BERTA E GLEYDSON CAMPOS
 
 // Arquivos "headers" padrões de C podem ser incluídos em um
 // programa C++, sendo necessário somente adicionar o caractere
@@ -740,6 +741,7 @@ int main(int argc, char* argv[])
     LoadTextureImage("../../data/goldTexture.jpg");                 // TextureImage17
     LoadTextureImage("../../data/queijo.jpg");                      // TextureImage18
     LoadTextureImage("../../data/parmaTexture.jpg");                // TextureImage19
+    LoadTextureImage("../../data/oldWallTexture.jpg");              // TextureImage20
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -837,6 +839,28 @@ int main(int argc, char* argv[])
 
     g_HouseBox.min = glm::vec4(-20.0f, -1.3f, 45.0f, 1.0f);
     g_HouseBox.max = glm::vec4(20.0f, 3.0f, 70.0f, 1.0f);
+
+
+    // Define os planos que limitam o mapa
+    Plane boundary_plane_north = {
+        glm::vec4(0.0f, 0.0f, 10.0f, 1.0f),   // ponto no plano (mais próximo)
+        glm::vec4(0.0f, 0.0f, 1.0f, 0.0f)     // normal apontando para sul
+    };
+
+    Plane boundary_plane_south = {
+        glm::vec4(0.0f, 0.0f, -10.0f, 1.0f),  // ponto no plano (mais próximo)
+        glm::vec4(0.0f, 0.0f, -1.0f, 0.0f)    // normal apontando para norte
+    };
+
+    Plane boundary_plane_east = {
+        glm::vec4(10.0f, 0.0f, 0.0f, 1.0f),   // ponto no plano (mais próximo)
+        glm::vec4(1.0f, 0.0f, 0.0f, 0.0f)     // normal apontando para oeste
+    };
+
+    Plane boundary_plane_west = {
+        glm::vec4(-10.0f, 0.0f, 0.0f, 1.0f),  // ponto no plano (mais próximo)
+        glm::vec4(-1.0f, 0.0f, 0.0f, 0.0f)    // normal apontando para leste
+    };
 
     // Inicializamos o código para renderização de texto.
     TextRendering_Init();
@@ -990,6 +1014,28 @@ int main(int argc, char* argv[])
                 new_camera_position = cashierCollision.correctedPosition;
             }
 
+            // Verifica colisão com os planos limite do mapa
+            float plane_threshold = 1.0f;
+            bool collides_with_boundary =
+            PointToPlaneCollision(new_camera_position, boundary_plane_north, plane_threshold) ||
+            PointToPlaneCollision(new_camera_position, boundary_plane_south, plane_threshold) ||
+            PointToPlaneCollision(new_camera_position, boundary_plane_east, plane_threshold) ||
+            PointToPlaneCollision(new_camera_position, boundary_plane_west, plane_threshold);
+
+            if (collides_with_boundary)
+            {
+                new_camera_position = g_camera_position_c;
+            }
+
+            if (new_camera_position.x < -85.0f)
+                new_camera_position.x = -85.0f;
+            if (new_camera_position.x > 85.0f)
+                new_camera_position.x = 85.0f;
+            if (new_camera_position.z < -195.0f)
+                new_camera_position.z = -195.0f;
+            if (new_camera_position.z > 83.0f)
+                new_camera_position.z = 83.0f;
+
             // Atualiza a posição final
             g_camera_position_c = new_camera_position;
 
@@ -1069,7 +1115,7 @@ int main(int argc, char* argv[])
         // Skybox
         glCullFace(GL_FRONT);
         glDepthMask(GL_FALSE);
-        model = Matrix_Translate(camera_position_c.x, camera_position_c.y, camera_position_c.z)
+        model = Matrix_Translate(camera_position_c.x, camera_position_c.y, camera_position_c.z - 50.0)
         * Matrix_Scale(200.0f, 200.0f, 200.0f);  // Aumenta o tamanho para evitar flickering nas bordas
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, SKY);
@@ -1158,21 +1204,6 @@ int main(int argc, char* argv[])
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, WOODHOUSE);
         DrawVirtualObject("the_woodhouse");
-
-        // Desenhamos o modelo da ultima casa
-        //model = Matrix_Translate(35.0f, -1.3f, -95.0f)
-        //* Matrix_Rotate_Y(M_PI/2)
-        //* Matrix_Scale(1.60f, 1.60f, 1.60f);
-        //glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-        //glUniform1i(g_object_id_uniform, LASTHOUSE);
-        //DrawVirtualObject("the_lasthouse");
-
-        //model = Matrix_Translate(-20.0f, -1.3f, -60.0f)
-        //* Matrix_Rotate_Y(M_PI/2)
-        //* Matrix_Scale(0.60f, 0.60f, 0.60f);
-        //glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-        //glUniform1i(g_object_id_uniform, LILHOUSE);
-        //DrawVirtualObject("the_lilhouse");
 
        // Desenhamos todas as instâncias da calçada
         for(const Calcada& calcada : calcadas) {
@@ -1414,7 +1445,7 @@ int main(int argc, char* argv[])
         // Desenhamos o modelo da baguete
         if (!baguete_picked)
         {
-            model = Matrix_Translate(-6.0f, -1.0f, -160.0f)
+            model = Matrix_Translate(-6.0f, 0.0f, -160.0f)
             * Matrix_Scale(0.15f, 0.15f, 0.15f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, BAGUETE);
@@ -1504,7 +1535,7 @@ int main(int argc, char* argv[])
             glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
             glStencilMask(0xFF);
 
-            model = Matrix_Translate(-6.0f, -1.0f, -160.0f)
+            model = Matrix_Translate(-6.0f, 0.0f, -160.0f)
             * Matrix_Scale(0.195f, 0.195f, 0.195f);  // Escala um pouco maior para o highlight
 
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
@@ -1632,31 +1663,6 @@ int main(int argc, char* argv[])
             glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), false);
             glDisable(GL_STENCIL_TEST);
         }
-
-
-        //personagem
-        glm::vec4 g_posicao_personagem = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-
-        if (g_cameraType)
-        {
-            glm::vec3 offset = -0.5f * glm::vec3(camera_view_vector);
-            offset.y = -3.0f;
-            offset.x = offset.x - 1;
-
-            g_posicao_personagem = g_camera_position_c + glm::vec4(offset, 0.0f);
-
-            model = Matrix_Translate(g_posicao_personagem.x, g_posicao_personagem.y, g_posicao_personagem.z)
-                    * Matrix_Scale(2.0f, 2.0f, 2.0f); // Escala fixa
-        }
-        else
-        {
-            model = Matrix_Translate(g_posicao_personagem.x, g_posicao_personagem.y, g_posicao_personagem.z)
-                    * Matrix_Scale(2.0f, 2.0f, 2.0f); // Escala fixa
-        }
-
-        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, PERSONAGEM);
-        DrawVirtualObject("personagem");
 
 
         //esfera seguindo a curva de bezier
@@ -2035,7 +2041,8 @@ void LoadShadersFromFiles()
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage16"), 16); // Textura do ceu estrelado
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage17"), 17); // Textura do coelho dourado
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage18"), 18); // Textura do queijo
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage19"), 18); // Textura do queijo
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage19"), 19); // Textura do queijo
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage20"), 20); // Textura do queijo
     glUseProgram(0);
 }
 
