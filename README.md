@@ -44,6 +44,41 @@ Também estamos avaliando a possibilidade de um limite de tempo para a conclusã
      - Tecla [F] para colocar em tela cheia
      - Bug da primeira vez mexendo no mouse a camera ir para um lugar aleatório, resolvido
 
+# Contribuições
+1) Gabriel Berta
+   - Iluminação da cena
+   - Elemento que usa cruva de bezier
+   - Cameras e movimentação
+2) Gleydson Campos
+   - Modelagem e texturização da cena 
+   - Colisões
+   - Lógica não trivial do jogo
+  
+# Manual do jogo
+W -> Mover para frente
+A -> Mover para o lado esquerdo 
+S -> Mover para trás
+D -> Mover para o lado direito
+B -> Correr mais rápido
+F -> Colocar em tela cheia
+E -> Interagir com objetos
+ 
+    
+![image](https://github.com/user-attachments/assets/c185a8be-0f83-48f6-8480-da1dbe2c6afd)
+
+# Passos necessários para compilação e execução da aplicação
+1) Clonar repositório
+2) Abrir arquivo 'laboratório_5'
+3) Dar build
+4) Executar
+5) Possíveis erros: arquivo de colisões não encontrado, assim como ocorreu na apresentação final, estamos enviando os arquivos no .zip
+
+![image](https://github.com/user-attachments/assets/30997b25-a61c-4690-8ad3-ddb538b6c411)
+
+![image](https://github.com/user-attachments/assets/238fce64-673e-4087-80cf-84c1fb765744)
+
+![image](https://github.com/user-attachments/assets/e16fa37d-13ee-48fd-aa90-f6c171c33bb3)
+
 
 
 
