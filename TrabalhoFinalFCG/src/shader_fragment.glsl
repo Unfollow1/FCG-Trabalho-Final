@@ -24,6 +24,7 @@ uniform mat4 projection;
 #define PLANE  2
 #define MAINBUILD 3
 #define BAGUETE 4
+#define CHEESE 7
 #define LUA 8
 
 #define PLANE_ASPHALT 10
@@ -66,6 +67,7 @@ uniform sampler2D TextureImage14;
 uniform sampler2D TextureImage15;
 uniform sampler2D TextureImage16;
 uniform sampler2D TextureImage17;
+uniform sampler2D TextureImage18;
 
 // cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
@@ -201,6 +203,11 @@ void main()
         U = texcoords.x;
         V = texcoords.y;
     }
+    else if ( object_id == CHEESE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
     else if (object_id == SKY)
     {
         vec4 bbox_center = (bbox_min + bbox_max) / 2.0;
@@ -281,6 +288,10 @@ void main()
         Kd_final = texture(TextureImage16, vec2(U,V)).rgb;
     }
     else if ( object_id ==  BUNNY )
+    {
+        Kd_final = texture(TextureImage17, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  CHEESE )
     {
         Kd_final = texture(TextureImage17, vec2(U,V)).rgb;
     }

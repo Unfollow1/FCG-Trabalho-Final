@@ -51,8 +51,8 @@
 #include "collisions.hpp"
 
 // Constantes
-#define VelocidadeBase 5.0f
-#define VelocidadeBike 15.0f
+#define VelocidadeBase 12.0f
+#define VelocidadeBike 20.0f
 #define SensibilidadeCamera 0.005f
 #define ControleVelocidadeCurva 0.5f
 #define CameraLivre true
@@ -348,9 +348,7 @@ std::vector<std::string> todos_itens = {
     "queijo",
     "presunto",
     "ovo",
-    "manteiga",
-    "tomate",
-    "cebola"
+    "manteiga"
 };
 
 std::vector<std::string> itens_para_comprar;
@@ -365,8 +363,6 @@ std::vector<bool> itens_pegos;
             ITEM_PRESUNTO    = 103,
             ITEM_OVO         = 104,
             ITEM_MANTEIGA    = 105,
-            ITEM_TOMATE      = 107,
-            ITEM_CEBOLA      = 108
         };
 
         // Mapeamento de IDs para nomes de itens
@@ -376,8 +372,6 @@ std::vector<bool> itens_pegos;
             {ITEM_PRESUNTO, "Presunto"},
             {ITEM_OVO, "Ovo"},
             {ITEM_MANTEIGA, "Manteiga"},
-            {ITEM_TOMATE, "Tomate"},
-            {ITEM_CEBOLA, "Cebola"},
         };
 
 void InitializeMoneyAndPrices()
@@ -392,8 +386,6 @@ void InitializeMoneyAndPrices()
     g_ItemPrices["presunto"] = 18.75f;
     g_ItemPrices["ovo"] = 14.32f;
     g_ItemPrices["manteiga"] = 13.99f;
-    g_ItemPrices["tomate"] = 12.89f;
-    g_ItemPrices["cebola"] = 8.25f;
 }
 
 /// função para desenhar dialogo do pagamento
@@ -408,8 +400,8 @@ void DrawCashierDialog(GLFWwindow* window)
     float line_height = TextRendering_LineHeight(window);
 
     // Desenha o diálogo
-    TextRendering_PrintString(window, "Caixa: Desculpe filho, estou sem meus oculos.", x, y, 1.0f);
-    TextRendering_PrintString(window, "Poderia me dizer quanto te devo de troco?", x, y - line_height, 1.0f);
+    TextRendering_PrintString(window, "Caixa: Qual o seu troco?.", x, y, 1.0f);
+    TextRendering_PrintString(window, "apenas respostas válidas", x, y - line_height, 1.0f);
 
     char total_text[64];
     snprintf(total_text, sizeof(total_text), "Total da compra: R$ %.2f", g_TotalPurchaseValue);
@@ -746,6 +738,7 @@ int main(int argc, char* argv[])
     LoadTextureImage("../../data/maquinaTextura.png");              // TextureImage15
     LoadTextureImage("../../data/ceuEstrelado.jpg");                // TextureImage16
     LoadTextureImage("../../data/goldTexture.jpg");                 // TextureImage17
+    LoadTextureImage("../../data/queijo.jpg");                      // TextureImage18
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -1085,12 +1078,12 @@ int main(int argc, char* argv[])
         glCullFace(GL_BACK);
 
         // Construções
-        //model = Matrix_Translate(13.0f,-1.0f,-165.0f)  // x, y, z (y = -1.1f coloca no mesmo nível do chão)
-        //* Matrix_Scale(0.4f, 0.4f, 0.4f)
-        //* Matrix_Rotate(165.0f, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
-        //glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-        //glUniform1i(g_object_id_uniform, MAINBUILD);
-        //DrawVirtualObject("the_mainbuild");
+        model = Matrix_Translate(13.0f,-1.0f,-165.0f)  // x, y, z (y = -1.1f coloca no mesmo nível do chão)
+        * Matrix_Scale(0.4f, 0.4f, 0.4f)
+        * Matrix_Rotate(165.0f, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, MAINBUILD);
+        DrawVirtualObject("the_mainbuild");
 
         // Desenhamos o modelo da casa
         model = Matrix_Translate(-25.0f, -1.1f, -20.0f)
@@ -1248,6 +1241,22 @@ int main(int argc, char* argv[])
         glUniform1i(g_object_id_uniform, POLE);
         DrawVirtualObject("the_pole");
 
+        // Desenhamos o poste
+        model = Matrix_Translate(-7.0f, -1.1f, -42.0f)
+        * Matrix_Rotate_Y(-M_PI/2)
+        * Matrix_Scale(0.6f, 0.6f, 0.6f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, POLE);
+        DrawVirtualObject("the_pole");
+
+        // Desenhamos o poste
+        model = Matrix_Translate(-7.0f, -1.1f, -78.5f)
+        * Matrix_Rotate_Y(-M_PI/2)
+        * Matrix_Scale(0.6f, 0.6f, 0.6f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, POLE);
+        DrawVirtualObject("the_pole");
+
         //Desenhamos o modelo da lua
         model = Matrix_Translate(15.0, 60.0, -100.0f)
         * Matrix_Rotate_Y(g_AngleY/10)
@@ -1259,8 +1268,8 @@ int main(int argc, char* argv[])
         DrawVirtualObject("the_sphere");
 
         //Desenhamos o modelo da maquina de pagamento
-        model = Matrix_Translate(0.0f, -1.1f, -5.5f)
-        * Matrix_Rotate_Y(-M_PI)
+        model = Matrix_Translate(15.0f, -1.1f, -147.5f)
+        * Matrix_Rotate_Y(M_PI*2)
         * Matrix_Scale(1.5f, 1.5f, 1.5f);
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, MAQUINA);
@@ -1438,18 +1447,9 @@ int main(int argc, char* argv[])
             }
         }
 
-        // Desenhamos o modelo da esfera
-        model = Matrix_Translate(-1.0f,0.0f,0.0f)
-              * Matrix_Rotate_Z(0.6f)
-              * Matrix_Rotate_X(0.2f)
-              * Matrix_Rotate_Y(g_AngleY + (float)glfwGetTime() * 0.1f);
-        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, SPHERE);
-        DrawVirtualObject("the_sphere");
-
         if (!bunny_picked)
         {
-            model = Matrix_Translate(1.0f,0.0f,0.0f);
+            model = Matrix_Translate(1.0f,0.0f,-10.0f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, BUNNY);
             DrawVirtualObject("the_bunny");
@@ -1460,7 +1460,7 @@ int main(int argc, char* argv[])
             if (SphereToSphereCollision(g_camera_position_c, PLAYER_RADIUS, bunny_position, BUNNY_RADIUS))
             {
                 bunny_picked = true;
-                g_PlayerMoney += 50.0f;
+                g_PlayerMoney += 500.0f;
                 printf("Coelho encontrado! +R$ 50.00\n");
             }
         }
@@ -1616,7 +1616,7 @@ int main(int argc, char* argv[])
             glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
             glStencilMask(0xFF);
 
-            model = Matrix_Translate(0.0f, -1.1f, -5.5f)
+            model = Matrix_Translate(15.0f, -1.1f, -147.5f)
             * Matrix_Scale(1.9f, 1.9f, 1.9f);  // Escala um pouco maior para o highlight
 
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
@@ -2056,6 +2056,7 @@ void LoadShadersFromFiles()
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage15"), 15); // Textura da maquina de pagamento
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage16"), 16); // Textura do ceu estrelado
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage17"), 17); // Textura do coelho dourado
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage18"), 18); // Textura do queijo
     glUseProgram(0);
 }
 
