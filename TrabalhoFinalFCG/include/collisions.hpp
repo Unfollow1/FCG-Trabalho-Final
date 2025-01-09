@@ -36,4 +36,16 @@ bool PointToPlaneCollision(
     float threshold
 );
 
+struct CollisionResult {
+    bool collided;
+    glm::vec4 correctedPosition;
+};
+
+CollisionResult ResolveBoxCollision(
+    const BoundingBox& movingBox,
+    const BoundingBox& staticBox,
+    const glm::vec4& currentPosition,
+    const glm::vec4& desiredPosition
+);
+
 #endif

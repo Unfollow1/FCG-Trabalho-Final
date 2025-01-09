@@ -303,9 +303,21 @@ glm::vec4 AtualizaPonto(float time, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, gl
 
 /// tudo sobre colisoes
 
+//esfera para esfera
 const float PLAYER_RADIUS = 1.5f;
 const float BUNNY_RADIUS = 1.5f;
 
+//box to box
+BoundingBox g_PlayerBox;
+BoundingBox g_CashierBox;
+BoundingBox g_HouseBox;
+
+// Estruturas para colisões
+extern struct BoundingBox g_PlayerBox;
+extern struct BoundingBox g_CashierBox;
+extern struct BoundingBox g_HouseBox;
+
+glm::vec4 g_CashierPosition = glm::vec4(-5.0f, -1.0f, -20.0f, 1.0f);
 
 /// variáveis para controlar se os itens foram pegos
 bool bunny_picked = false;
@@ -732,7 +744,8 @@ int main(int argc, char* argv[])
     LoadTextureImage("../../data/lastHouseTexture.png");            // TextureImage13
     LoadTextureImage("../../data/lilHouseTexture.png");             // TextureImage14
     LoadTextureImage("../../data/maquinaTextura.png");              // TextureImage15
-    LoadTextureImage("../../data/ceuEstrelado.jpg");                // TextureImage15
+    LoadTextureImage("../../data/ceuEstrelado.jpg");                // TextureImage16
+    LoadTextureImage("../../data/goldTexture.jpg");                 // TextureImage17
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -825,6 +838,12 @@ int main(int argc, char* argv[])
         BuildTrianglesAndAddToVirtualScene(&model);
     }
 
+    g_CashierBox.min = glm::vec4(g_CashierPosition.x - 1.0f, g_CashierPosition.y - 1.0f, g_CashierPosition.z - 1.0f, 1.0f);
+    g_CashierBox.max = glm::vec4(g_CashierPosition.x + 1.0f, g_CashierPosition.y + 1.0f, g_CashierPosition.z + 1.0f, 1.0f);
+
+    g_HouseBox.min = glm::vec4(-20.0f, -1.3f, 45.0f, 1.0f);
+    g_HouseBox.max = glm::vec4(20.0f, 3.0f, 70.0f, 1.0f);
+
     // Inicializamos o código para renderização de texto.
     TextRendering_Init();
 
@@ -903,6 +922,7 @@ int main(int argc, char* argv[])
             speed = VelocidadeBike;
         }
 
+
         // Matriz model é a identidade
         glm::mat4 model = Matrix_Identity();
 
@@ -957,6 +977,27 @@ int main(int argc, char* argv[])
                 g_camera_position_c += u * speed * delta_t;
 
             g_camera_position_c.y = g_CameraAlturaFixa;
+
+            glm::vec4 new_camera_position = g_camera_position_c; // Posição atual
+
+            // Atualiza a bounding box do jogador
+            g_PlayerBox.min = new_camera_position - glm::vec4(1.5f, 1.5f, 1.5f, 0.0f);
+            g_PlayerBox.max = new_camera_position + glm::vec4(1.5f, 1.5f, 1.5f, 0.0f);
+
+            // Verifica e resolve colisão com a casa
+            CollisionResult houseCollision = ResolveBoxCollision(g_PlayerBox, g_HouseBox, g_camera_position_c, new_camera_position);
+            if (houseCollision.collided) {
+                new_camera_position = houseCollision.correctedPosition;
+            }
+
+            // Verifica e resolve colisão com a máquina
+            CollisionResult cashierCollision = ResolveBoxCollision(g_PlayerBox, g_CashierBox, g_camera_position_c, new_camera_position);
+            if (cashierCollision.collided) {
+                new_camera_position = cashierCollision.correctedPosition;
+            }
+
+            // Atualiza a posição final
+            g_camera_position_c = new_camera_position;
 
 
             // Note que, no sistema de coordenadas da câmera, os planos near e far
@@ -1408,8 +1449,7 @@ int main(int argc, char* argv[])
 
         if (!bunny_picked)
         {
-            model = Matrix_Translate(1.0f,0.0f,0.0f)
-            * Matrix_Rotate_X(g_AngleX + (float)glfwGetTime() * 0.1f);
+            model = Matrix_Translate(1.0f,0.0f,0.0f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, BUNNY);
             DrawVirtualObject("the_bunny");
@@ -2013,8 +2053,9 @@ void LoadShadersFromFiles()
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage12"), 12); // Textura de uma da casa de madeira
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage13"), 13); // Textura da ultima casa
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage14"), 14); // Textura da casa pequena
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage15"), 15); // Textura da casa pequena
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage16"), 16); // Textura da casa pequena
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage15"), 15); // Textura da maquina de pagamento
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage16"), 16); // Textura do ceu estrelado
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage17"), 17); // Textura do coelho dourado
     glUseProgram(0);
 }
 

@@ -65,6 +65,7 @@ uniform sampler2D TextureImage13;
 uniform sampler2D TextureImage14;
 uniform sampler2D TextureImage15;
 uniform sampler2D TextureImage16;
+uniform sampler2D TextureImage17;
 
 // cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
@@ -278,6 +279,10 @@ void main()
     else if ( object_id ==  SKY )
     {
         Kd_final = texture(TextureImage16, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  BUNNY )
+    {
+        Kd_final = texture(TextureImage17, vec2(U,V)).rgb;
     }
     else
     {
