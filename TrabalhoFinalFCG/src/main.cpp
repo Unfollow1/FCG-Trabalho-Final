@@ -5,8 +5,9 @@
 //    INF01047 Fundamentos de Computação Gráfica
 //               Prof. Eduardo Gastal
 //
-//                   LABORATÓRIO 5
+//       TRABALHO FINAL BASEADO NO LABORATÓRIO 5
 //
+//          GABRIEL BERTA E GLEYDSON CAMPOS
 
 // Arquivos "headers" padrões de C podem ser incluídos em um
 // programa C++, sendo necessário somente adicionar o caractere
@@ -48,18 +49,19 @@
 // Headers locais, definidos na pasta "include/"
 #include "utils.h"
 #include "matrices.h"
-
+#include "collisions.hpp"
 
 // Constantes
-#define VelocidadeBase 5.0f
-#define VelocidadeBike 15.0f
+#define VelocidadeBase 12.0f
+#define VelocidadeBike 20.0f
 #define SensibilidadeCamera 0.005f
 #define ControleVelocidadeCurva 0.5f
 #define CameraLivre true
 #define CameraLook false
+#define M_PI   3.14159265358979323846
 
 // Tempo de Inatividade para trocar de camera
-#define INACTIVITY_THRESHOLD  5.0f
+#define INACTIVITY_THRESHOLD  10.0f
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
 // arquivo ".obj". Veja https://en.wikipedia.org/wiki/Wavefront_.obj_file .
@@ -169,6 +171,7 @@ void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 void SortearItens(int quantidade);
 void DrawShoppingList(GLFWwindow* window);
 void MarcarItemComoPego(int item_id);
+void DrawCashierDialog(GLFWwindow* window);
 
 // Definimos uma estrutura que armazenará dados necessários para renderizar
 // cada objeto da cena virtual.
@@ -214,7 +217,7 @@ bool g_MiddleMouseButtonPressed = false; // Análogo para botão do meio do mous
 // renderização.
 float g_CameraTheta = 0.0f; // Ângulo no plano ZX em relação ao eixo Z
 float g_CameraPhi = 0.0f;   // Ângulo em relação ao eixo Y
-float g_CameraDistance = 3.5f; // Distância da câmera para a origem
+float g_CameraDistance = 10.0f; // Distância da câmera para a origem
 
 // Variáveis que controlam rotação do antebraço
 float g_ForearmAngleZ = 0.0f;
@@ -270,10 +273,10 @@ bool trocaCamera = false;
 //curva de bezier
 
 // Pontos de controle da curva de Bézier
-glm::vec4 p0 = glm::vec4(-3.0f, 0.0f, -5.0f, 1.0f);  // Ponto inicial
-glm::vec4 p1 = glm::vec4(-1.0f, 2.0f, -5.0f, 1.0f);  // Primeiro ponto de controle (sobe)
-glm::vec4 p2 = glm::vec4(1.0f, -2.0f, -10.0f, 1.0f);  // Segundo ponto de controle (desce)
-glm::vec4 p3 = glm::vec4(3.0f, 0.0f, -10.0f, 1.0f);   // Ponto final
+glm::vec4 p0 = glm::vec4(-8.0f, 10.0f, -5.0f, 1.0f);  // Ponto inicial
+glm::vec4 p1 = glm::vec4(-5.0f, 12.0f, -8.0f, 1.0f);  // 2o
+glm::vec4 p2 = glm::vec4(-2.0f, 8.0f, -10.0f, 1.0f);  // 3o
+glm::vec4 p3 = glm::vec4(1.0f, 12.0f, -5.0f, 1.0f);   // 4o
 
 glm::vec4 PontoBezier(float t, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, glm::vec4 p3)
 {
@@ -299,30 +302,54 @@ glm::vec4 AtualizaPonto(float time, glm::vec4 p0, glm::vec4 p1, glm::vec4 p2, gl
 
 // fim da curva de bezier
 
+/// tudo sobre colisoes
 
-bool bunny_picked = false;  // Para controlar se o coelho já foi pego
+//esfera para esfera
+const float PLAYER_RADIUS = 1.5f;
+const float BUNNY_RADIUS = 1.5f;
 
-float g_CameraAlturaFixa = 1.0f;
+//box to box
+BoundingBox g_PlayerBox;
+BoundingBox g_CashierBox;
+BoundingBox g_HouseBox;
+
+// Estruturas para colisões
+extern struct BoundingBox g_PlayerBox;
+extern struct BoundingBox g_CashierBox;
+extern struct BoundingBox g_HouseBox;
+
+glm::vec4 g_CashierPosition = glm::vec4(-5.0f, -1.0f, -20.0f, 1.0f);
+glm::vec4 g_BunnyPosition = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+
+/// variáveis para controlar se os itens foram pegos
+bool bunny_picked = false;
+bool baguete_picked = false;
+bool egg_picked = false;
+bool butter_picked = false;
+bool cheese_picked = false;
+
+float g_PlayerMoney = 0.0f;                 // Dinheiro atual do jogador
+float g_TotalPurchaseValue = 0.0f;          // Valor total das compras
+bool g_HasPaidPurchases = false;            // Flag para indicar se as compras foram pagas
+std::map<std::string, float> g_ItemPrices;  // Mapa para armazenar preços dos itens
+bool g_InteractingWithCashier = false;      // Flag para controlar a interação com o caixa
+std::string g_InputTroco = "";              // String para armazenar o input do usuário
+bool g_WaitingForInput = false;             // Flag para controlar se estamos esperando input
+float g_CorrectChange = 0.0f;               // Valor correto do troco
+bool g_PaymentCompleted = false;            // Flag para indicar se o pagamento foi concluído corretamente
+glm::vec4 g_HomePosition = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);  // Posição da casa (ajuste conforme necessário)
+bool g_GameWon = false;  // Flag para indicar se o jogador ganhou o jogo
+
+float g_CameraAlturaFixa = 2.0f;
 
 std::map<std::string, glm::mat4> g_object_matrices;
 int g_object_highlighted = -1;
 
 std::vector<std::string> todos_itens = {
-    "Pao frances",
-    "baguete"
+    "baguete",
     "queijo",
-    "presunto",
     "ovo",
-    "manteiga",
-    "alface",
-    "tomate",
-    "cebola",
-    "pepino",
-    "pimentao",
-    "mostarda",
-    "maionese",
-    "bacon",
-    "azeitonas"
+    "manteiga"
 };
 
 std::vector<std::string> itens_para_comprar;
@@ -332,41 +359,69 @@ std::vector<bool> itens_pegos;
         // Para facilitar a identificação dos objetos, criamos um enum com os IDs dos itens.
 
         enum ItemID {
-            ITEM_PAO_FRANCES = 100,
             ITEM_BAGUETE     = 101,
             ITEM_QUEIJO      = 102,
             ITEM_PRESUNTO    = 103,
             ITEM_OVO         = 104,
             ITEM_MANTEIGA    = 105,
-            ITEM_ALFACE      = 106,
-            ITEM_TOMATE      = 107,
-            ITEM_CEBOLA      = 108,
-            ITEM_PEPINO      = 109,
-            ITEM_PIMENTAO    = 110,
-            ITEM_MOSTARDA    = 111,
-            ITEM_MAIONESE    = 112,
-            ITEM_BACON       = 113,
-            ITEM_AZEITONAS   = 114
         };
 
         // Mapeamento de IDs para nomes de itens
         std::map<int, std::string> id_para_nome = {
-            {ITEM_PAO_FRANCES, "Pao frances"},
             {ITEM_BAGUETE, "Baguete"},
             {ITEM_QUEIJO, "Queijo"},
             {ITEM_PRESUNTO, "Presunto"},
             {ITEM_OVO, "Ovo"},
             {ITEM_MANTEIGA, "Manteiga"},
-            {ITEM_ALFACE, "Alface"},
-            {ITEM_TOMATE, "Tomate"},
-            {ITEM_CEBOLA, "Cebola"},
-            {ITEM_PEPINO, "Pepino"},
-            {ITEM_PIMENTAO, "Pimentao"},
-            {ITEM_MOSTARDA, "Mostarda"},
-            {ITEM_MAIONESE, "Maionese"},
-            {ITEM_BACON, "Bacon"},
-            {ITEM_AZEITONAS, "Azeitonas"}
         };
+
+void InitializeMoneyAndPrices()
+{
+    // Gera um valor aleatório entre 50.00 e 150.00
+    g_PlayerMoney = (40.0f * 100 + (rand() % (20 * 100))) / 100.0f;
+    if (g_PlayerMoney > 150.0f) g_PlayerMoney = 150.0f;
+
+    // Define preços para os itens (valores com 2 casas decimais)
+    g_ItemPrices["baguete"] = 15.24f;
+    g_ItemPrices["queijo"] = 17.99f;
+    g_ItemPrices["presunto"] = 1.75f;
+    g_ItemPrices["ovo"] = 14.32f;
+    g_ItemPrices["manteiga"] = 13.99f;
+}
+
+/// função para desenhar dialogo do pagamento
+
+void DrawCashierDialog(GLFWwindow* window)
+{
+    if (!g_InteractingWithCashier) return;
+
+    // Posição central na tela
+    float x = -0.4f;
+    float y = 0.2f;
+    float line_height = TextRendering_LineHeight(window);
+
+    // Desenha o diálogo
+    TextRendering_PrintString(window, "Caixa: Qual o seu troco?.", x, y, 1.0f);
+    TextRendering_PrintString(window, "apenas respostas válidas", x, y - line_height, 1.0f);
+
+    char total_text[64];
+    snprintf(total_text, sizeof(total_text), "Total da compra: R$ %.2f", g_TotalPurchaseValue);
+    TextRendering_PrintString(window, total_text, x, y - 2*line_height, 1.0f);
+
+    char saldo_text[64];
+    snprintf(saldo_text, sizeof(saldo_text), "Voce entregou: R$ %.2f", g_PlayerMoney);
+    TextRendering_PrintString(window, saldo_text, x, y - 3*line_height, 1.0f);
+
+    // Área para input do jogador com cursor piscante
+    char input_text[64];
+    if (g_InputTroco.empty()) {
+        snprintf(input_text, sizeof(input_text), "Troco correto: R$ _____");
+    } else {
+        snprintf(input_text, sizeof(input_text), "Troco correto: R$ %s", g_InputTroco.c_str());
+    }
+    TextRendering_PrintString(window, input_text, x, y - 4*line_height, 1.0f);
+
+}
 
 /// Destacar objeto
 
@@ -385,6 +440,185 @@ int GetObjectUnderCrosshair(
     std::map<std::string, glm::mat4>& object_matrices
 );
 
+/// estrutura de dados usada para instanciar calçadas
+
+struct Calcada {
+    glm::vec3 position;
+    float rotation;
+    glm::mat4 model;
+};
+
+std::vector<Calcada> calcadas;
+
+void GerarCalcadas() {
+    Calcada calcada;
+    float largura_calcada = 1.5f;
+    float altura_calcada = -0.75f;
+    float profundidade_calcada = 0.5f;
+    float posicao_lateral = 6.53f;
+    float espacamento = 9.05f;
+
+    /// Array com as 17 posições Z para os segmentos verticais
+    float posicoes_z[17];
+    posicoes_z[0] = -0.5f;
+    for(int i = 1; i < 17; i++) {
+        posicoes_z[i] = posicoes_z[0] - (espacamento * i);
+    }
+
+    // Lateral direita - os segmentos C verticais
+    for(int i = 0; i < 17; i++) {
+        calcada.position = glm::vec3(posicao_lateral, altura_calcada, posicoes_z[i]);
+        calcada.rotation = M_PI/2;
+        calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+                     * Matrix_Rotate_Y(calcada.rotation)
+                     * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+        calcadas.push_back(calcada);
+    }
+
+    // Lateral esquerda - os segmentos C verticais
+    for(int i = 0; i < 17; i++) {
+        calcada.position = glm::vec3(-posicao_lateral, altura_calcada, posicoes_z[i]);
+        calcada.rotation = -M_PI/2;
+        calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+                     * Matrix_Rotate_Y(calcada.rotation)
+                     * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+        calcadas.push_back(calcada);
+    }
+
+    // Segmentos A - horizontais nas pontas superiores
+    // Segmentos A da direita (agora com 3 segmentos)
+    for(int i = 0; i < 3; i++)
+    {
+        calcada.position = glm::vec3(posicao_lateral + 5.05 + largura_calcada + (i * (largura_calcada + 7.55)), altura_calcada, 2.0f);
+        calcada.rotation = 0.0f;
+        calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+        * Matrix_Rotate_Y(calcada.rotation)
+        * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+        calcadas.push_back(calcada);
+    }
+
+    // Segmentos A da esquerda (agora com 3 segmentos)
+    for(int i = 0; i < 3; i++)
+    {
+        calcada.position = glm::vec3(-posicao_lateral - 5.05 - largura_calcada - (i * (largura_calcada + 7.55)), altura_calcada, 2.0f);
+        calcada.rotation = 0.0f;
+        calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+        * Matrix_Rotate_Y(calcada.rotation)
+        * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+        calcadas.push_back(calcada);
+    }
+
+    // Segmento A vertical - ponta direita (primeiro segmento)
+    float x_pos_direita = posicao_lateral + 7.55 + largura_calcada + (2 * (largura_calcada + 7.55));
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 8.55f);
+    calcada.rotation = M_PI/2;
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    // Segmento A vertical - ponta direita (segundo segmento)
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 17.6f);
+    calcada.rotation = M_PI/2;
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    // Segmento A vertical - ponta direita (terceiro segmento)
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 26.65f); // Mantive o mesmo espaçamento (~9.05)
+    calcada.rotation = M_PI/2;
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    // Segmento A vertical - ponta esquerda (primeiro segmento)
+    float x_pos_esquerda = -posicao_lateral - 7.55 - largura_calcada - (2 * (largura_calcada + 7.55));
+    calcada.position = glm::vec3(x_pos_esquerda, altura_calcada, 8.55f);
+    calcada.rotation = -M_PI/2;
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    // Segmento A vertical - ponta esquerda (segundo segmento)
+    calcada.position = glm::vec3(x_pos_esquerda, altura_calcada, 17.6f);
+    calcada.rotation = -M_PI/2;
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    // Segmento A vertical - ponta esquerda (terceiro segmento)
+    calcada.position = glm::vec3(x_pos_esquerda, altura_calcada, 26.65f); // Mantive espaçamento similar
+    calcada.rotation = -M_PI/2;
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+        // Segmento A horizontal - extremidade direita do topo
+    x_pos_direita = posicao_lateral + 7.55 + largura_calcada + (2 * (largura_calcada + 4.27));
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 29.15f); // Usando a altura do último segmento vertical
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    x_pos_direita = posicao_lateral + 7.55 + largura_calcada + (2 * (largura_calcada - 0.25));
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 29.15f); // Usando a altura do último segmento vertical
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    x_pos_direita = posicao_lateral + 7.55 + largura_calcada + (2 * (largura_calcada - 4.77));
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 29.15f); // Usando a altura do último segmento vertical
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+
+    x_pos_direita = posicao_lateral + 7.55 + largura_calcada + (2 * (largura_calcada - 9.29));
+    calcada.position = glm::vec3(x_pos_direita, altura_calcada, 29.15f); // Usando a altura do último segmento vertical
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    // Segmento A horizontal - extremidade esquerda do topo
+    x_pos_esquerda = -posicao_lateral - 7.55 - largura_calcada - (2 * (largura_calcada + 4.27));
+    calcada.position = glm::vec3(x_pos_esquerda, altura_calcada, 29.15f); // Mesma altura do direito
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    x_pos_esquerda = -posicao_lateral - 7.55 - largura_calcada - (2 * (largura_calcada - 0.25));
+    calcada.position = glm::vec3(x_pos_esquerda, altura_calcada, 29.15f); // Mesma altura do direito
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+    x_pos_esquerda = -posicao_lateral - 7.55 - largura_calcada - (2 * (largura_calcada - 4.77));
+    calcada.position = glm::vec3(x_pos_esquerda, altura_calcada, 29.15f); // Mesma altura do direito
+    calcada.rotation = 0.0f; // Horizontal
+    calcada.model = Matrix_Translate(calcada.position.x, calcada.position.y, calcada.position.z)
+    * Matrix_Rotate_Y(calcada.rotation)
+    * Matrix_Scale(largura_calcada, 1.0f, profundidade_calcada);
+    calcadas.push_back(calcada);
+
+}
+
 int main(int argc, char* argv[])
 {
     // Inicializamos a biblioteca GLFW, utilizada para criar uma janela do
@@ -393,8 +627,10 @@ int main(int argc, char* argv[])
 
     // Inicializa o gerador de números aleatórios
     srand(time(NULL));
-    // Sorteia 4 itens para comprar
-    SortearItens(4);
+    // Sorteia 2 itens para comprar
+    SortearItens(2);
+    // Inicializa o sistema monetário do jogo
+    InitializeMoneyAndPrices();
 
     if (!success)
     {
@@ -420,7 +656,7 @@ int main(int argc, char* argv[])
     // Criamos uma janela do sistema operacional, com 800 colunas e 600 linhas
     // de pixels, e com título "INF01047 ...".
     GLFWwindow* window;
-    window = glfwCreateWindow(800, 600, "INF01047 - 00343897 - Gleydson de Sousa Campos", NULL, NULL);
+    window = glfwCreateWindow(800, 600, "Neighborhood", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -456,6 +692,8 @@ int main(int argc, char* argv[])
     // Indicamos que as chamadas OpenGL deverão renderizar nesta janela
     glfwMakeContextCurrent(window);
 
+    GerarCalcadas();
+
     // Carregamento de todas funções definidas por OpenGL 3.3, utilizando a
     // biblioteca GLAD.
     gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
@@ -482,7 +720,28 @@ int main(int argc, char* argv[])
     // Carregamos duas imagens para serem utilizadas como textura
     LoadTextureImage("../../data/tc-earth_daymap_surface.jpg");      // TextureImage0
     LoadTextureImage("../../data/tc-earth_nightmap_citylights.gif"); // TextureImage1
-    LoadTextureImage("../../data/textures/TexturaLua.jpg");          // TextureImage2 Lua
+
+    /// texturas adicionadas
+
+    LoadTextureImage("../../data/baguete_COLOR.png");               // TextureImage2
+    LoadTextureImage("../../data/asfalto.png");                     // TextureImage3
+    LoadTextureImage("../../data/poleTexture.png");                 // TextureImage4
+    LoadTextureImage("../../data/TexturaLua.jpg");                  // TextureImage5
+    LoadTextureImage("../../data/texturaCalcada.png");              // TextureImage6
+    LoadTextureImage("../../data/smallHouseTexture.jpg");           // TextureImage7
+    LoadTextureImage("../../data/grassTexture.png");                // TextureImage8
+    LoadTextureImage("../../data/gasStationTexture.jpg");           // TextureImage9
+    LoadTextureImage("../../data/myhouseTexture.png");              // TextureImage10
+    LoadTextureImage("../../data/longHouseTexture.jpg");            // TextureImage11
+    LoadTextureImage("../../data/woodHouseTexture.png");            // TextureImage12
+    LoadTextureImage("../../data/lastHouseTexture.png");            // TextureImage13
+    LoadTextureImage("../../data/lilHouseTexture.png");             // TextureImage14
+    LoadTextureImage("../../data/maquinaTextura.png");              // TextureImage15
+    LoadTextureImage("../../data/ceuEstrelado.jpg");                // TextureImage16
+    LoadTextureImage("../../data/goldTexture.jpg");                 // TextureImage17
+    LoadTextureImage("../../data/queijo.jpg");                      // TextureImage18
+    LoadTextureImage("../../data/parmaTexture.jpg");                // TextureImage19
+    LoadTextureImage("../../data/oldWallTexture.jpg");              // TextureImage20
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     ObjModel spheremodel("../../data/sphere.obj");
@@ -497,15 +756,111 @@ int main(int argc, char* argv[])
     ComputeNormals(&planemodel);
     BuildTrianglesAndAddToVirtualScene(&planemodel);
 
+    /// .obj adicionados
+
+    ObjModel mainbuildmodel("../../data/mainbuild.obj");
+    ComputeNormals(&mainbuildmodel);
+    BuildTrianglesAndAddToVirtualScene(&mainbuildmodel);
+
+    // Carregando o modelo da calçada
+    ObjModel calcadamodel("../../data/calcada.obj");
+    ComputeNormals(&calcadamodel);
+    BuildTrianglesAndAddToVirtualScene(&calcadamodel);
+
+    // baguete
+    ObjModel baguetemodel("../../data/baguete.obj");
+    ComputeNormals(&baguetemodel);
+    BuildTrianglesAndAddToVirtualScene(&baguetemodel);
+
+    ObjModel eggmodel("../../data/eggs.obj");
+    ComputeNormals(&eggmodel);
+    BuildTrianglesAndAddToVirtualScene(&eggmodel);
+
+    ObjModel buttermodel("../../data/butter.obj");
+    ComputeNormals(&buttermodel);
+    BuildTrianglesAndAddToVirtualScene(&buttermodel);
+
+    ObjModel cheesemodel("../../data/cheese.obj");
+    ComputeNormals(&cheesemodel);
+    BuildTrianglesAndAddToVirtualScene(&cheesemodel);
+
     ObjModel personagemmodel("../../data/objs/personagem/personagem.obj");
     ComputeNormals(&personagemmodel);
     BuildTrianglesAndAddToVirtualScene(&personagemmodel);
+
+    ObjModel mansionmodel("../../data/mansion.obj");
+    ComputeNormals(&mansionmodel);
+    BuildTrianglesAndAddToVirtualScene(&mansionmodel);
+
+    ObjModel polemodel("../../data/pole.obj");
+    ComputeNormals(&polemodel);
+    BuildTrianglesAndAddToVirtualScene(&polemodel);
+
+    ObjModel smallhousemodel("../../data/smallHouse.obj");
+    ComputeNormals(&smallhousemodel);
+    BuildTrianglesAndAddToVirtualScene(&smallhousemodel);
+
+    ObjModel gasstationmodel("../../data/gasStation.obj");
+    ComputeNormals(&gasstationmodel);
+    BuildTrianglesAndAddToVirtualScene(&gasstationmodel);
+
+    ObjModel myhousemodel("../../data/myhouse.obj");
+    ComputeNormals(&myhousemodel);
+    BuildTrianglesAndAddToVirtualScene(&myhousemodel);
+
+    ObjModel longhousemodel("../../data/longHouse.obj");
+    ComputeNormals(&longhousemodel);
+    BuildTrianglesAndAddToVirtualScene(&longhousemodel);
+
+    ObjModel woodhousemodel("../../data/woodhouse.obj");
+    ComputeNormals(&woodhousemodel);
+    BuildTrianglesAndAddToVirtualScene(&woodhousemodel);
+
+    ObjModel lasthousemodel("../../data/lasthouse.obj");
+    ComputeNormals(&lasthousemodel);
+    BuildTrianglesAndAddToVirtualScene(&lasthousemodel);
+
+    ObjModel lilhousemodel("../../data/lilhouse.obj");
+    ComputeNormals(&lilhousemodel);
+    BuildTrianglesAndAddToVirtualScene(&lilhousemodel);
+
+    ObjModel maquinamodel("../../data/maquina.obj");
+    ComputeNormals(&maquinamodel);
+    BuildTrianglesAndAddToVirtualScene(&maquinamodel);
 
     if ( argc > 1 )
     {
         ObjModel model(argv[1]);
         BuildTrianglesAndAddToVirtualScene(&model);
     }
+
+    g_CashierBox.min = glm::vec4(g_CashierPosition.x - 1.0f, g_CashierPosition.y - 1.0f, g_CashierPosition.z - 1.0f, 1.0f);
+    g_CashierBox.max = glm::vec4(g_CashierPosition.x + 1.0f, g_CashierPosition.y + 1.0f, g_CashierPosition.z + 1.0f, 1.0f);
+
+    g_HouseBox.min = glm::vec4(-20.0f, -1.3f, 45.0f, 1.0f);
+    g_HouseBox.max = glm::vec4(20.0f, 3.0f, 70.0f, 1.0f);
+
+
+    // Define os planos que limitam o mapa
+    Plane boundary_plane_north = {
+        glm::vec4(0.0f, 0.0f, 10.0f, 1.0f),   // ponto no plano (mais próximo)
+        glm::vec4(0.0f, 0.0f, 1.0f, 0.0f)     // normal apontando para sul
+    };
+
+    Plane boundary_plane_south = {
+        glm::vec4(0.0f, 0.0f, -10.0f, 1.0f),  // ponto no plano (mais próximo)
+        glm::vec4(0.0f, 0.0f, -1.0f, 0.0f)    // normal apontando para norte
+    };
+
+    Plane boundary_plane_east = {
+        glm::vec4(10.0f, 0.0f, 0.0f, 1.0f),   // ponto no plano (mais próximo)
+        glm::vec4(1.0f, 0.0f, 0.0f, 0.0f)     // normal apontando para oeste
+    };
+
+    Plane boundary_plane_west = {
+        glm::vec4(-10.0f, 0.0f, 0.0f, 1.0f),  // ponto no plano (mais próximo)
+        glm::vec4(-1.0f, 0.0f, 0.0f, 0.0f)    // normal apontando para leste
+    };
 
     // Inicializamos o código para renderização de texto.
     TextRendering_Init();
@@ -585,6 +940,7 @@ int main(int argc, char* argv[])
             speed = VelocidadeBike;
         }
 
+
         // Matriz model é a identidade
         glm::mat4 model = Matrix_Identity();
 
@@ -620,15 +976,10 @@ int main(int argc, char* argv[])
         }
 
 
-        //
-
-
-
-
         if(g_cameraType)
         {
 
-                // Calculamos os vetores da base da câmera
+            // Calculamos os vetores da base da câmera
             glm::vec4 w = -camera_view_vector / norm(camera_view_vector);
             glm::vec4 u = crossproduct(camera_up_vector, w);
 
@@ -645,37 +996,63 @@ int main(int argc, char* argv[])
 
             g_camera_position_c.y = g_CameraAlturaFixa;
 
+            glm::vec4 new_camera_position = g_camera_position_c; // Posição atual
+
+            // Atualiza a bounding box do jogador
+            g_PlayerBox.min = new_camera_position - glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+            g_PlayerBox.max = new_camera_position + glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+
+            // Verifica e resolve colisão com a casa
+            CollisionResult houseCollision = ResolveBoxCollision(g_PlayerBox, g_HouseBox, g_camera_position_c, new_camera_position);
+            if (houseCollision.collided) {
+                new_camera_position = houseCollision.correctedPosition;
+            }
+
+            // Verifica e resolve colisão com a máquina
+            CollisionResult cashierCollision = ResolveBoxCollision(g_PlayerBox, g_CashierBox, g_camera_position_c, new_camera_position);
+            if (cashierCollision.collided) {
+                new_camera_position = cashierCollision.correctedPosition;
+            }
+
+            // Verifica colisão com os planos limite do mapa
+            float plane_threshold = 1.0f;
+            bool collides_with_boundary =
+            PointToPlaneCollision(new_camera_position, boundary_plane_north, plane_threshold) ||
+            PointToPlaneCollision(new_camera_position, boundary_plane_south, plane_threshold) ||
+            PointToPlaneCollision(new_camera_position, boundary_plane_east, plane_threshold) ||
+            PointToPlaneCollision(new_camera_position, boundary_plane_west, plane_threshold);
+
+            if (collides_with_boundary)
+            {
+                new_camera_position = g_camera_position_c;
+            }
+
+            if (new_camera_position.x < -85.0f)
+                new_camera_position.x = -85.0f;
+            if (new_camera_position.x > 85.0f)
+                new_camera_position.x = 85.0f;
+            if (new_camera_position.z < -195.0f)
+                new_camera_position.z = -195.0f;
+            if (new_camera_position.z > 83.0f)
+                new_camera_position.z = 83.0f;
+
+            // Atualiza a posição final
+            g_camera_position_c = new_camera_position;
+
 
             // Note que, no sistema de coordenadas da câmera, os planos near e far
             // estão no sentido negativo! Veja slides 176-204 do documento Aula_09_Projecoes.pdf.
             float nearplane = -0.1f;  // Posição do "near plane"
-            float farplane  = -100.0f; // Posição do "far plane"
+            float farplane  = -500.0f; // Posição do "far plane"
 
-            if (g_UsePerspectiveProjection)
-            {
-                // Projeção Perspectiva.
-                // Para definição do field of view (FOV), veja slides 205-215 do documento Aula_09_Projecoes.pdf.
-                float field_of_view = 3.141592 / 3.0f;
-                projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
-            }
-            else
-            {
-                // Projeção Ortográfica.
-                // Para definição dos valores l, r, b, t ("left", "right", "bottom", "top"),
-                // PARA PROJEÇÃO ORTOGRÁFICA veja slides 219-224 do documento Aula_09_Projecoes.pdf.
-                // Para simular um "zoom" ortográfico, computamos o valor de "t"
-                // utilizando a variável g_CameraDistance.
-                float t = 1.5f*g_CameraDistance/2.5f;
-                float b = -t;
-                float r = t*g_ScreenRatio;
-                float l = -r;
-                projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
-            }
+            // Projeção Perspectiva.
+            // Para definição do field of view (FOV), veja slides 205-215 do documento Aula_09_Projecoes.pdf.
+            float field_of_view = 3.141592 / 3.0f;
+            projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
         }
 
         else
         {
-            // O ponto de interesse é o último ponto de onde a câmera livre esteve
             glm::vec4 camera_lookat_l = g_camera_position_c;
             glm::vec4 camera_up_vector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 
@@ -696,25 +1073,11 @@ int main(int argc, char* argv[])
             float nearplane = -0.1f;  // Posição do "near plane"
             float farplane  = -100.0f; // Posição do "far plane"
 
-            if (g_UsePerspectiveProjection)
-            {
-                // Projeção Perspectiva para Look-At
-                float field_of_view = 3.141592 / 3.0f;
-                projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
-            }
-            else
-            {
-                // Projeção Ortográfica para Look-At
-                float t = 1.5f;
-                float b = -t;
-                float r = t * g_ScreenRatio;
-                float l = -r;
-                projection = Matrix_Orthographic(l, r, b, t, nearplane, farplane);
-            }
+            // Projeção Perspectiva para Look-At
+            float field_of_view = 3.141592 / 3.0f;
+            projection = Matrix_Perspective(field_of_view, g_ScreenRatio, nearplane, farplane);
+
         }
-
-
-
 
         // Enviamos as matrizes "view" e "projection" para a placa de vídeo
         // (GPU). Veja o arquivo "shader_vertex.glsl", onde estas são
@@ -725,28 +1088,409 @@ int main(int argc, char* argv[])
         #define SPHERE 0
         #define BUNNY  1
         #define PLANE  2
-        #define LUA    3
+        #define MAINBUILD 3
+        #define BAGUETE 4
+        #define EGG 5
+        #define BUTTER 6
+        #define CHEESE 7
+        #define LUA 8
+        #define MANSION 9
+        #define PLANE_ASPHALT 10
+        #define PLANE_GRASS 11
+        #define SMALLHOUSE 12
+        #define GASSTATION 13
+        #define MYHOUSE 14
         #define PERSONAGEM 15
+        #define LONGHOUSE 16
+        #define WOODHOUSE 17
+        #define LASTHOUSE 18
+        #define POLE 19
+        #define CALCADA 20
+        #define LILHOUSE 21
+        #define MAQUINA 22
+        #define SKY 23
 
-        // Desenhamos o modelo da esfera
-        model = Matrix_Translate(-1.0f,0.0f,0.0f)
-              * Matrix_Rotate_Z(0.6f)
-              * Matrix_Rotate_X(0.2f)
-              * Matrix_Rotate_Y(g_AngleY + (float)glfwGetTime() * 0.1f);
-        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, SPHERE);
+        /// desenhos adicionados
+
+        // Skybox
+        glCullFace(GL_FRONT);
+        glDepthMask(GL_FALSE);
+        model = Matrix_Translate(camera_position_c.x, camera_position_c.y, camera_position_c.z - 50.0)
+        * Matrix_Scale(200.0f, 200.0f, 200.0f);  // Aumenta o tamanho para evitar flickering nas bordas
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, SKY);
+        DrawVirtualObject("the_sphere");
+        // Reativa escrita no z-buffer
+        glDepthMask(GL_TRUE);
+        glCullFace(GL_BACK);
+
+        // Construções
+        model = Matrix_Translate(13.0f,-1.0f,-165.0f)  // x, y, z (y = -1.1f coloca no mesmo nível do chão)
+        * Matrix_Scale(0.4f, 0.4f, 0.4f)
+        * Matrix_Rotate(165.0f, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, MAINBUILD);
+        DrawVirtualObject("the_mainbuild");
+
+        // Desenhamos o modelo da casa
+        model = Matrix_Translate(-25.0f, -1.1f, -20.0f)
+        * Matrix_Rotate_Y(M_PI/2.0f)
+        * Matrix_Scale(0.7f, 0.7f, 0.7f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, SMALLHOUSE);
+        DrawVirtualObject("the_smallHouse");
+
+        model = Matrix_Translate(33.0f, -1.1f, -75.0f)
+        * Matrix_Rotate_Y(M_PI*2)
+        * Matrix_Scale(0.7f, 0.7f, 0.7f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, SMALLHOUSE);
+        DrawVirtualObject("the_smallHouse");
+
+        // Desenhamos o modelo do posto de gasolina
+        model = Matrix_Translate(-70.0f, -1.3f, -105.0f)
+        * Matrix_Rotate_Y(M_PI)
+        * Matrix_Scale(0.55f, 0.55f, 0.55f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, GASSTATION);
+        DrawVirtualObject("the_gasstation");
+
+        // Desenhamos o modelo da nossa casa
+        model = Matrix_Translate(0.0f, -1.3f, 58.0f)
+        * Matrix_Rotate_Y(M_PI/2)
+        * Matrix_Scale(1.0f, 1.0f, 1.0f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, MYHOUSE);
+        DrawVirtualObject("myHouse");
+
+        // Salvamos a matriz do caixa para uso no raycasting
+        g_object_matrices["myHouse"] = model;
+
+        if (g_object_highlighted == MYHOUSE && tecla_E_pressionada && g_PaymentCompleted)
+        {
+            printf("Interagindo com a casa\n");
+            g_GameWon = true;
+            tecla_E_pressionada = false;
+        }
+
+        // Desenhamos o modelo de uma das casas
+        model = Matrix_Translate(40.0f, -1.3f, -30.0f)
+        * Matrix_Rotate_Y(M_PI)
+        * Matrix_Scale(0.90f, 0.90f, 0.90f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, LONGHOUSE);
+        DrawVirtualObject("the_longhouse");
+
+        // Desenhamos o modelo da casa de madeira 1
+        model = Matrix_Translate(60.0f, -1.3f, 17.50f)
+        * Matrix_Rotate_Y(M_PI)
+        * Matrix_Scale(0.40f, 0.40f, 0.40f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, WOODHOUSE);
+        DrawVirtualObject("the_woodhouse");
+
+        // Desenhamos o modelo da casa de madeira 2
+        model = Matrix_Translate(-60.0f, -1.3f, 17.50f)
+        * Matrix_Rotate_Y(M_PI*2)
+        * Matrix_Scale(0.40f, 0.40f, 0.40f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, WOODHOUSE);
+        DrawVirtualObject("the_woodhouse");
+
+        // Desenhamos o modelo da casa de madeira 3
+        model = Matrix_Translate(-30.0f, -1.3f, -50.50f)
+        * Matrix_Rotate_Y(M_PI/2)
+        * Matrix_Scale(0.40f, 0.40f, 0.40f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, WOODHOUSE);
+        DrawVirtualObject("the_woodhouse");
+
+       // Desenhamos todas as instâncias da calçada
+        for(const Calcada& calcada : calcadas) {
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(calcada.model));
+            glUniform1i(g_object_id_uniform, CALCADA);
+            DrawVirtualObject("calcada");
+
+
+            /// Desenhamos os planos do chão
+
+            //asfalto
+            model = Matrix_Translate(0.0f,-1.1f,-73.5f)
+            * Matrix_Scale(5.0f, 1.0f, 76.5f); // Aumentar o tamanho do plano
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+            glUniform1i(g_object_id_uniform, PLANE);
+            DrawVirtualObject("the_plane");
+
+            model = Matrix_Translate(0.0f,-1.1f,16.0f)
+            * Matrix_Scale(35.0f, 1.0f, 13.0f);
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+            glUniform1i(g_object_id_uniform, PLANE_ASPHALT);
+            DrawVirtualObject("the_plane");
+        }
+
+        //grama
+        model = Matrix_Translate(45.0f,-1.1f,-97.0f)
+        * Matrix_Scale(40.0f, 1.0f, 100.0f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_GRASS);
+        DrawVirtualObject("the_plane");
+
+        model = Matrix_Translate(-45.0f,-1.1f,-97.0f)
+        * Matrix_Scale(40.0f, 1.0f, 100.0f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_GRASS);
+        DrawVirtualObject("the_plane");
+
+        model = Matrix_Translate(60.0f,-1.1f,43.0f)
+        * Matrix_Scale(25.0f, 1.0f, 40.0f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_GRASS);
+        DrawVirtualObject("the_plane");
+
+        model = Matrix_Translate(-60.0f,-1.1f,43.0f)
+        * Matrix_Scale(25.0f, 1.0f, 40.0f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_GRASS);
+        DrawVirtualObject("the_plane");
+
+        model = Matrix_Translate(0.0f,-1.1f,55.5f)
+        * Matrix_Scale(35.0f, 1.0f, 27.5f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_GRASS);
+        DrawVirtualObject("the_plane");
+
+        model = Matrix_Translate(0.0f,-1.1f,-173.5f)
+        * Matrix_Scale(5.0f, 1.0f, 23.5f); // Aumentar o tamanho do plano
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, PLANE_GRASS);
+        DrawVirtualObject("the_plane");
+
+        // Desenhamos o poste
+        model = Matrix_Translate(-7.0f, -1.1f, -5.5f)
+        * Matrix_Rotate_Y(-M_PI/2)
+        * Matrix_Scale(0.6f, 0.6f, 0.6f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, POLE);
+        DrawVirtualObject("the_pole");
+
+        // Desenhamos o poste
+        model = Matrix_Translate(-7.0f, -1.1f, -42.0f)
+        * Matrix_Rotate_Y(-M_PI/2)
+        * Matrix_Scale(0.6f, 0.6f, 0.6f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, POLE);
+        DrawVirtualObject("the_pole");
+
+        // Desenhamos o poste
+        model = Matrix_Translate(-7.0f, -1.1f, -78.5f)
+        * Matrix_Rotate_Y(-M_PI/2)
+        * Matrix_Scale(0.6f, 0.6f, 0.6f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, POLE);
+        DrawVirtualObject("the_pole");
+
+        //Desenhamos o modelo da lua
+        model = Matrix_Translate(15.0, 60.0, -100.0f)
+        * Matrix_Rotate_Y(g_AngleY/10)
+        * Matrix_Rotate_Z(g_AngleY/5)
+        * Matrix_Rotate_X(g_AngleY/10)
+        * Matrix_Scale(6.0f, 6.0f, 6.0f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, LUA);
         DrawVirtualObject("the_sphere");
 
-        // Desenhamos o modelo do coelho
+        //Desenhamos o modelo da maquina de pagamento
+        model = Matrix_Translate(15.0f, -1.1f, -147.5f)
+        * Matrix_Rotate_Y(M_PI*2)
+        * Matrix_Scale(1.5f, 1.5f, 1.5f);
+        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniform1i(g_object_id_uniform, MAQUINA);
+        DrawVirtualObject("maquina_pagamento");
+
+        // Salvamos a matriz do caixa para uso no raycasting
+        g_object_matrices["maquina_pagamento"] = model;
+
+        if (g_object_highlighted == MAQUINA && tecla_E_pressionada && !g_HasPaidPurchases)
+        {
+            printf("Tentando interagir com o caixa\n"); // Debug
+
+            bool all_items_collected = true;
+            int items_coletados = 0;
+            g_TotalPurchaseValue = 0.0f;
+
+
+            // Verifica quantos itens foram coletados
+            for (size_t i = 0; i < itens_pegos.size(); i++)
+            {
+                if (itens_pegos[i])
+                {
+                    items_coletados++;
+                    g_TotalPurchaseValue += g_ItemPrices[itens_para_comprar[i]];
+                }
+                else
+                {
+                    all_items_collected = false;
+                }
+            }
+
+            printf("Items coletados: %d de %zu\n", items_coletados, itens_pegos.size()); // Debug
+
+            if (all_items_collected)
+            {
+                printf("Iniciando interação com caixa. Valor total: %.2f\n", g_TotalPurchaseValue); // Debug
+                g_InteractingWithCashier = true;
+                tecla_E_pressionada = false;
+            }
+            else
+            {
+                printf("Ainda faltam itens para coletar!\n"); // Debug
+            }
+        }
+
+
+       // Desenhamos o modelo do queijo
+        if (!cheese_picked)
+        {
+            model = Matrix_Translate(10.0f, -1.0f, -156.0f)
+            * Matrix_Scale(0.5f, 0.5f, 0.5f);
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+            glUniform1i(g_object_id_uniform, CHEESE);
+            DrawVirtualObject("the_cheese");
+
+            // Salvamos a matriz do objeto para uso no raycasting
+            g_object_matrices["the_cheese"] = model;
+        }
+
+        if (g_object_highlighted == CHEESE && tecla_E_pressionada && !cheese_picked)
+        {
+            cheese_picked = true;
+            MarcarItemComoPego(ITEM_QUEIJO);
+            tecla_E_pressionada = false;
+
+            // Verifica se o objeto está na lista de compras e marca como pego
+            for (size_t i = 0; i < itens_para_comprar.size(); ++i)
+            {
+                if (itens_para_comprar[i] == "queijo")
+                {
+                    itens_pegos[i] = true;
+                    printf("Item comprado: %s\n", itens_para_comprar[i].c_str());
+                    break;
+                }
+            }
+        }
+
+        // Desenhamos o modelo da manteiga
+        if (!butter_picked)
+        {
+            model = Matrix_Translate(10.0f, -1.0f, -160.0f)
+            * Matrix_Scale(0.3f, 0.3f, 0.3f);
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+            glUniform1i(g_object_id_uniform, BUTTER);
+            DrawVirtualObject("the_butter");
+
+            // Salvamos a matriz do objeto para uso no raycasting
+            g_object_matrices["the_butter"] = model;
+        }
+
+        if (g_object_highlighted == BUTTER && tecla_E_pressionada && !butter_picked)
+        {
+            butter_picked = true;
+            MarcarItemComoPego(ITEM_MANTEIGA);
+            tecla_E_pressionada = false;
+
+            // Verifica se o objeto está na lista de compras e marca como pego
+            for (size_t i = 0; i < itens_para_comprar.size(); ++i)
+            {
+                if (itens_para_comprar[i] == "manteiga")
+                {
+                    itens_pegos[i] = true;
+                    printf("Item comprado: %s\n", itens_para_comprar[i].c_str());
+                    break;
+                }
+            }
+        }
+
+
+        // Desenhamos o modelo do ovo
+        if (!egg_picked)
+        {
+            model = Matrix_Translate(-6.0f, -1.0f, -156.0f)
+            * Matrix_Scale(0.60f, 0.60f, 0.60f);
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+            glUniform1i(g_object_id_uniform, EGG);
+            DrawVirtualObject("the_eggs");
+
+            // Salvamos a matriz do ovo para uso no raycasting
+            g_object_matrices["the_eggs"] = model;
+        }
+
+        if (g_object_highlighted == EGG && tecla_E_pressionada && !egg_picked)
+        {
+            egg_picked = true;
+            MarcarItemComoPego(ITEM_OVO);
+            tecla_E_pressionada = false;
+
+            // Verifica se o ovo está na lista de compras e marca como pego
+            for (size_t i = 0; i < itens_para_comprar.size(); ++i)
+            {
+                if (itens_para_comprar[i] == "ovo")
+                {
+                    itens_pegos[i] = true;
+                    printf("Item comprado: %s\n", itens_para_comprar[i].c_str());
+                    break;
+                }
+            }
+        }
+
+        // Desenhamos o modelo da baguete
+        if (!baguete_picked)
+        {
+            model = Matrix_Translate(-6.0f, 0.0f, -160.0f)
+            * Matrix_Scale(0.15f, 0.15f, 0.15f);
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+            glUniform1i(g_object_id_uniform, BAGUETE);
+            DrawVirtualObject("the_baguete");
+
+            // Salvamos a matriz da baguete para uso no raycasting
+            g_object_matrices["the_baguete"] = model;
+        }
+
+        if (g_object_highlighted == BAGUETE && tecla_E_pressionada && !baguete_picked)
+        {
+            baguete_picked = true;
+            MarcarItemComoPego(ITEM_BAGUETE);
+            tecla_E_pressionada = false;
+
+            // Verificamos se a baguete está na lista de compras e marca como pego
+            for (size_t i = 0; i < itens_para_comprar.size(); ++i)
+            {
+                if (itens_para_comprar[i] == "baguete")
+                {
+                    itens_pegos[i] = true;
+                    printf("Item comprado: %s\n", itens_para_comprar[i].c_str());
+                    break;
+                }
+            }
+        }
+
         if (!bunny_picked)
         {
-            model = Matrix_Translate(1.0f,0.0f,0.0f)
+            model = Matrix_Translate(50.0f,0.0f,-40.0f)
             * Matrix_Rotate_X(g_AngleX + (float)glfwGetTime() * 0.1f);
             glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
             glUniform1i(g_object_id_uniform, BUNNY);
             DrawVirtualObject("the_bunny");
-        }
 
+            glm::vec4 bunny_position = model * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+            // Verifica colisão com o jogador
+            if (SphereToSphereCollision(g_camera_position_c, PLAYER_RADIUS, bunny_position, BUNNY_RADIUS))
+            {
+                bunny_picked = true;
+                g_PlayerMoney += 50.0f;
+                printf("Coelho encontrado! +R$ 50.00\n");
+            }
+        }
         // Salvamos a matriz do coelho para uso no raycasting
         g_object_matrices["the_bunny"] = model;
 
@@ -758,23 +1502,6 @@ int main(int argc, char* argv[])
             g_object_matrices
         );
 
-        if (g_object_highlighted == BUNNY && tecla_E_pressionada && !bunny_picked)
-        {
-            bunny_picked = true;
-            tecla_E_pressionada = false;
-            MarcarItemComoPego(ITEM_PRESUNTO);
-
-            // Verifica se o coelho está na lista de compras e marca como pego
-            for (size_t i = 0; i < itens_para_comprar.size(); ++i)
-            {
-                if (itens_para_comprar[i] == "presunto") //  "Leite" como exemplo para o coelho so pra testar
-                {
-                    itens_pegos[i] = true;
-                    printf("Item comprado: %s\n", itens_para_comprar[i].c_str());
-                    break;
-                }
-            }
-        }
 
         // Se o coelho está sob o crosshair, desenhamos ele novamente com destaque amarelo
         if (g_object_highlighted == BUNNY && !bunny_picked) {
@@ -801,64 +1528,152 @@ int main(int argc, char* argv[])
             glDisable(GL_STENCIL_TEST);
         }
 
-        // Desenhamos o plano do chão
-        model = Matrix_Translate(0.0f,-1.1f,0.0f);
-        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, PLANE);
-        DrawVirtualObject("the_plane");
-
-        //Desenhamos o modelo da lua
-        model = Matrix_Translate(5.0, 8.0, -13.0f)
-                * Matrix_Rotate_Y(g_AngleY/10)
-                * Matrix_Rotate_Z(g_AngleY/5)
-                * Matrix_Rotate_X(g_AngleY/10)
-                * Matrix_Scale(2.0f, 2.0f, 2.0f);
-        glUniformMatrix4fv(g_model_uniform, 1 , GL_FALSE , glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, LUA);
-        DrawVirtualObject("the_sphere");
-
-
-        //personagem
-        glm::vec4 g_posicao_personagem = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-
-        if (g_cameraType)
+        else if (g_object_highlighted == BAGUETE && !baguete_picked)
         {
-            glm::vec3 offset = -0.5f * glm::vec3(camera_view_vector);
-            offset.y = -3.0f;
-            offset.x = offset.x - 1;
+            glEnable(GL_STENCIL_TEST);
+            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glStencilMask(0xFF);
 
-            g_posicao_personagem = g_camera_position_c + glm::vec4(offset, 0.0f);
+            model = Matrix_Translate(-6.0f, 0.0f, -160.0f)
+            * Matrix_Scale(0.195f, 0.195f, 0.195f);  // Escala um pouco maior para o highlight
 
-            model = Matrix_Translate(g_posicao_personagem.x, g_posicao_personagem.y, g_posicao_personagem.z)
-                    * Matrix_Scale(2.0f, 2.0f, 2.0f); // Escala fixa
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+            // Ativamos a sobreposição de cor
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), true);
+            glUniform4f(glGetUniformLocation(g_GpuProgramID, "color_override"), 1.0f, 1.0f, 0.0f, 1.0f);
+
+            DrawVirtualObject("the_baguete");
+
+            // Desativamos a sobreposição de cor para os próximos objetos
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), false);
+            glDisable(GL_STENCIL_TEST);
         }
-        else
+        else if (g_object_highlighted == EGG && !egg_picked)
         {
-            model = Matrix_Translate(g_posicao_personagem.x, g_posicao_personagem.y, g_posicao_personagem.z)
-                    * Matrix_Scale(2.0f, 2.0f, 2.0f); // Escala fixa
+            glEnable(GL_STENCIL_TEST);
+            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glStencilMask(0xFF);
+
+            model = Matrix_Translate(-6.0f, -1.0f, -156.0f)
+            * Matrix_Scale(1.20f, 1.20f, 1.20f);  // Escala um pouco maior para o highlight
+
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+            // Ativamos a sobreposição de cor
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), true);
+            glUniform4f(glGetUniformLocation(g_GpuProgramID, "color_override"), 1.0f, 1.0f, 0.0f, 1.0f);
+
+            DrawVirtualObject("the_eggs");
+
+            // Desativamos a sobreposição de cor para os próximos objetos
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), false);
+            glDisable(GL_STENCIL_TEST);
         }
 
-        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, PERSONAGEM);
-        DrawVirtualObject("personagem");
+        else if (g_object_highlighted == BUTTER && !butter_picked)
+        {
+            glEnable(GL_STENCIL_TEST);
+            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glStencilMask(0xFF);
 
+            model = Matrix_Translate(10.0f, -1.0f, -160.0f)
+            * Matrix_Scale(0.5f, 0.5f, 0.5f);  // Escala um pouco maior para o highlight
 
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
 
+            // Ativamos a sobreposição de cor
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), true);
+            glUniform4f(glGetUniformLocation(g_GpuProgramID, "color_override"), 1.0f, 1.0f, 0.0f, 1.0f);
 
-        // Enviar a matriz para o shader e desenhar o objeto
-        glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-        glUniform1i(g_object_id_uniform, PERSONAGEM);
-        DrawVirtualObject("personagem");
+            DrawVirtualObject("the_butter");
 
+            // Desativamos a sobreposição de cor para os próximos objetos
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), false);
+            glDisable(GL_STENCIL_TEST);
+        }
+
+        else if (g_object_highlighted == CHEESE && !cheese_picked)
+        {
+            glEnable(GL_STENCIL_TEST);
+            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glStencilMask(0xFF);
+
+            model = Matrix_Translate(10.0f, -1.0f, -156.0f)
+            * Matrix_Scale(0.6f, 0.6f, 0.6f);  // Escala um pouco maior para o highlight
+
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+            // Ativamos a sobreposição de cor
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), true);
+            glUniform4f(glGetUniformLocation(g_GpuProgramID, "color_override"), 1.0f, 1.0f, 0.0f, 1.0f);
+
+            DrawVirtualObject("the_cheese");
+
+            // Desativamos a sobreposição de cor para os próximos objetos
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), false);
+            glDisable(GL_STENCIL_TEST);
+        }
+        else if (g_object_highlighted == MAQUINA)
+        {
+            glEnable(GL_STENCIL_TEST);
+            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glStencilMask(0xFF);
+
+            model = Matrix_Translate(15.0f, -1.1f, -147.5f)
+            * Matrix_Scale(1.9f, 1.9f, 1.9f);  // Escala um pouco maior para o highlight
+
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+            // Ativamos a sobreposição de cor
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), true);
+            glUniform4f(glGetUniformLocation(g_GpuProgramID, "color_override"), 1.0f, 1.0f, 0.0f, 1.0f);
+
+            DrawVirtualObject("maquina_pagamento");
+
+            // Desativamos a sobreposição de cor para os próximos objetos
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), false);
+            glDisable(GL_STENCIL_TEST);
+        }
+
+        else if (g_object_highlighted == MYHOUSE && g_PaymentCompleted)
+        {
+            glEnable(GL_STENCIL_TEST);
+            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glStencilMask(0xFF);
+
+            model = Matrix_Translate(0.0f, -1.3f, 58.0f)
+                  * Matrix_Scale(1.3f, 1.3f, 1.3f);  // Escala um pouco maior para o highlight
+
+            glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+
+            // Ativamos a sobreposição de cor
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), true);
+            glUniform4f(glGetUniformLocation(g_GpuProgramID, "color_override"), 1.0f, 1.0f, 0.0f, 1.0f);
+
+            DrawVirtualObject("myHouse");
+
+            // Desativamos a sobreposição de cor para os próximos objetos
+            glUniform1i(glGetUniformLocation(g_GpuProgramID, "use_color_override"), false);
+            glDisable(GL_STENCIL_TEST);
+        }
 
 
         //esfera seguindo a curva de bezier
         glm::vec4 sphere_position = AtualizaPonto(current_time * ControleVelocidadeCurva , p0, p1, p2, p3);
         model = Matrix_Translate(sphere_position.x, sphere_position.y, sphere_position.z)
-            * Matrix_Scale(0.5f, 0.5f, 0.5f);
+            * Matrix_Scale(0.1f, 0.1f, 0.1f);
         glUniformMatrix4fv(g_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
         glUniform1i(g_object_id_uniform, SPHERE);
         DrawVirtualObject("the_sphere");
+
+
 
         ///crosshair("+")
         glUseProgram(g_GpuProgramID);
@@ -926,18 +1741,16 @@ int main(int argc, char* argv[])
 
 /// ######
 
-        // Imprimimos na tela os ângulos de Euler que controlam a rotação do
-        // terceiro cubo.
-        TextRendering_ShowEulerAngles(window);
-
-        // Imprimimos na informação sobre a matriz de projeção sendo utilizada.
-        TextRendering_ShowProjection(window);
-
         // Imprimimos na tela informação sobre o número de quadros renderizados
         // por segundo (frames per second).
         TextRendering_ShowFramesPerSecond(window);
 
         DrawShoppingList(window);
+
+        // Desenha o diálogo do caixa se estiver interagindo
+        if (g_InteractingWithCashier) {
+            DrawCashierDialog(window);
+        }
 
         // O framebuffer onde OpenGL executa as operações de renderização não
         // é o mesmo que está sendo mostrado para o usuário, caso contrário
@@ -1001,14 +1814,77 @@ int GetObjectUnderCrosshair(glm::vec4 camera_position, glm::vec4 camera_view, st
 
     // Testamos interseção com cada objeto da cena
     for (const auto& obj : virtual_scene) {
-        if (obj.first == "the_bunny") { // Por enquanto só testamos com o coelho
+        if (obj.first == "the_bunny") {
             glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f); // Ajuste conforme o tamanho do objeto
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
 
             if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first])) {
-                return BUNNY; // Retorna o ID do objeto (definido nos #define no início do arquivo)
+                return BUNNY;
             }
         }
+        else if (obj.first == "the_baguete") {
+            glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+
+            if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first])) {
+                return BAGUETE;
+            }
+        }
+        else if (obj.first == "the_eggs")
+        {
+            glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+
+            if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first]))
+            {
+                return EGG;
+            }
+        }
+
+        else if (obj.first == "the_butter")
+        {
+            glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+
+            if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first]))
+            {
+                return BUTTER;
+            }
+        }
+
+        else if (obj.first == "the_cheese")
+        {
+            glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+
+            if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first]))
+            {
+                return CHEESE;
+            }
+        }
+
+        else if (obj.first == "maquina_pagamento")
+        {
+            glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+
+            if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first]))
+            {
+                return MAQUINA;
+            }
+        }
+
+        else if (obj.first == "myHouse")
+        {
+            glm::vec4 box_center = object_matrices[obj.first] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+            glm::vec4 box_extent = glm::vec4(0.5f, 0.5f, 0.5f, 0.0f);
+
+            if (RayOBBIntersection(camera_position, ray_direction, box_center, box_extent, object_matrices[obj.first]))
+            {
+                return MYHOUSE;
+            }
+        }
+
     }
     return -1; // Nenhum objeto encontrado
 }
@@ -1146,8 +2022,27 @@ void LoadShadersFromFiles()
     glUseProgram(g_GpuProgramID);
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage0"), 0);
     glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage1"), 1);
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TexturaLua"), 2);
-    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TexturaPersonagem"), 3);
+
+    /// Variáveis em "shader_fragment.glsl" para acesso das imagens de textura adicionadas
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage2"), 2); // Textura da baguete
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage3"), 3); // Textura do asfalto
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage4"), 4); // Textura do poste
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage5"), 5); // Textura do lua
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage6"), 6); // Textura do calcada
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage7"), 7); // Textura da casa pequena
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage8"), 8); // Textura da grama
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage9"), 9); // Textura do posto de gasolina
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage10"), 10); // Textura do nossa casa
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage11"), 11); // Textura de uma das casa
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage12"), 12); // Textura de uma da casa de madeira
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage13"), 13); // Textura da ultima casa
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage14"), 14); // Textura da casa pequena
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage15"), 15); // Textura da maquina de pagamento
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage16"), 16); // Textura do ceu estrelado
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage17"), 17); // Textura do coelho dourado
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage18"), 18); // Textura do queijo
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage19"), 19); // Textura do queijo
+    glUniform1i(glGetUniformLocation(g_GpuProgramID, "TextureImage20"), 20); // Textura do queijo
     glUseProgram(0);
 }
 
@@ -1829,7 +2724,54 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mod)
             // Volta para modo janela
             glfwSetWindowMonitor(window, nullptr, xpos, ypos, width, height, 0);
         }
+
     }
+            // Se estiver interagindo com o caixa, aceita input numérico
+        if (g_InteractingWithCashier && action == GLFW_PRESS)
+        {
+            if (key >= GLFW_KEY_0 && key <= GLFW_KEY_9)
+            {
+                g_InputTroco += (char)(key - GLFW_KEY_0 + '0');
+                printf("Tecla pressionada: %c, Input atual: %s\n", (char)(key - GLFW_KEY_0 + '0'), g_InputTroco.c_str());
+            }
+            else if (key == GLFW_KEY_PERIOD || key == GLFW_KEY_KP_DECIMAL)
+            {
+                if (g_InputTroco.find('.') == std::string::npos) // Só permite um ponto decimal
+                    g_InputTroco += '.';
+            }
+            else if (key == GLFW_KEY_BACKSPACE)
+            {
+                if (!g_InputTroco.empty())
+                    g_InputTroco.pop_back();
+            }
+            else if (key == GLFW_KEY_ENTER || key == GLFW_KEY_KP_ENTER)
+            {
+                // Verifica se o valor está correto
+                float input_value = std::stof(g_InputTroco.empty() ? "0" : g_InputTroco);
+                g_CorrectChange = g_PlayerMoney - g_TotalPurchaseValue;
+
+                if (fabs(input_value - g_CorrectChange) < 0.01f) // Tolerância de 1 centavo
+                {
+                    printf("Troco correto!\n");
+                    g_HasPaidPurchases = true;
+                    g_PaymentCompleted = true;
+                    g_InteractingWithCashier = false;
+                    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                }
+                else
+                {
+                    printf("Troco incorreto! Tente novamente.\n");
+                    g_InputTroco = ""; // Limpa o input para nova tentativa
+                }
+            }
+            else if (key == GLFW_KEY_ESCAPE)
+            {
+                // Cancela a interação
+                g_InteractingWithCashier = false;
+                g_InputTroco = "";
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            }
+        }
 }
 
 // Definimos o callback para impressão de erros da GLFW no terminal
@@ -1998,35 +2940,55 @@ void DrawShoppingList(GLFWwindow* window)
     float line_height = TextRendering_LineHeight(window);
 
     // Posição inicial da lista (canto superior direito)
-    float x = 0.6f; // posicao horizontal da lista e do timmer
-    float y = 0.8f; // posicao vertical da lista e do timmer
+    float x = 0.6f;
+    float y = 0.8f;
 
     // Título da lista
     TextRendering_PrintString(window, "Lista de Compras:", x, y, 1.0f);
 
-    // Imprime cada item
+    // Imprime cada item com seu preço
     for (size_t i = 0; i < itens_para_comprar.size(); ++i)
     {
         std::string prefix = itens_pegos[i] ? "[x] " : "[ ] ";
-        TextRendering_PrintString(window, prefix + itens_para_comprar[i],
-            x, y - ((i+1) * line_height), 1.0f);
+        std::string item_text = prefix + itens_para_comprar[i];
+
+        // Se o item foi pego, mostra seu preço
+        if (itens_pegos[i])
+        {
+            char price_text[32];
+            float item_price = g_ItemPrices[itens_para_comprar[i]];
+            snprintf(price_text, sizeof(price_text), " - R$ %.2f", item_price);
+            item_text += price_text;
+        }
+
+        TextRendering_PrintString(window, item_text,
+                                  x, y - ((i+1) * line_height), 1.0f);
     }
 
-    // Desenha o timer logo abaixo da lista
+    // Mostra o saldo do jogador
+    char money_text[32];
+    snprintf(money_text, sizeof(money_text), "Saldo: R$ %.2f", g_PlayerMoney);
+    TextRendering_PrintString(window, money_text,
+                              x, y - ((itens_para_comprar.size() + 1) * line_height), 1.0f);
+
+    // Desenha o timer logo abaixo do saldo
     int minutos = (int)(tempo_restante / 60.0f);
     int segundos = (int)(tempo_restante) % 60;
 
     char buffer[32];
     snprintf(buffer, 32, "Tempo: %02d:%02d", minutos, segundos);
 
-    // Posiciona o timer uma linha abaixo do último item
     TextRendering_PrintString(window, buffer,
-        x, y - ((itens_para_comprar.size() + 2) * line_height), 1.0f);
+                              x, y - ((itens_para_comprar.size() + 2) * line_height), 1.0f);
 
     // Se for game over, mostra a mensagem no centro
     if (game_over)
     {
         TextRendering_PrintString(window, "GAME OVER!", -0.2f, 0.0f, 2.0f);
+    }
+    else if (g_GameWon)
+    {
+        TextRendering_PrintString(window, "PARABENS! VOCE VENCEU!", -0.4f, 0.0f, 2.0f);
     }
 }
 

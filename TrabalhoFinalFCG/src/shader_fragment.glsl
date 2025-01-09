@@ -22,8 +22,27 @@ uniform mat4 projection;
 #define SPHERE 0
 #define BUNNY  1
 #define PLANE  2
-#define LUA    3 // Adicionamos um identificador para a Lua
-#define PERSONAGEM 15
+#define MAINBUILD 3
+#define BAGUETE 4
+#define BUTTER 6
+#define CHEESE 7
+#define LUA 8
+
+#define PLANE_ASPHALT 10
+#define PLANE_GRASS 11
+#define SMALLHOUSE 12
+#define GASSTATION 13
+#define MYHOUSE 14
+
+#define LONGHOUSE 16
+#define WOODHOUSE 17
+#define LASTHOUSE 18
+#define POLE 19
+#define CALCADA 20
+#define LILHOUSE 21
+#define MAQUINA 22
+#define SKY 23
+
 uniform int object_id;
 
 // Parâmetros da axis-aligned bounding box (AABB) do modelo
@@ -33,18 +52,29 @@ uniform vec4 bbox_max;
 // Variáveis para acesso das imagens de textura
 uniform sampler2D TextureImage0;
 uniform sampler2D TextureImage1;
+uniform sampler2D TextureImage2;
+uniform sampler2D TextureImage3;
+uniform sampler2D TextureImage4;
+uniform sampler2D TextureImage5;
+uniform sampler2D TextureImage6;
+uniform sampler2D TextureImage7;
+uniform sampler2D TextureImage8;
+uniform sampler2D TextureImage9;
+uniform sampler2D TextureImage10;
+uniform sampler2D TextureImage11;
+uniform sampler2D TextureImage12;
+uniform sampler2D TextureImage13;
+uniform sampler2D TextureImage14;
+uniform sampler2D TextureImage15;
+uniform sampler2D TextureImage16;
+uniform sampler2D TextureImage17;
+uniform sampler2D TextureImage18;
+uniform sampler2D TextureImage19;
+uniform sampler2D TextureImage20;
 
-// Textura exclusiva para a Lua
-uniform sampler2D TexturaLua;
-
-uniform sampler2D TexturaPersonagem;
-
-// Cor branca para objetos destacados
+// cor branca para objetos destacados
 uniform vec4 color_override;  // Cor para sobrescrever a cor padrão
 uniform bool use_color_override; // Flag para indicar se devemos usar a cor de sobreposição
-
-// Posição da Lua como fonte de luz
-vec4 lua_light_position = vec4(5.0, 8.0, -13.0, 1.0); // Posição fixa da luz da Lua
 
 // O valor de saída ("out") de um Fragment Shader é a cor final do fragmento.
 out vec4 color;
@@ -55,7 +85,12 @@ out vec4 color;
 
 void main()
 {
-    // O fragmento atual é coberto por um ponto que pertence à superfície de um
+    // Obtemos a posição da câmera utilizando a inversa da matriz que define o
+    // sistema de coordenadas da câmera.
+    vec4 origin = vec4(0.0, 0.0, 0.0, 1.0);
+    vec4 camera_position = inverse(view) * origin;
+
+    // O fragmento atual é coberto por um ponto que percente à superfície de um
     // dos objetos virtuais da cena. Este ponto, p, possui uma posição no
     // sistema de coordenadas global (World coordinates). Esta posição é obtida
     // através da interpolação, feita pelo rasterizador, da posição de cada
@@ -66,14 +101,17 @@ void main()
     // normais de cada vértice.
     vec4 n = normalize(normal);
 
-    // Vetor que define o sentido da luz da Lua em relação ao ponto atual.
-    vec4 l_lua = normalize(lua_light_position - p);
+    // Vetor que define o sentido da fonte de luz em relação ao ponto atual.
+    vec4 l = normalize(vec4(1.0,1.0,0.0,0.0));
+
+    // Vetor que define o sentido da câmera em relação ao ponto atual.
+    vec4 v = normalize(camera_position - p);
 
     // Coordenadas de textura U e V
     float U = 0.0;
     float V = 0.0;
 
-    if (object_id == SPHERE || object_id == LUA) // Lua é tratada como esfera
+    if ( object_id == SPHERE || object_id == LUA ) // a lua também é uma esfera
     {
         vec4 bbox_center = (bbox_min + bbox_max) / 2.0;
 
@@ -93,7 +131,7 @@ void main()
         U = (theta + M_PI) / (2.0 * M_PI);
         V = (phi + M_PI_2) / M_PI;
     }
-    else if (object_id == BUNNY)
+    else if ( object_id == BUNNY )
     {
         float minx = bbox_min.x;
         float maxx = bbox_max.x;
@@ -101,37 +139,190 @@ void main()
         float miny = bbox_min.y;
         float maxy = bbox_max.y;
 
+        float minz = bbox_min.z;
+        float maxz = bbox_max.z;
+
         U = (position_model.x - minx) / (maxx - minx);
         V = (position_model.y - miny) / (maxy - miny);
     }
-    else if (object_id == PLANE)
+    else if ( object_id == PLANE || object_id == PLANE_ASPHALT || object_id == PLANE_GRASS)
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == BAGUETE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == POLE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+       else if ( object_id == CALCADA )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == SMALLHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == GASSTATION )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == MYHOUSE )
     {
         U = texcoords.x;
         V = texcoords.y;
     }
 
-
-    // Aplicamos texturas diferentes dependendo do objeto
-    vec3 Kd_final;
-    if (object_id == LUA)
+    else if ( object_id == LONGHOUSE )
     {
-        Kd_final = texture(TexturaLua, vec2(U, V)).rgb;
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == WOODHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == LASTHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == LILHOUSE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == MAQUINA )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == CHEESE )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == BUTTER )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if ( object_id == MAINBUILD )
+    {
+        U = texcoords.x;
+        V = texcoords.y;
+    }
+    else if (object_id == SKY)
+    {
+        vec4 bbox_center = (bbox_min + bbox_max) / 2.0;
+
+        float theta = atan(position_model.x, position_model.z);
+        float phi = asin(position_model.y);
+
+        U = (theta + M_PI) / (2*M_PI);
+        V = (phi + M_PI_2) / M_PI;
+    }
+
+    // Equação de Iluminação
+    float lambert = max(0,dot(n,l));
+    float ambient_light = 0.4;
+
+    // Calculamos cores diferentes dependendo do objeto
+    vec3 Kd_final;
+
+    if ( object_id == BAGUETE )
+    {
+        // Baguete usa apenas TextureImage2
+        Kd_final = texture(TextureImage2, vec2(U,V)).rgb;
+    }
+        else if ( object_id == PLANE || object_id == PLANE_ASPHALT )
+    {
+        Kd_final = texture(TextureImage3, vec2(U,V)).rgb;
+    }
+    else if ( object_id == POLE )
+    {
+        Kd_final = texture(TextureImage4, vec2(U,V)).rgb;
+    }
+    else if ( object_id == LUA )
+    {
+        Kd_final = texture(TextureImage5, vec2(U,V)).rgb;
+    }
+        else if ( object_id == CALCADA )
+    {
+        Kd_final = texture(TextureImage6, vec2(U,V)).rgb;
+    }
+    else if ( object_id == SMALLHOUSE )
+    {
+        Kd_final = texture(TextureImage7, vec2(U,V)).rgb;
+    }
+        else if ( object_id == PLANE_GRASS )
+    {
+        Kd_final = texture(TextureImage8, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  GASSTATION )
+    {
+        Kd_final = texture(TextureImage9, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  MYHOUSE )
+    {
+        Kd_final = texture(TextureImage10, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  LONGHOUSE )
+    {
+        Kd_final = texture(TextureImage11, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  WOODHOUSE )
+    {
+        Kd_final = texture(TextureImage12, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  LASTHOUSE )
+    {
+        Kd_final = texture(TextureImage13, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  LILHOUSE )
+    {
+        Kd_final = texture(TextureImage14, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  MAQUINA )
+    {
+        Kd_final = texture(TextureImage15, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  SKY )
+    {
+        Kd_final = texture(TextureImage16, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  BUNNY )
+    {
+        Kd_final = texture(TextureImage17, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  CHEESE )
+    {
+        Kd_final = texture(TextureImage17, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  BUTTER )
+    {
+        Kd_final = texture(TextureImage18, vec2(U,V)).rgb;
+    }
+    else if ( object_id ==  MAINBUILD )
+    {
+        Kd_final = texture(TextureImage20, vec2(U,V)).rgb;
     }
     else
     {
-        vec3 Kd0 = texture(TextureImage0, vec2(U, V)).rgb;
-        vec3 Kd1 = texture(TextureImage1, vec2(U, V)).rgb;
-        Kd_final = mix(Kd1, Kd0, max(0, dot(n, l_lua)));
+        // Outros objetos usam TextureImage0 e TextureImage1 com interpolação
+        vec3 Kd0 = texture(TextureImage0, vec2(U,V)).rgb;
+        vec3 Kd1 = texture(TextureImage1, vec2(U,V)).rgb;
+        Kd_final = mix(Kd1, Kd0, lambert);
     }
-
-    // Componente de iluminação
-    float lambert_lua = max(0, dot(n, l_lua));
-
-    // Intensidade da luz ambiente
-    float ambient_light = 0.4; // Controle de intensidade da luz ambiente
-
-    // Cor final combinando a luz da Lua e a luz ambiente
-    vec3 final_color = Kd_final * (lambert_lua + ambient_light);
 
     if (use_color_override)
     {
@@ -139,26 +330,10 @@ void main()
     }
     else
     {
-        color.rgb = final_color; // Seu código original de cor aqui
-
-
-        // NOTE: Se você quiser fazer o rendering de objetos transparentes, é
-        // necessário:
-        // 1) Habilitar a operação de "blending" de OpenGL logo antes de realizar o
-        //    desenho dos objetos transparentes, com os comandos abaixo no código C++:
-        //      glEnable(GL_BLEND);
-        //      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        // 2) Realizar o desenho de todos objetos transparentes *após* ter desenhado
-        //    todos os objetos opacos; e
-        // 3) Realizar o desenho de objetos transparentes ordenados de acordo com
-        //    suas distâncias para a câmera (desenhando primeiro objetos
-        //    transparentes que estão mais longe da câmera).
-
-        // Alpha default = 1 = 100% opaco = 0% transparente
-        color.a = 1.0;
+        color.rgb = Kd_final * (lambert + ambient_light);
+        color.a = 1;
     }
 
-    // Correção gamma, considerando monitor sRGB.
-    // Veja https://en.wikipedia.org/w/index.php?title=Gamma_correction&oldid=751281772#Windows.2C_Mac.2C_sRGB_and_TV.2Fvideo_standard_gammas
-    color.rgb = pow(color.rgb, vec3(1.0 / 2.2));
+    // Cor final com correção gamma, considerando monitor sRGB.
+    color.rgb = pow(color.rgb, vec3(1.0,1.0,1.0)/2.2);
 }
