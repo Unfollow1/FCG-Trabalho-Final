@@ -25,24 +25,24 @@ CollisionResult ResolveBoxCollision(
     result.collided = false;
     result.correctedPosition = desiredPosition;
 
-    // Calcula sobreposição em cada eixo
+    // Calcula sobreposiÃ§Ã£o em cada eixo
     float overlapX1 = staticBox.max.x - movingBox.min.x;
     float overlapX2 = movingBox.max.x - staticBox.min.x;
     float overlapZ1 = staticBox.max.z - movingBox.min.z;
     float overlapZ2 = movingBox.max.z - staticBox.min.z;
 
-    // Verifica se há colisão
+    // Verifica se hÃ¡ colisÃ£o
     bool collidedX = (overlapX1 > 0 && overlapX2 > 0);
     bool collidedZ = (overlapZ1 > 0 && overlapZ2 > 0);
 
     if (collidedX && collidedZ) {
         result.collided = true;
 
-        // Determina a correção menor
+        // Determina a correÃ§Ã£o menor
         float correctionX = (desiredPosition.x > currentPosition.x) ? -overlapX1 : overlapX2;
         float correctionZ = (desiredPosition.z > currentPosition.z) ? -overlapZ1 : overlapZ2;
 
-        // Escolhe a correção com menor magnitude
+        // Escolhe a correÃ§Ã£o com menor magnitude
         if (std::abs(correctionX) <= std::abs(correctionZ)) {
             result.correctedPosition.x = desiredPosition.x + correctionX;
             result.correctedPosition.z = currentPosition.z;
@@ -51,7 +51,7 @@ CollisionResult ResolveBoxCollision(
             result.correctedPosition.z = desiredPosition.z + correctionZ;
         }
 
-        // Mantém a posição Y original
+        // MantÃ©m a posiÃ§Ã£o Y original
         result.correctedPosition.y = currentPosition.y;
     }
 

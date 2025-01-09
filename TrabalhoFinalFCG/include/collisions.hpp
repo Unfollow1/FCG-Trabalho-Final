@@ -15,7 +15,7 @@ struct Plane {
     glm::vec4 normal; // Normal do plano (normalizada)
 };
 
-// Colis„o esfera-esfera (usado para o coelho)
+// Colis√£o esfera-esfera (usado para o coelho)
 bool SphereToSphereCollision(
     const glm::vec4& center1,
     float radius1,
@@ -23,13 +23,13 @@ bool SphereToSphereCollision(
     float radius2
 );
 
-// Colis„o caixa-caixa (usado para objetos maiores)
+// Colis√£o caixa-caixa (usado para objetos maiores)
 bool BoxToBoxCollision(
     const BoundingBox& box1,
     const BoundingBox& box2
 );
 
-// Colis„o ponto-plano (usado para limites do mapa)
+// Colis√£o ponto-plano (usado para limites do mapa)
 bool PointToPlaneCollision(
     const glm::vec4& point,
     const Plane& plane,
